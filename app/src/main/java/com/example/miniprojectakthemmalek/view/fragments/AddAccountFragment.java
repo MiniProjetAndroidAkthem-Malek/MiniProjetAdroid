@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.balysv.materialripple.MaterialRippleLayout;
 import com.example.miniprojectakthemmalek.R;
@@ -35,6 +37,7 @@ public class AddAccountFragment extends Fragment {
     TextInputEditText passwordAddAccount;
     SessionManager sessionManager;
     View parent_view;
+    ImageButton backAccount;
     public AddAccountFragment() {
         // Required empty public constructor
     }
@@ -76,6 +79,19 @@ public class AddAccountFragment extends Fragment {
         passwordAddAccount= rootView.findViewById(R.id.passwordAddAcount);
         parent_view = rootView.findViewById(android.R.id.content);
         sessionManager=new SessionManager(getContext());
+        backAccount=rootView.findViewById(R.id.backAccount);
+
+        backAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction().replace(R.id.accountFrame,new AccountsFragment()).commit();
+            }
+        });
+
+
+
+
+
 
 
         addAccount.setOnClickListener(new View.OnClickListener() {

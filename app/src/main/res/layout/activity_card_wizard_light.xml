@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:foreground="@color/overlay_light_80"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/image_13" />
+        app:srcCompat="@drawable/volks" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
         android:orientation="vertical">
 
 
-        <androidx.core.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"

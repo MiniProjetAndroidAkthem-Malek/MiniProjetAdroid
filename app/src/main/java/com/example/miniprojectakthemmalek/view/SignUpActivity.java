@@ -82,7 +82,7 @@ final String usernameLoc = usernameInput.getText().toString();
                                 public void onResponse(User user) {
 
                                     sessionManager.openSessionForUser(user);
-                                    Intent intent=new Intent(getApplicationContext(),ProfileActivity.class);
+                                    Intent intent=new Intent(getApplicationContext(),CardWizardLight.class);
                                     intent.putExtra("username",user.getUsername());
                                     startActivity(intent);
                                 }

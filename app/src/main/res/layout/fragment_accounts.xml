@@ -18,11 +18,12 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <View
-        android:layout_width="50dp"
-        android:layout_height="3dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@color/colorPrimary" />
+     <View
+         android:layout_width="50dp"
+         android:layout_height="15dp"
+         android:layout_gravity="center_horizontal"
+         android:background="@color/white_transparency"
+         />
 
     <TextView
         android:id="@+id/addAnAccount"
@@ -30,10 +31,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/spacing_middle"
-        android:text="Or add an account"
+        android:text="Sign In"
+        android:textStyle="bold"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        android:textColor="@color/colorPrimary"
-        android:textStyle="bold" />
+        android:textColor="@color/purple_A400"
+         />
 
 </LinearLayout>
 

@@ -17,14 +17,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/spacing_mlarge">
-
-            <TextView
+            <ImageButton
+                android:id="@+id/backAccount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="USERNAME"
-                android:textAlignment="center"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                android:textColor="@color/grey_40" />
+                android:background="@drawable/ic_arrow_back"
+                android:backgroundTint="@color/purple_300"
+                ></ImageButton>
+
+
+
+
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/usernameAddAcount"
@@ -37,21 +40,16 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:textColor="@color/blue_600"
-                android:textStyle="bold"
+                android:textColor="@color/grey_500"
+                android:hint="username"
+
                 android:theme="@style/EditText.Grey" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="@dimen/spacing_mlarge" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PASSWORD"
-                android:textAlignment="center"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                android:textColor="@color/grey_40" />
+
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordAddAcount"
@@ -61,11 +59,13 @@
                 android:layout_marginRight="-4dp"
                 android:inputType="textPassword"
                 android:maxLength="50"
+                android:hint="password"
+
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:textColor="@color/blue_600"
-                android:textStyle="bold"
+                android:textColor="@color/grey_500"
+
                 android:theme="@style/EditText.Grey" />
 
 
@@ -77,7 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_alignParentBottom="true"
-                android:background="@color/blue_600">
+                android:background="@color/purple_500">
 
                 <TextView
                     android:layout_width="wrap_content"

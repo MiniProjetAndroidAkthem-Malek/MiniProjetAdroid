@@ -21,6 +21,7 @@
         <activity android:name=".view.HomeActivity"></activity>
         <activity android:name=".view.SignUpActivity" />
         <activity android:name=".view.ProfileActivity" />
+        <activity android:name=".view.CardWizardLight" />
         <activity android:name=".MainActivity" />
         <activity android:name=".view.AuthentificationActivity">
             <intent-filter>
