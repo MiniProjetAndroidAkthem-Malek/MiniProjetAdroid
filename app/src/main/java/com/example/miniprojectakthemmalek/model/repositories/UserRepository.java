@@ -1,5 +1,7 @@
 package com.example.miniprojectakthemmalek.model.repositories;
 
+import android.content.Intent;
+
 import com.example.miniprojectakthemmalek.interfacesUseCase.ILogin;
 import com.example.miniprojectakthemmalek.model.api.entityInterface.IUser;
 import com.example.miniprojectakthemmalek.model.entities.User;
@@ -57,6 +59,7 @@ public void addUser(User user, final addingCallback callback )
     });
 
 }
+
 public void getAllUsers(final getAllUserCallBack getAllUserCallBack)
 {
 Call<List<User>> call;
@@ -95,7 +98,9 @@ call.enqueue(new Callback<List<User>>() {
 
             @Override
             public void onFailure(Call<List<User>> call, Throwable t) {
+
                 t.printStackTrace();
+
                 callBack.onResponse(null);
             }
         });

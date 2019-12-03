@@ -1,9 +1,11 @@
 package com.example.miniprojectakthemmalek.view.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.os.StrictMode;
@@ -16,6 +18,7 @@ import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.view.SessionManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 
 public class ProfileFragment extends Fragment {
@@ -30,10 +33,10 @@ public class ProfileFragment extends Fragment {
 
     SessionManager sessionManager;
     User user;
-
-    TextView firstNameLabel,lastNameLabel,addressLabel,phoneNumberLabel,usernameLabel;
+    Toolbar toolbar;
+    CircularImageView image;
+    TextView postsLabel,first_name_label,last_name_label,address_label,phone_number_label,birth_date_label,partner_label,firstNameLabel,lastNameLabel,addressLabel,phoneNumberLabel,usernameLabel,textView11,textView12;
     FloatingActionButton settingBtn;
-
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -56,6 +59,28 @@ public class ProfileFragment extends Fragment {
         }
     }
 
+
+    public void initStyle()
+    {
+        if(user.getTheme_r()!=0)
+        {
+         int rgb = Color.rgb(user.getTheme_r(),user.getTheme_g(),user.getTheme_b());
+
+        toolbar.setBackgroundColor(rgb);
+        image.setBorderColor(rgb);
+        textView11.setTextColor(rgb);
+        textView12.setTextColor(rgb);
+
+        first_name_label.setTextColor(rgb);
+        last_name_label.setTextColor(rgb);
+        address_label.setTextColor(rgb);
+        phone_number_label.setTextColor(rgb);
+        birth_date_label.setTextColor(rgb);
+        partner_label.setTextColor(rgb);
+        postsLabel.setTextColor(rgb);
+
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,13 +100,29 @@ public class ProfileFragment extends Fragment {
         usernameLabel=rootView.findViewById(R.id.usernameLabel);
         settingBtn=rootView.findViewById(R.id.settingsAdd);
 
-        firstNameLabel.setText(user.getFirst_name());
-        lastNameLabel.setText(user.getLast_name());
+            toolbar = rootView.findViewById(R.id.toolbar);
+            image=rootView.findViewById(R.id.image);
+        postsLabel=rootView.findViewById(R.id.postsLabel);
+
+            first_name_label=rootView.findViewById(R.id.first_name_label);
+            last_name_label=rootView.findViewById(R.id.last_name_label);
+            address_label=rootView.findViewById(R.id.address_label);
+            phone_number_label=rootView.findViewById(R.id.phone_number_label);
+            birth_date_label=rootView.findViewById(R.id.birth_date_label);
+            partner_label=rootView.findViewById(R.id.partner_label);
+
+        postsLabel=rootView.findViewById(R.id.postsLabel);
+        textView11=rootView.findViewById(R.id.textView11);
+        textView12=rootView.findViewById(R.id.textView12);
+            firstNameLabel.setText(user.getFirst_name());
+
+            lastNameLabel.setText(user.getLast_name());
         addressLabel.setText(user.getAddress());
         phoneNumberLabel.setText(user.getPhone_number().toString());
         usernameLabel.setText(user.getUsername());
 
 
+initStyle();
 settingBtn.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -100,6 +141,7 @@ settingBtn.setOnClickListener(new View.OnClickListener() {
 
         return rootView;
     }
+
 
 
 

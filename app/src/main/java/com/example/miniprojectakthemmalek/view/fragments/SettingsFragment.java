@@ -1,24 +1,22 @@
 package com.example.miniprojectakthemmalek.view.fragments;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.fragment.app.Fragment;
 
-import android.text.method.KeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.SeekBar;
 
-import com.example.miniprojectakthemmalek.MainActivity;
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
@@ -41,7 +39,12 @@ public class SettingsFragment extends Fragment {
     int x=0;
     SessionManager sessionManager;
     User user;
-   AppCompatButton deletemyaccount;
+   AppCompatButton deletemyaccount,bt_pick_color;
+    AppCompatSeekBar red,green,blue;
+
+    int r=0;
+    int g=0;
+    int b=0;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -91,7 +94,95 @@ public class SettingsFragment extends Fragment {
         bt_change=rootView.findViewById(R.id.bt_change);
         deletemyaccount=rootView.findViewById(R.id.deletemyaccount);
         logoutSettings=rootView.findViewById(R.id.logoutSettings);
+        bt_pick_color = rootView.findViewById(R.id.bt_pick_color);
+
+        red=rootView.findViewById(R.id.red);
+        green =rootView.findViewById(R.id.green);
+        blue = rootView.findViewById(R.id.blue);
+
+        red.setMax(255);
+        red.setMin(0);
+
+        green.setMin(0);
+        green.setMax(255);
+
+        blue.setMin(0);
+        blue.setMax(255);
+
         user = sessionManager.getUser(getArguments().getString("username"),1);
+
+        red.setProgress(user.getTheme_r());
+        green.setProgress(user.getTheme_g());
+        blue.setProgress(user.getTheme_b());
+        bt_pick_color.setBackgroundColor(Color.rgb(red.getProgress(),green.getProgress(),blue.getProgress()));
+
+        red.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                System.out.println(progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+                bt_pick_color.setBackgroundColor(Color.rgb(seekBar.getProgress(),green.getProgress(),blue.getProgress()));
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+                bt_pick_color.setBackgroundColor(Color.rgb(seekBar.getProgress(),green.getProgress(),blue.getProgress()));
+                sessionManager.updateThemeForUser(user.getUsername(),seekBar.getProgress(),green.getProgress(),blue.getProgress());
+            }
+        });
+
+
+        green.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+                bt_pick_color.setBackgroundColor(Color.rgb(red.getProgress(),seekBar.getProgress(),blue.getProgress()));
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+                bt_pick_color.setBackgroundColor(Color.rgb(red.getProgress(),seekBar.getProgress(),blue.getProgress()));
+                sessionManager.updateThemeForUser(user.getUsername(),red.getProgress(),seekBar.getProgress(),blue.getProgress());
+                System.out.println("r= "+sessionManager.getUser(user.getTheme_r()));
+            }
+        });
+
+blue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+        bt_pick_color.setBackgroundColor(Color.rgb(red.getProgress(),green.getProgress(),seekBar.getProgress()));
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+
+        bt_pick_color.setBackgroundColor(Color.rgb(red.getProgress(),green.getProgress(),seekBar.getProgress()));
+        sessionManager.updateThemeForUser(user.getUsername(),red.getProgress(),green.getProgress(),seekBar.getProgress());
+
+    }
+});
+
 
         System.out.println(user);
         firstnameSettings.setText(user.getFirst_name().toString());
@@ -192,7 +283,11 @@ logoutSettings.setOnClickListener(new View.OnClickListener() {
 
 
 
+public void updateColor(AppCompatButton bt_pick_color,int r,int g ,int b)
+{
 
+
+}
 
 
 }

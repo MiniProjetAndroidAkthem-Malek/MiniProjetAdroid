@@ -3,10 +3,12 @@ package com.example.miniprojectakthemmalek.view.adapter;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,7 +25,7 @@ public class AccountsAdapter extends RecyclerView.Adapter<AccountsAdapter.UserVi
 
 
     private List<User> user_list;
-Fragment fragment;
+    Fragment fragment;
     public AccountsAdapter(Fragment fragment)
     {
     this.fragment = fragment;
@@ -54,7 +56,7 @@ Fragment fragment;
 
         final User single_user=this.user_list.get(position);
         holder.txt_view.setText(single_user.getUsername());
-
+   //     holder.linearLayout.setBackgroundColor(Color.rgb(single_user.getTheme_r(),single_user.getTheme_g(),single_user.getTheme_b()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,13 +82,14 @@ Fragment fragment;
     public static class UserViewHolder extends RecyclerView.ViewHolder {
 
         public TextView txt_view;
+        public LinearLayout linearLayout;
 
         public UserViewHolder(@NonNull View itemView)
         {
 
             super(itemView);
             txt_view=itemView.findViewById(R.id.usernameAccount);
-
+            linearLayout=itemView.findViewById(R.id.account_layout);
         }
 
 

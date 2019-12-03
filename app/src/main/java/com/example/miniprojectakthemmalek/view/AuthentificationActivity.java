@@ -49,19 +49,21 @@ public class AuthentificationActivity extends AppCompatActivity implements ILogi
     IUser iUser = RetrofitInstance.getRetrofitInstance().create(IUser.class);
 
     SessionManager sessionManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_simple_light);
-        sessionManager=new SessionManager(this);
-        loginPresenter =new AutentificationPresenter(getApplicationContext());
 
+        sessionManager=new SessionManager(this);
+        sessionManager.synchroniseWithDatabase();
+
+        loginPresenter =new AutentificationPresenter(getApplicationContext());
         parent_view = findViewById(android.R.id.content);
         signin = findViewById(R.id.signin);
         signup = findViewById(R.id.sign_up);
-       // username = findViewById(R.id.username);
-        //password = findViewById(R.id.password);
+
         signin.setVisibility(View.INVISIBLE);
         Tools.setSystemBarColor(this, android.R.color.white);
         Tools.setSystemBarLight(this);
@@ -81,6 +83,7 @@ signup.setOnClickListener(new View.OnClickListener() {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
 
 
 
@@ -141,7 +144,9 @@ signup.setOnClickListener(new View.OnClickListener() {
         }
     }
 
-
-
-
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+    //sessionManager.synchroniseWithDatabase();
+    }
 }

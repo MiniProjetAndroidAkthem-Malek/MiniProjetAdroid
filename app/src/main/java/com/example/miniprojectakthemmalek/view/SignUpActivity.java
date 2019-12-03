@@ -81,7 +81,11 @@ final String usernameLoc = usernameInput.getText().toString();
                                 @Override
                                 public void onResponse(User user) {
 
+                                    user.setTheme_r(0);
+                                    user.setTheme_g(0);
+                                    user.setTheme_b(0);
                                     sessionManager.openSessionForUser(user);
+                                    System.out.println(user);
                                     Intent intent=new Intent(getApplicationContext(),CardWizardLight.class);
                                     intent.putExtra("username",user.getUsername());
                                     startActivity(intent);

@@ -7,13 +7,13 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <include layout="@layout/toolbar" />
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
 
     <RelativeLayout
@@ -52,13 +52,17 @@
                 android:textStyle="bold" />
 
             <LinearLayout
+                android:id="@+id/retry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_medium"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+
+                >
 
                 <ImageView
+
                     android:layout_width="@dimen/spacing_large"
                     android:layout_height="@dimen/spacing_large"
                     android:layout_marginEnd="@dimen/spacing_medium"

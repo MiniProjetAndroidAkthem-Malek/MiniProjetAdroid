@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.miniprojectakthemmalek.model.entities.User;
+import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
 import com.example.miniprojectakthemmalek.view.database.AppDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SessionManager {
@@ -71,6 +73,38 @@ public class SessionManager {
         }
 
     }
+
+    public void updateThemeForUser(String username,int theme_r ,int theme_g, int theme_b)
+    {
+
+        database.userDao().updateTheme(username,theme_r,theme_g,theme_b);
+
+    }
+
+
+    public void synchroniseWithDatabase()
+    {
+        UserRepository.getInstance().getAllUsers(new UserRepository.getAllUserCallBack() {
+            @Override
+            public void onResponse(List<User> user) {
+
+                for(User u:getAllUsers())
+                {
+                    if(!user.contains(u))
+                    {
+                        System.out.println(u.getUsername());
+                        deleteSessionForUser(u.getUsername());
+                    }
+                }
+            }
+        });
+
+
+
+
+    }
+
+
 
     public void updateRememberStatusForUser(String username,int rememberMe)
     {

@@ -2,6 +2,8 @@ package com.example.miniprojectakthemmalek.view.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -16,10 +18,15 @@ import com.balysv.materialripple.MaterialRippleLayout;
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
+import com.example.miniprojectakthemmalek.view.ErrorHandlerActivity;
 import com.example.miniprojectakthemmalek.view.HomeActivity;
 import com.example.miniprojectakthemmalek.view.SessionManager;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class PasswordFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -94,6 +101,9 @@ public PasswordFragment() {
     @Override
     public void onClick(View v) {
 
+        System.out.println("isWifiOn --------> "+isWifiOn(getContext()));
+        System.out.println("isInternetConnection --------> "+isInternetConnection(getContext()));
+
         UserRepository.getInstance().getOneUser(username, new UserRepository.getOneUserCallBack() {
             @Override
             public void onResponse(User user) {
@@ -112,15 +122,22 @@ public PasswordFragment() {
                         }
 
 
+
+
                         Intent intentHome =new Intent(getContext(), HomeActivity.class);
                         intentHome.putExtra("username",user.getUsername());
                         startActivity(intentHome);
+
+                    }else  {
+
+                        Snackbar.make(parent_view, "Wrong password or username", Snackbar.LENGTH_SHORT).show();
 
                     }
 
                 }else{
 
-                    Snackbar.make(parent_view, "Wrong password or username", Snackbar.LENGTH_SHORT).show();
+
+
 
                 }
             }
@@ -131,11 +148,44 @@ public PasswordFragment() {
 });
 
 
-
         return rootView;
     }
 
+    public static boolean isWifiOn(final Context context) {
 
+        boolean status = false;
+
+        final ConnectivityManager connManager =
+                (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(null != connManager) {
+            NetworkInfo[] allNetworks = connManager.getAllNetworkInfo();
+            if(null != allNetworks) {
+                for(NetworkInfo info: allNetworks) {
+                    if ( info.getState() == NetworkInfo.State.CONNECTED ) {
+                        status = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return status;
+    }
+
+
+    public static boolean isInternetConnection(Context context)
+    {
+        boolean success = false;
+        try {
+            URL url = new URL("https://google.com");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(10000);
+            connection.connect();
+            success = connection.getResponseCode() == 200;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return success;
+    }
 
 
 }

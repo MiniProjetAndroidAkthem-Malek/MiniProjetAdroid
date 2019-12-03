@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-
+import java.util.Objects;
 
 @SuppressWarnings("ALL")
 @Entity(tableName = "t_user")
@@ -53,6 +53,16 @@ public class User implements Serializable {
     @ColumnInfo(name = "rememberMe")
     int rememberMe;
 
+    @ColumnInfo(name = "theme_r")
+    int theme_r;
+
+    @ColumnInfo(name = "theme_g")
+    int theme_g;
+
+    @ColumnInfo(name = "theme_b")
+    int theme_b;
+
+
     @Ignore
     public User(String username, String password) {
         this.username = username;
@@ -87,7 +97,8 @@ public class User implements Serializable {
         this.isActive = isActive;
     }
 
-    public User(String username, String password, String email, String first_name, String last_name, Long phone_number, String address, int isActive, int rememberMe) {
+    public User(String username, String password, String email, String first_name, String last_name, Long phone_number, String address, int isActive, int rememberMe,int theme_r,int theme_g,int theme_b) {
+
         this.username = username;
         this.password = password;
         this.email = email;
@@ -97,6 +108,10 @@ public class User implements Serializable {
         this.address = address;
         this.isActive = isActive;
         this.rememberMe=rememberMe;
+        this.theme_r=theme_r;
+        this.theme_g =theme_g;
+        this.theme_b=theme_b;
+
     }
     @Ignore
     public User(int id, String username, String password, String email, String first_name, String last_name, Long phone_number, String address, int isActive) {
@@ -195,10 +210,26 @@ public class User implements Serializable {
                 ", phone_number=" + phone_number +
                 ", address='" + address + '\'' +
                 ", isActive=" + isActive +
+                ", rememberMe=" + rememberMe +
+                ", theme_r=" + theme_r +
+                ", theme_g=" + theme_g +
+                ", theme_b=" + theme_b +
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id &&
+                username.equals(user.username) ;
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, email, first_name, last_name, phone_number, address, isActive);
+    }
 
     public int getRememberMe() {
         return rememberMe;
@@ -206,5 +237,29 @@ public class User implements Serializable {
 
     public void setRememberMe(int rememberMe) {
         this.rememberMe = rememberMe;
+    }
+
+    public int getTheme_r() {
+        return theme_r;
+    }
+
+    public void setTheme_r(int theme_r) {
+        this.theme_r = theme_r;
+    }
+
+    public int getTheme_g() {
+        return theme_g;
+    }
+
+    public void setTheme_g(int theme_g) {
+        this.theme_g = theme_g;
+    }
+
+    public int getTheme_b() {
+        return theme_b;
+    }
+
+    public void setTheme_b(int theme_b) {
+        this.theme_b = theme_b;
     }
 }

@@ -33,6 +33,9 @@ void updateConnectionStatus(String username,int isActive);
 @Query("update t_user set rememberMe=:rememberMe where username=:username ")
 void updateRememberStatus(String username,int rememberMe);
 
+@Query("update t_user set theme_r=:theme_r ,theme_g=:theme_g,theme_b=:theme_b where username=:username ")
+void updateTheme(String username,int theme_r,int theme_g,int theme_b);
+
 @Query("delete from t_user")
 void deleteAll();
 

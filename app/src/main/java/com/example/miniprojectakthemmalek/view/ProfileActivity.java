@@ -2,6 +2,7 @@ package com.example.miniprojectakthemmalek.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.widget.TextView;
@@ -52,9 +53,6 @@ public class ProfileActivity extends AppCompatActivity {
         usernameLabel.setText(user.getUsername());*/
 
 }
-
-
-
 
 
 }
