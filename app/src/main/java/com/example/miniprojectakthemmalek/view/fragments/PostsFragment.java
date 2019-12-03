@@ -24,6 +24,7 @@ import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
 import com.example.miniprojectakthemmalek.view.SessionManager;
 import com.example.miniprojectakthemmalek.view.adapter.AccountsAdapter;
 import com.example.miniprojectakthemmalek.view.adapter.PostAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -47,6 +48,8 @@ public class PostsFragment extends Fragment {
     Toolbar toolbar;
     RecyclerView recyclerView;
     PostAdapter postAdapter;
+String username;
+    FloatingActionButton moveToAddPost;
     public PostsFragment() {
         // Required empty public constructor
     }
@@ -85,8 +88,26 @@ public class PostsFragment extends Fragment {
         movetoprofile=rootView.findViewById(R.id.movetoprofile);
         toolbar=rootView.findViewById(R.id.toolbar);
         recyclerView = rootView.findViewById(R.id.recyclerViewPost);
+        moveToAddPost=rootView.findViewById(R.id.moveToAddPost);
+        username = getArguments().getString("username");
 
-      postAdapter=new PostAdapter();
+        moveToAddPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AddPostFragment addPostFragment =    new AddPostFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("username",username);
+                addPostFragment.setArguments(bundle);
+
+
+
+                getFragmentManager().beginTransaction().replace(R.id.frameHome,addPostFragment).commit();
+
+            }
+        });
+
+
         IPost iPost = RetrofitInstance.getRetrofitInstance().create(IPost.class);
 
         Call<List<Post>> call;
@@ -94,8 +115,12 @@ public class PostsFragment extends Fragment {
         call.enqueue(new Callback<List<Post>>() {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
-               // System.out.println(response.body());
-                getResponse(response.body());
+
+                postAdapter=new PostAdapter(response.body());
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setAdapter(postAdapter);
+
             }
 
             @Override
@@ -106,10 +131,6 @@ public class PostsFragment extends Fragment {
 
         });
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        recyclerView.setAdapter(postAdapter);
 
         return rootView;
     }
@@ -125,19 +146,5 @@ public class PostsFragment extends Fragment {
 
         }
     }
-
-
-    public void getResponse(List<Post> postList)
-    {
-
-        postAdapter.setPost_list(postList);
-
-    }
-
-
-
-
-
-
 
 }

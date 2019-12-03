@@ -11,8 +11,16 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.example.miniprojectakthemmalek.R;
+import com.example.miniprojectakthemmalek.model.entities.Post;
 import com.example.miniprojectakthemmalek.model.entities.User;
+import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
+import com.example.miniprojectakthemmalek.view.fragments.AddPostFragment;
 import com.example.miniprojectakthemmalek.view.fragments.PostsFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -20,8 +28,6 @@ public class HomeActivity extends AppCompatActivity {
     SessionManager sessionManager;
     User user;
     Toolbar toolbar;
-
-
     public void initStyle()
     {
 
@@ -41,17 +47,23 @@ public class HomeActivity extends AppCompatActivity {
         movetoprofile=findViewById(R.id.movetoprofile);
         toolbar=findViewById(R.id.toolbar);
        sessionManager=new SessionManager(this);
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.frameHome,new PostsFragment()).commit();
-
-      System.out.println("home="+sessionManager.getAllUsers());
-
         if(getIntent().hasExtra("username"))
         {
             user = sessionManager.getUser(getIntent().getStringExtra("username"),1);
         }
+     PostsFragment postsFragment =    new PostsFragment();
+       Bundle bundle = new Bundle();
+       bundle.putString("username",user.getUsername().toString());
+       postsFragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.frameHome,postsFragment).commit();
+
+      System.out.println("home="+sessionManager.getAllUsers());
+
+
 
         initStyle();
+
+
 
       movetoprofile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,9 +73,10 @@ public class HomeActivity extends AppCompatActivity {
                 intent.putExtra("username",user.getUsername());
                 startActivity(intent);
 
-
             }
         });
+
+
 
     }
 

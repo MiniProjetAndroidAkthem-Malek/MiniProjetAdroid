@@ -101,8 +101,8 @@ public PasswordFragment() {
     @Override
     public void onClick(View v) {
 
-        System.out.println("isWifiOn --------> "+isWifiOn(getContext()));
-        System.out.println("isInternetConnection --------> "+isInternetConnection(getContext()));
+      //  System.out.println("isWifiOn --------> "+isWifiOn(getContext()));
+      // System.out.println("isInternetConnection --------> "+isInternetConnection(getContext()));
 
         UserRepository.getInstance().getOneUser(username, new UserRepository.getOneUserCallBack() {
             @Override

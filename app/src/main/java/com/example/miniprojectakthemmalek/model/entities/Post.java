@@ -15,6 +15,11 @@ public class Post {
     @SerializedName("description")
     String description;
 
+    public Post(String username, String description) {
+        this.username = username;
+        this.description = description;
+    }
+
     public Post(String username, Date posted_in, String description) {
         this.username = username;
         this.posted_in = posted_in;

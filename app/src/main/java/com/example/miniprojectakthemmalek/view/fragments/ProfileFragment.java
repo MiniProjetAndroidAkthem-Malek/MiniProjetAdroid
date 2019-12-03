@@ -90,7 +90,6 @@ public class ProfileFragment extends Fragment {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-
        user = sessionManager.getUser(getArguments().getString("username"),1);
         System.out.println(user);
         firstNameLabel=rootView.findViewById(R.id.firstNameLabel);
