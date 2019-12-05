@@ -12,6 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.miniprojectakthemmalek.R;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class ErrorHandlerActivity extends AppCompatActivity {
 
     LinearLayout retry;
@@ -20,21 +24,22 @@ public class ErrorHandlerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_no_item_internet_icon);
 
-    retry= findViewById(R.id.retry);
-    retry.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
 
-            Intent intent=new Intent(getApplicationContext(),AuthentificationActivity.class);
-            startActivity(intent);
-        }
-    });
 
+
+        retry= findViewById(R.id.retry);
+        retry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(getApplicationContext(),AuthentificationActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
 
     }
-
-
 
 
 

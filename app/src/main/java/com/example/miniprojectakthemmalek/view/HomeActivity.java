@@ -44,6 +44,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline_feed);
 
+
+
         movetoprofile=findViewById(R.id.movetoprofile);
         toolbar=findViewById(R.id.toolbar);
        sessionManager=new SessionManager(this);

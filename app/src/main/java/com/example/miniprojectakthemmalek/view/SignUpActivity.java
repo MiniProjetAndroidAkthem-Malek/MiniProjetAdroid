@@ -71,6 +71,7 @@ final String usernameLoc = usernameInput.getText().toString();
                     linearLayout.addView(btn,linearLayout.indexOfChild(email_sign_in_button));
                     linearLayout.removeView(email_sign_in_button);
                     linearLayout.removeView(facebooklogin);
+
                     btn.setBackgroundResource(R.drawable.btn_rounded_accent);
                     btn.setTextColor(Color.WHITE);
                     btn.setOnClickListener(new View.OnClickListener() {

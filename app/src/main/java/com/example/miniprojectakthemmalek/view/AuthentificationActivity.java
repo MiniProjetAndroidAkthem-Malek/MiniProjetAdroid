@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Bitmap;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -27,17 +28,25 @@ import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.interfacesUseCase.ILogin;
 import com.example.miniprojectakthemmalek.model.api.RetrofitInstance;
 import com.example.miniprojectakthemmalek.model.api.entityInterface.IUser;
+import com.example.miniprojectakthemmalek.model.entities.Follow;
+import com.example.miniprojectakthemmalek.model.entities.Post;
 import com.example.miniprojectakthemmalek.model.entities.User;
+import com.example.miniprojectakthemmalek.model.repositories.FollowRepository;
+import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
 import com.example.miniprojectakthemmalek.presenter.AutentificationPresenter;
 import com.example.miniprojectakthemmalek.view.database.AppDatabase;
 import com.example.miniprojectakthemmalek.view.fragments.AccountsFragment;
+import com.example.miniprojectakthemmalek.view.utils.GeoCoder.GeoLocationManager;
 import com.google.android.material.snackbar.Snackbar;
 import com.example.miniprojectakthemmalek.view.utils.Tools;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 
 public class AuthentificationActivity extends AppCompatActivity implements ILogin.view {
 
@@ -50,11 +59,14 @@ public class AuthentificationActivity extends AppCompatActivity implements ILogi
 
     SessionManager sessionManager;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_simple_light);
+
 
         sessionManager=new SessionManager(this);
         sessionManager.synchroniseWithDatabase();
@@ -68,9 +80,13 @@ public class AuthentificationActivity extends AppCompatActivity implements ILogi
         Tools.setSystemBarColor(this, android.R.color.white);
         Tools.setSystemBarLight(this);
 
-        //sessionManager.clearAllSession();
         getSupportFragmentManager().beginTransaction().replace(R.id.accountFrame,new AccountsFragment()).commit();
         System.out.println(sessionManager.getAllUsers());
+
+        Date date=new Date();
+        Timestamp ts =new Timestamp(date.getTime());
+        System.out.println(ts);
+
 
 
 signup.setOnClickListener(new View.OnClickListener() {
@@ -83,9 +99,6 @@ signup.setOnClickListener(new View.OnClickListener() {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
-
-
 
        /*Intent intent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.INTERNAL_CONTENT_URI);
