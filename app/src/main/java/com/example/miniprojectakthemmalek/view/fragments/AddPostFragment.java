@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -30,6 +31,7 @@ public class AddPostFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     EditText et_post;
+    TextView usernamelabel;
     FloatingActionButton moveToPost;
 String username;
     public AddPostFragment() {
@@ -70,8 +72,10 @@ String username;
         View rootView =inflater.inflate(R.layout.dialog_add_post, container, false);
         et_post=rootView.findViewById(R.id.et_post);
         moveToPost=rootView.findViewById(R.id.moveToPost);
-username= getArguments().getString("username");
+        usernamelabel=rootView.findViewById(R.id.usernamelabel);
+        username= getArguments().getString("username");
        
+        usernamelabel.setText(username);
 
 moveToPost.setOnClickListener(new View.OnClickListener() {
     @Override

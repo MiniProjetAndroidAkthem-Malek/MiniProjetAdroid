@@ -117,6 +117,7 @@ String username;
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
 
                 postAdapter=new PostAdapter(response.body());
+                postAdapter.setUsername(username);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setAdapter(postAdapter);

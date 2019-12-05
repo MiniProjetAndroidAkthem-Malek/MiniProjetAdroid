@@ -9,10 +9,12 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import com.balysv.materialripple.MaterialRippleLayout;
 import com.example.miniprojectakthemmalek.R;
@@ -130,7 +132,7 @@ public PasswordFragment() {
 
                     }else  {
 
-                        //Snackbar.make(parent_view, "Wrong password or username", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(parent_view, "Wrong password or username", Snackbar.LENGTH_SHORT).show();
 
                     }
 
@@ -171,21 +173,67 @@ public PasswordFragment() {
         return status;
     }
 
-
-    public static boolean isInternetConnection(Context context)
+    public static boolean isInternetConnection()
     {
         boolean success = false;
         try {
+
             URL url = new URL("https://google.com");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setConnectTimeout(10000);
             connection.connect();
             success = connection.getResponseCode() == 200;
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         return success;
     }
 
+
+    public boolean isConnectingToInternet(Context context) {
+        if (networkConnectivity(context)) {
+            try {
+                Process p1 = Runtime.getRuntime().exec(
+                        "ping -c 1 www.google.com");
+                int returnVal = p1.waitFor();
+                boolean reachable = (returnVal == 0);
+                if (reachable) {
+                    System.out.println("Internet access");
+                    return reachable;
+                } else {
+                    return false;
+                }
+            } catch (Exception e) {
+                return false;
+            }
+        } else
+            return false;
+
+    }
+
+    private boolean networkConnectivity(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
+    }
+
+
+    private void runProgress(final ProgressBar progressBar) {
+        final Handler mHandler = new Handler();
+        Runnable runnable = new Runnable() {
+            public void run() {
+                int progress = progressBar.getProgress() + 10;
+                progressBar.setProgress(progress);
+                if (progress > 100) {
+                    progressBar.setProgress(0);
+                }
+                mHandler.postDelayed(this, 1000);
+            }
+        };
+
+        mHandler.post(runnable);
+    }
 
 }

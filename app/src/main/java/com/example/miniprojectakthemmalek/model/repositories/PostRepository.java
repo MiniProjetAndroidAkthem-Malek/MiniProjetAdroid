@@ -69,7 +69,25 @@ public class PostRepository {
     });
 
 }
+    public void getAllPostOf(String username,final getAllPostCallBack allPostCallBack)
+    {
+        Call<List<Post>> call;
+        call = iPost.getAllPostsOf(username);
+        call.enqueue(new Callback<List<Post>>() {
+            @Override
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
 
+                allPostCallBack.onResponse(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Post>> call, Throwable t) {
+
+                t.printStackTrace();
+            }
+        });
+
+    }
 public interface getAllPostCallBack
 {
     public void onResponse(List<Post> posts);

@@ -1,5 +1,6 @@
 package com.example.miniprojectakthemmalek.view.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.Post;
 import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
+import com.example.miniprojectakthemmalek.view.OtherProfileActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,15 @@ import java.util.List;
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
 
     private List<Post> post_list;
+    private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public PostAdapter(List<Post> postList)
     {
@@ -38,11 +49,23 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final PostViewHolder holder, int position) {
+
         System.out.println(this.post_list.get(position));
         final Post single_post=this.post_list.get(position);
         holder.username_text_view.setText(single_post.getUsername());
         holder.description_text_view.setText(single_post.getDescription());
+
+        holder.username_text_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(holder.itemView.getContext(), OtherProfileActivity.class);
+                intent.putExtra("username",holder.username_text_view.getText().toString());
+                intent.putExtra("ConnectedUsername",username);
+                holder.itemView.getContext().startActivity(intent);
+
+            }
+        });
 
     }
 
