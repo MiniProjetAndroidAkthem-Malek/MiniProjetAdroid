@@ -24,7 +24,7 @@ android:background="@color/grey_5">
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:layout_width="@dimen/spacing_xxlarge"
                 android:layout_height="@dimen/spacing_xxlarge"
-                android:src="@drawable/photo_male_8"
+                android:src="@drawable/akthem"
                 app:civ_shadow="true"
                 app:civ_shadow_radius="0"
                 app:civ_border="false" />
@@ -43,7 +43,7 @@ android:background="@color/grey_5">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:text="David Park"
+                    android:text="Akthem Arfaoui"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textColor="@color/grey_90"
                     android:textStyle="bold" />
@@ -177,8 +177,8 @@ android:background="@color/grey_5">
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="clickAction"
-                android:tint="@color/teal_600"
-                app:srcCompat="@drawable/ic_apps" />
+                android:tint="@color/purple_500"
+                app:srcCompat="@drawable/ic_home" />
 
         </LinearLayout>
 
@@ -198,8 +198,8 @@ android:background="@color/grey_5">
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="clickAction"
-                android:tint="@color/teal_500"
-                app:srcCompat="@drawable/ic_local_offer" />
+                android:tint="@color/purple_500"
+                app:srcCompat="@drawable/ic_people_outline" />
 
         </LinearLayout>
 
@@ -217,7 +217,7 @@ android:background="@color/grey_5">
     android:clickable="true"
     android:onClick="clickAction"
     android:tint="@android:color/white"
-    app:backgroundTint="@color/teal_500"
+    app:backgroundTint="@color/purple_500"
     app:elevation="2dp"
     app:fabSize="normal"
     app:rippleColor="@color/deep_orange_400"

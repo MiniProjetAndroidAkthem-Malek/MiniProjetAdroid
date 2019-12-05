@@ -130,7 +130,7 @@ public PasswordFragment() {
 
                     }else  {
 
-                        Snackbar.make(parent_view, "Wrong password or username", Snackbar.LENGTH_SHORT).show();
+                        //Snackbar.make(parent_view, "Wrong password or username", Snackbar.LENGTH_SHORT).show();
 
                     }
 

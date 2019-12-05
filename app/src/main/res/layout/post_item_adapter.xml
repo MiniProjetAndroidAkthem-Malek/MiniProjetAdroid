@@ -30,7 +30,7 @@
                     android:layout_width="@dimen/spacing_xxlarge"
                     android:layout_height="@dimen/spacing_xxlarge"
                     android:foreground="@color/overlay_light_20"
-                    android:src="@drawable/photo_female_1"
+                    android:src="@drawable/akthem"
                    />
 
                 <View
@@ -69,7 +69,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:text="Hwy, Carthage"
+                            android:text="Sidi Bou Said, Carthage"
                             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                             android:textColor="@color/light_blue_400"
                             android:textStyle="bold" />
