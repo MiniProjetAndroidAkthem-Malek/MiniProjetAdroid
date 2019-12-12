@@ -16,20 +16,35 @@
         android:id="@+id/grp_2"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_inbox"
-            android:title="Inbox"
+            android:id="@+id/nav_group"
+            android:title="Add new group"
             app:actionLayout="@layout/badge_navigation_plain" />
         <item
             android:id="@+id/nav_priority_inbox"
-            android:title="Priority inbox"
+            android:title="Show my groups"
             app:actionLayout="@layout/badge_navigation_colored" />
         <item
-            android:id="@+id/nav_social"
-            android:title="Social"
+            android:id="@+id/nav_all_groups"
+            android:title="Show All groups"
             app:actionLayout="@layout/badge_navigation_colored" />
     </group>
 
-
+    <group
+        android:id="@+id/grp_6"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_group6"
+            android:title="Add new event"
+            app:actionLayout="@layout/badge_navigation_plain" />
+        <item
+            android:id="@+id/nav_priority_inbox6"
+            android:title="Show my events"
+            app:actionLayout="@layout/badge_navigation_colored" />
+        <item
+            android:id="@+id/nav_all_groups6"
+            android:title="Show recents events"
+            app:actionLayout="@layout/badge_navigation_colored" />
+    </group>
     <item
         android:checkableBehavior="single"
         android:title="All labels">
@@ -39,7 +54,7 @@
             android:checkableBehavior="single">
             <item
                 android:id="@+id/nav_starred"
-                android:title="Starred" />
+                android:title="Invitation(s)" />
             <item
                 android:id="@+id/nav_sent"
                 android:title="Sent" />

@@ -50,6 +50,29 @@ public class PostRepository {
 
     }
 
+    public void addPost(final Post post, final addingPostCallback callback )
+    {
+        Call<JsonPrimitive> call ;
+
+        call =  iPost.addPost(post);
+        call.enqueue(new Callback<JsonPrimitive>() {
+            @Override
+            public void onResponse(Call<JsonPrimitive> call, Response<JsonPrimitive> response) {
+
+                callback.addingCallback(post);
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonPrimitive> call, Throwable t) {
+
+                t.printStackTrace();
+
+            }
+        });
+
+    }
+
     public void getAllPost(final getAllPostCallBack allPostCallBack)
 {
     Call<List<Post>> call;
@@ -69,6 +92,28 @@ public class PostRepository {
     });
 
 }
+
+    public void getPost(String username , String description,final getAllPostCallBack allPostCallBack)
+    {
+        Call<List<Post>> call;
+        call = iPost.getPost(username,description);
+        call.enqueue(new Callback<List<Post>>() {
+            @Override
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+
+                allPostCallBack.onResponse(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Post>> call, Throwable t) {
+
+                t.printStackTrace();
+            }
+        });
+
+    }
+
+
     public void getAllPostOf(String username,final getAllPostCallBack allPostCallBack)
     {
         Call<List<Post>> call;
@@ -98,4 +143,8 @@ public interface getAllPostCallBack
         public void addingCallback(int code);
     }
 
+    public interface addingPostCallback
+    {
+        public void addingCallback(Post post);
+    }
 }

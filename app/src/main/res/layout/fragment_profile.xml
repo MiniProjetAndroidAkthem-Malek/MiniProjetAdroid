@@ -55,6 +55,7 @@
                     android:textColor="@color/grey_90" />
 
                 <TextView
+                    android:id="@+id/jobProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_medium"
@@ -182,6 +183,7 @@
                             android:orientation="vertical">
 
                             <TextView
+
                                 android:id="@+id/textView12"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -376,6 +378,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/birth_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_medium"

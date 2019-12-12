@@ -33,6 +33,9 @@ Call<JsonPrimitive> addUser(@Body User user);
 @PUT("users/update")
 Call<JsonObject> updateUser(@Body User user);
 
+@PUT("users/updatePartner")
+Call<JsonObject> updatePartnerUser(@Body User user);
+
 @DELETE("users/delete/{username}")
 Call<JsonObject> deleteUser(@Path("username") String username);
 

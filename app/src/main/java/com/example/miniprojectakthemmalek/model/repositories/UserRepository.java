@@ -2,7 +2,6 @@ package com.example.miniprojectakthemmalek.model.repositories;
 
 import android.content.Intent;
 
-import com.example.miniprojectakthemmalek.interfacesUseCase.ILogin;
 import com.example.miniprojectakthemmalek.model.api.entityInterface.IUser;
 import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.api.RetrofitInstance;
@@ -20,7 +19,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserRepository implements ILogin.model {
+public class UserRepository {
 
 
     private static UserRepository instance;
@@ -79,7 +78,6 @@ call.enqueue(new Callback<List<User>>() {
 });
 
 }
-    @Override
     public void getOneUser(String username, final getOneUserCallBack callBack) {
         Call<List<User>> call = iUser.getOneUser(username);
         call.enqueue(new Callback<List<User>>() {
@@ -124,6 +122,25 @@ call.enqueue(new Callback<List<User>>() {
         });
 
     }
+
+    public void updatePartnerForUser(User user)
+    {
+        Call<JsonObject> call ;
+        call = iUser.updatePartnerUser(user);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+            }
+        });
+
+    }
+
 
 public void deleteUser(String  username)
 {

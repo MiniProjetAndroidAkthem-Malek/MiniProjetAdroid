@@ -31,7 +31,7 @@ public class SessionManager {
             database.userDao().insertOne(user);
         }
 
-        if(user.isActive()==1)
+        if(user.getActive()==1)
         {
             Intent intent = new Intent(context, ServiceApp.class);
             intent.putExtra("username",user.getUsername());

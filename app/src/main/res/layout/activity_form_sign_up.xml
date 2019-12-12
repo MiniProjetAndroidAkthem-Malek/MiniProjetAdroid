@@ -77,6 +77,9 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
+
+
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -92,51 +95,230 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <EditText
-                            android:id="@+id/email"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        >
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Email"
-                            android:inputType="textEmailAddress"
-                            android:maxLines="1"
-                            android:singleLine="true" />
+                            android:layout_weight="1"
+                            >
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                            <EditText
+                                android:id="@+id/firstName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="First name"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:singleLine="true" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <EditText
-                            android:id="@+id/address"
+                        <View
+                            android:layout_width="2dp"
+                            android:layout_height="0dp"></View>
+
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Address"
-                            android:inputType="text"
-                            android:maxLines="1"
-                            android:singleLine="true" />
+                            android:layout_weight="1"
+                            >
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                            <EditText
+                                android:id="@+id/lastName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Last name"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:singleLine="true" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
 
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                               <LinearLayout
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:orientation="horizontal"
+                                   >
 
-                        <EditText
-                            android:id="@+id/phonenumberInput"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Phone number"
-                            android:inputType="phone"
-                            android:maxLines="1"
-                            android:singleLine="true" />
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                                   <TextView
+                                       android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:text="Birth date "
+                                       android:layout_gravity="center_vertical"
+                                       ></TextView>
+
+
+
+
+
+
+                                    <DatePicker
+                                        android:id="@+id/birth_date"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="100dp"
+                                        android:datePickerMode="spinner"
+                                        android:calendarViewShown="false"
+
+                                        ></DatePicker>
+
+                               </LinearLayout>
+
+
+
+
+
+
+
+
+
+                    </LinearLayout>
+                                  <LinearLayout
+                                      android:layout_width="match_parent"
+                                      android:layout_height="wrap_content"
+                                      android:orientation="horizontal"
+                                      >
+                                      <TextView
+                                          android:layout_width="wrap_content"
+                                          android:layout_height="wrap_content"
+                                          android:text="Num of children    "
+                                          android:layout_gravity="center_vertical"
+                                          ></TextView>
+                                <NumberPicker
+                                    android:id="@+id/numChildren"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="100dp"
+
+
+                                 ></NumberPicker>
+
+
+                                      <TextView
+                                          android:layout_width="wrap_content"
+                                          android:layout_height="wrap_content"
+                                          android:text="  Disable "
+                                          android:layout_gravity="center_vertical"
+
+
+                                          ></TextView>
+
+                                      <NumberPicker
+                                          android:id="@+id/disableChildren"
+                                          android:layout_width="wrap_content"
+                                          android:layout_height="100dp"
+
+
+                                          ></NumberPicker>
+
+                                       </LinearLayout>
+
+
+                                     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                 
+
+
+
+
+                 
+                 
+
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+
+                 
 
 
                     <LinearLayout
@@ -195,15 +377,6 @@
                         android:layout_marginTop="@dimen/spacing_large"
                         android:background="@drawable/btn_rounded_accent"
                         android:text="REGISTER"
-                        android:textColor="@android:color/white" />
-
-
-                    <Button
-                        android:id="@+id/facebooklogin"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/btn_rounded_primary"
-                        android:text="REGISTER WITH FACEBOOK"
                         android:textColor="@android:color/white" />
 
                 </LinearLayout>

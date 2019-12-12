@@ -25,4 +25,7 @@ Call<List<Post>> getAllPosts();
 Call<List<Post>> getAllPostsOf(@Path("username") String username);
 
 
+@GET("/post/get/{username}/{description}")
+Call<List<Post>> getPost(@Path("username") String username,@Path("description") String description);
+
 }

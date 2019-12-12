@@ -4,10 +4,12 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 @SuppressWarnings("ALL")
@@ -46,9 +48,33 @@ public class User implements Serializable {
     @SerializedName("address")
     String address;
 
+    @ColumnInfo(name = "sexe")
+    @SerializedName("sexe")
+    String sexe;
+
+    @ColumnInfo(name = "partner")
+    @SerializedName("partner")
+    String partner;
+
+    @ColumnInfo(name = "birth_date")
+    @SerializedName("birth_date")
+    String birth_date;
+
+    @ColumnInfo(name = "job")
+    @SerializedName("job")
+    String job;
+
+    @ColumnInfo(name = "number_children")
+    @SerializedName("number_children")
+    int numChildren;
+
+    @ColumnInfo(name = "number_children_disabilities")
+    @SerializedName("number_children_disabilities")
+    int numDisableChildren;
+
     @ColumnInfo(name = "isActive")
     @SerializedName("isActive")
-    int isActive;
+    int active;
 
     @ColumnInfo(name = "rememberMe")
     int rememberMe;
@@ -63,10 +89,18 @@ public class User implements Serializable {
     int theme_b;
 
 
-    @Ignore
-    public User(String username, String password) {
+    public User(String username, String password, String sexe, String birth_date, int numChildren, int numDisableChildren) {
         this.username = username;
         this.password = password;
+        this.sexe = sexe;
+        this.birth_date = birth_date;
+        this.numChildren = numChildren;
+        this.numDisableChildren = numDisableChildren;
+    }
+@Ignore
+    public User(String username, String partner) {
+        this.username = username;
+        this.partner = partner;
     }
 
     @Ignore
@@ -85,18 +119,12 @@ public class User implements Serializable {
         this.last_name = last_name;
         this.address = address;
     }
-    @Ignore
-    public User(String username, String password, String email, String first_name, String last_name, Long phone_number, String address, int isActive) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.phone_number = phone_number;
-        this.address = address;
-        this.isActive = isActive;
-    }
 
+
+
+
+
+    @Ignore
     public User(String username, String password, String email, String first_name, String last_name, Long phone_number, String address, int isActive, int rememberMe,int theme_r,int theme_g,int theme_b) {
 
         this.username = username;
@@ -106,7 +134,6 @@ public class User implements Serializable {
         this.last_name = last_name;
         this.phone_number = phone_number;
         this.address = address;
-        this.isActive = isActive;
         this.rememberMe=rememberMe;
         this.theme_r=theme_r;
         this.theme_g =theme_g;
@@ -123,7 +150,6 @@ public class User implements Serializable {
         this.last_name = last_name;
         this.phone_number = phone_number;
         this.address = address;
-        this.isActive = isActive;
     }
 
     public int getId() {
@@ -190,46 +216,7 @@ public class User implements Serializable {
         this.address = address;
     }
 
-    public int isActive() {
-        return isActive;
-    }
 
-    public void setActive(int active) {
-        isActive = active;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", phone_number=" + phone_number +
-                ", address='" + address + '\'' +
-                ", isActive=" + isActive +
-                ", rememberMe=" + rememberMe +
-                ", theme_r=" + theme_r +
-                ", theme_g=" + theme_g +
-                ", theme_b=" + theme_b +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id &&
-                username.equals(user.username) ;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, username, password, email, first_name, last_name, phone_number, address, isActive);
-    }
 
     public int getRememberMe() {
         return rememberMe;
@@ -261,5 +248,114 @@ public class User implements Serializable {
 
     public void setTheme_b(int theme_b) {
         this.theme_b = theme_b;
+    }
+
+
+    public String getSexe() {
+        return sexe;
+    }
+
+    public void setSexe(String sexe) {
+        this.sexe = sexe;
+    }
+
+    public String getPartner() {
+        return partner;
+    }
+
+    public void setPartner(String partner) {
+        this.partner = partner;
+    }
+
+    public String getBirth_date() {
+        return birth_date;
+    }
+
+    public void setBirth_date(String  birth_date) {
+        this.birth_date = birth_date;
+    }
+
+    public int getNumChildren() {
+        return numChildren;
+    }
+
+    public void setNumChildren(int numChildren) {
+        this.numChildren = numChildren;
+    }
+
+    public int getNumDisableChildren() {
+        return numDisableChildren;
+    }
+
+    public void setNumDisableChildren(int numDisableChildren) {
+        this.numDisableChildren = numDisableChildren;
+    }
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id &&
+                rememberMe == user.rememberMe &&
+                theme_r == user.theme_r &&
+                theme_g == user.theme_g &&
+                theme_b == user.theme_b &&
+                Objects.equals(username, user.username) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(first_name, user.first_name) &&
+                Objects.equals(last_name, user.last_name) &&
+                Objects.equals(phone_number, user.phone_number) &&
+                Objects.equals(address, user.address) &&
+                Objects.equals(sexe, user.sexe) &&
+                Objects.equals(partner, user.partner);
+    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", phone_number=" + phone_number +
+                ", address='" + address + '\'' +
+                ", sexe='" + sexe + '\'' +
+                ", partner='" + partner + '\'' +
+                ", birth_date='" + birth_date + '\'' +
+                ", job='" + job + '\'' +
+                ", numChildren=" + numChildren +
+                ", numDisableChildren=" + numDisableChildren +
+                ", active=" + active +
+                ", rememberMe=" + rememberMe +
+                ", theme_r=" + theme_r +
+                ", theme_g=" + theme_g +
+                ", theme_b=" + theme_b +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, email, first_name, last_name, phone_number, address, sexe, partner, rememberMe, theme_r, theme_g, theme_b);
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
     }
 }

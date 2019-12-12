@@ -54,7 +54,7 @@ public class MessageRepository {
 
     }
 
-    public void getOneFollow(String sender,String receiver,final MessageRepository.getManyCallback getManyCallback) {
+    public void getMessages(String sender,String receiver,final MessageRepository.getManyCallback getManyCallback) {
         Call<List<Message>> call = iMessage.getAllMessageOf(sender,receiver);
         call.enqueue(new Callback<List<Message>>() {
             @Override

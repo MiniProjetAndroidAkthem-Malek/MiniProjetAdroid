@@ -25,41 +25,58 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.miniprojectakthemmalek.R;
-import com.example.miniprojectakthemmalek.interfacesUseCase.ILogin;
 import com.example.miniprojectakthemmalek.model.api.RetrofitInstance;
 import com.example.miniprojectakthemmalek.model.api.entityInterface.IUser;
 import com.example.miniprojectakthemmalek.model.entities.Follow;
+import com.example.miniprojectakthemmalek.model.entities.Invitation;
 import com.example.miniprojectakthemmalek.model.entities.Post;
 import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.repositories.FollowRepository;
+import com.example.miniprojectakthemmalek.model.repositories.GroupPostsRepository;
+import com.example.miniprojectakthemmalek.model.repositories.InvitationRepository;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
-import com.example.miniprojectakthemmalek.presenter.AutentificationPresenter;
 import com.example.miniprojectakthemmalek.view.database.AppDatabase;
 import com.example.miniprojectakthemmalek.view.fragments.AccountsFragment;
 import com.example.miniprojectakthemmalek.view.utils.GeoCoder.GeoLocationManager;
+import com.example.miniprojectakthemmalek.view.utils.JavaMailApi.SendMail;
 import com.google.android.material.snackbar.Snackbar;
 import com.example.miniprojectakthemmalek.view.utils.Tools;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
-public class AuthentificationActivity extends AppCompatActivity implements ILogin.view {
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+
+
+public class AuthentificationActivity extends AppCompatActivity  {
+
 
     private View parent_view;
     Button signin;
     TextView signup;
-    ILogin.presenter loginPresenter;
     TextInputEditText username,password;
     IUser iUser = RetrofitInstance.getRetrofitInstance().create(IUser.class);
 
     SessionManager sessionManager;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +85,14 @@ public class AuthentificationActivity extends AppCompatActivity implements ILogi
         setContentView(R.layout.activity_login_simple_light);
 
 
+/*
+        SendMail sendMail=new SendMail(getApplicationContext(),"malek.belayeb@esprit.tn","sqd","qqqqqq00");
+        sendMail.execute();
+*/
+
         sessionManager=new SessionManager(this);
         sessionManager.synchroniseWithDatabase();
 
-        loginPresenter =new AutentificationPresenter(getApplicationContext());
         parent_view = findViewById(android.R.id.content);
         signin = findViewById(R.id.signin);
         signup = findViewById(R.id.sign_up);
@@ -83,10 +104,23 @@ public class AuthentificationActivity extends AppCompatActivity implements ILogi
         getSupportFragmentManager().beginTransaction().replace(R.id.accountFrame,new AccountsFragment()).commit();
         System.out.println(sessionManager.getAllUsers());
 
-        Date date=new Date();
-        Timestamp ts =new Timestamp(date.getTime());
-        System.out.println(ts);
 
+
+/*
+        InvitationRepository.getInstance().addInvitation(new Invitation("pp", "malek", "malek", "malek"), new InvitationRepository.addingCallback() {
+            @Override
+            public void addingCallback(int code) {
+
+            }
+        });*/
+/*
+        InvitationRepository.getInstance().addInvitation(new Invitation("uu", "malek", "malek", "malek"), new InvitationRepository.addingCallback() {
+            @Override
+            public void addingCallback(int code) {
+
+            }
+        });
+*/
 
 
 signup.setOnClickListener(new View.OnClickListener() {
@@ -116,20 +150,7 @@ signup.setOnClickListener(new View.OnClickListener() {
 
     }
 
-    @Override
-    public void onValidate(Context context,User user) {
 
-        if(user == null)
-        {
-
-        }else{
-
-            Intent intent =new Intent(context,ProfileActivity.class);
-            startActivity(intent);
-
-        }
-
-    }
 
 
     @Override

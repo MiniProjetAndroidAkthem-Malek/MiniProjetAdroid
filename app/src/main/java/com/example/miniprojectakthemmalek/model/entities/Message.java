@@ -20,6 +20,9 @@ public class Message {
     @SerializedName("send_in")
     Timestamp send_in;
 
+    public Message() {
+
+    }
 
     public Message(String sender, String receiver, String message) {
         this.sender = sender;

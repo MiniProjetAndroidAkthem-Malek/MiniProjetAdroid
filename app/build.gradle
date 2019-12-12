@@ -57,6 +57,9 @@ dependencies {
     implementation "com.google.android.gms:play-services-location:15.0.1"
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.github.nkzawa:socket.io-client:0.5.0'
+    implementation 'com.sun.mail:android-mail:1.5.5'
+    implementation 'com.sun.mail:android-activation:1.5.5'
 
     annotationProcessor 'androidx.room:room-compiler:2.2.0'
     implementation 'androidx.room:room-runtime:2.2.0'
