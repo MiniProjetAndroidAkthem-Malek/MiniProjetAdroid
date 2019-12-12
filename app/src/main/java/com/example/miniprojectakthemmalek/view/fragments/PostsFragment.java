@@ -1,6 +1,7 @@
 package com.example.miniprojectakthemmalek.view.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 
 import androidx.appcompat.widget.Toolbar;
@@ -21,9 +24,11 @@ import com.example.miniprojectakthemmalek.model.api.entityInterface.IPost;
 import com.example.miniprojectakthemmalek.model.entities.Post;
 import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
+import com.example.miniprojectakthemmalek.view.ProfileActivity;
 import com.example.miniprojectakthemmalek.view.SessionManager;
 import com.example.miniprojectakthemmalek.view.adapter.AccountsAdapter;
 import com.example.miniprojectakthemmalek.view.adapter.PostAdapter;
+import com.example.miniprojectakthemmalek.view.utils.Base_Home;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -42,7 +47,9 @@ public class PostsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    Button movetoprofile;
+    ImageButton movetoprofile;
+    ImageButton movetobasehome;
+
     SessionManager sessionManager;
     User user;
     Toolbar toolbar;
@@ -50,6 +57,14 @@ public class PostsFragment extends Fragment {
     PostAdapter postAdapter;
 String username;
     FloatingActionButton moveToAddPost;
+
+
+
+
+
+
+    int x=0;
+
     public PostsFragment() {
         // Required empty public constructor
     }
@@ -85,7 +100,8 @@ String username;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_posts, container, false);
-        movetoprofile=rootView.findViewById(R.id.movetoprofile);
+        movetoprofile=rootView.findViewById(R.id.moveee);
+        movetobasehome=rootView.findViewById(R.id.movebasehome);
         toolbar=rootView.findViewById(R.id.toolbar);
         recyclerView = rootView.findViewById(R.id.recyclerViewPost);
         moveToAddPost=rootView.findViewById(R.id.moveToAddPost);
@@ -106,6 +122,35 @@ String username;
 
             }
         });
+        movetoprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent =new Intent(getContext(), ProfileActivity.class);
+                intent.putExtra("username",username);
+                startActivity(intent);
+
+            }
+        });
+
+
+        movetobasehome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent =new Intent(getContext(), Base_Home.class);
+                intent.putExtra("username",username);
+                startActivity(intent);
+
+            }
+        });
+
+
+
+
+
+
+
 
 
         IPost iPost = RetrofitInstance.getRetrofitInstance().create(IPost.class);

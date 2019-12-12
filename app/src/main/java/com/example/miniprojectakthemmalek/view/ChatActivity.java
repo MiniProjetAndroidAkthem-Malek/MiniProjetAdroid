@@ -41,6 +41,9 @@ Button buttonSendMessage;
                     public void addingCallback(int code) {
 
                         System.out.println(code);
+                        System.out.println(editTextChatMessage.getText().toString());
+                        editTextChatMessage.setText("");
+
                     }
                 });
 

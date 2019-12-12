@@ -101,12 +101,12 @@ public class SettingsFragment extends Fragment {
         blue = rootView.findViewById(R.id.blue);
 
         red.setMax(255);
-        red.setMin(0);
+        //red.setMin(0);
 
-        green.setMin(0);
+        //green.setMin(0);
         green.setMax(255);
 
-        blue.setMin(0);
+        //blue.setMin(0);
         blue.setMax(255);
 
         user = sessionManager.getUser(getArguments().getString("username"),1);

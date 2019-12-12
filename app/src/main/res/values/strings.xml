@@ -22,4 +22,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string-array name="posts_array">
+        <item>All Posts</item>
+        <item>My Posts</item>
+        <item>My Friends posts</item>
+        <item>Public Posts</item>
+
+    </string-array>
+
 </resources>

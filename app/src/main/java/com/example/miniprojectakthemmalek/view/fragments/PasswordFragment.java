@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.balysv.materialripple.MaterialRippleLayout;
 import com.example.miniprojectakthemmalek.R;
@@ -132,7 +133,11 @@ public PasswordFragment() {
 
                     }else  {
 
-                        Snackbar.make(parent_view, "Wrong password or username", Snackbar.LENGTH_SHORT).show();
+
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(getContext(),"wrong password Bro !", duration);
+                        toast.show();
 
                     }
 

@@ -22,13 +22,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.ChatActivity"></activity>
+        <activity android:name=".view.utils.Base_Home"></activity>
+        <activity android:name=".view.ChatActivity" />
         <activity android:name=".view.OtherProfileActivity" />
         <activity android:name=".view.ErrorHandlerActivity" />
         <activity android:name=".view.HomeActivity" />
         <activity android:name=".view.SignUpActivity" />
         <activity android:name=".view.ProfileActivity" />
         <activity android:name=".view.CardWizardLight" />
+        <activity android:name=".CommentActivity"/>
         <activity android:name=".view.AuthentificationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,8 @@ import com.example.miniprojectakthemmalek.model.entities.Post;
 import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
 import com.example.miniprojectakthemmalek.view.HomeActivity;
+import com.example.miniprojectakthemmalek.view.ProfileActivity;
+import com.example.miniprojectakthemmalek.view.utils.Base_Home;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -34,6 +37,8 @@ public class AddPostFragment extends Fragment {
     TextView usernamelabel;
     FloatingActionButton moveToPost;
 String username;
+ImageButton movetoprofile;
+ImageButton movetobasehome;
     public AddPostFragment() {
         // Required empty public constructor
     }
@@ -72,10 +77,22 @@ String username;
         View rootView =inflater.inflate(R.layout.dialog_add_post, container, false);
         et_post=rootView.findViewById(R.id.et_post);
         moveToPost=rootView.findViewById(R.id.moveToPost);
+        movetoprofile=rootView.findViewById(R.id.moveeee);
+        movetobasehome=rootView.findViewById(R.id.movetobasehome);
         usernamelabel=rootView.findViewById(R.id.usernamelabel);
         username= getArguments().getString("username");
        
         usernamelabel.setText(username);
+        movetoprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent =new Intent(getContext(), ProfileActivity.class);
+                intent.putExtra("username",username);
+                startActivity(intent);
+
+            }
+        });
 
 moveToPost.setOnClickListener(new View.OnClickListener() {
     @Override
@@ -95,6 +112,21 @@ moveToPost.setOnClickListener(new View.OnClickListener() {
         });
     }
 });
+
+
+
+        movetobasehome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent =new Intent(getContext(), Base_Home.class);
+                intent.putExtra("username",username);
+                startActivity(intent);
+
+            }
+        });
+
+
 
 
 
