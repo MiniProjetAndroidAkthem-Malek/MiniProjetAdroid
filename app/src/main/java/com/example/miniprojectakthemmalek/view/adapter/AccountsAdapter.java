@@ -3,6 +3,7 @@ package com.example.miniprojectakthemmalek.view.adapter;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,15 +18,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.User;
+import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 import com.example.miniprojectakthemmalek.view.fragments.PasswordFragment;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AccountsAdapter extends RecyclerView.Adapter<AccountsAdapter.UserViewHolder> {
 
 
     private List<User> user_list;
     Fragment fragment;
+
     public AccountsAdapter(Fragment fragment)
     {
     this.fragment = fragment;
@@ -57,6 +62,8 @@ public class AccountsAdapter extends RecyclerView.Adapter<AccountsAdapter.UserVi
         final User single_user=this.user_list.get(position);
         holder.txt_view.setText(single_user.getUsername());
    //     holder.linearLayout.setBackgroundColor(Color.rgb(single_user.getTheme_r(),single_user.getTheme_g(),single_user.getTheme_b()));
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +78,18 @@ public class AccountsAdapter extends RecyclerView.Adapter<AccountsAdapter.UserVi
             }
         });
 
+        ImageRepository.getInstance().loadPicutreOf(single_user.getUsername().toString(),0.4f,0.4f, new ImageRepository.getPictureCallBack() {
+            @Override
+            public void onResponse(Bitmap picBitmap) {
+
+                if(picBitmap!=null){
+
+                    holder.image.setImageBitmap(picBitmap);
+
+                }
+             }
+        });
+
 
     }
 
@@ -83,13 +102,14 @@ public class AccountsAdapter extends RecyclerView.Adapter<AccountsAdapter.UserVi
 
         public TextView txt_view;
         public LinearLayout linearLayout;
-
+        CircleImageView image;
         public UserViewHolder(@NonNull View itemView)
         {
 
             super(itemView);
             txt_view=itemView.findViewById(R.id.usernameAccount);
             linearLayout=itemView.findViewById(R.id.account_layout);
+            image = itemView.findViewById(R.id.image);
         }
 
 

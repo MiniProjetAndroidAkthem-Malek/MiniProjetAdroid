@@ -1,7 +1,11 @@
 package com.example.miniprojectakthemmalek.view.fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.ImageDecoder;
+import android.graphics.drawable.AnimatedImageDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -12,19 +16,26 @@ import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.Follow;
 import com.example.miniprojectakthemmalek.model.entities.Post;
 import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.repositories.FollowRepository;
+import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
 import com.example.miniprojectakthemmalek.view.SessionManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
+import java.io.IOException;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class ProfileFragment extends Fragment {
@@ -40,7 +51,7 @@ public class ProfileFragment extends Fragment {
     SessionManager sessionManager;
     User user;
     Toolbar toolbar;
-    CircularImageView image;
+    CircleImageView image;
     TextView jobProfile,birth_date, partnerLabel, postsLabel,first_name_label,last_name_label,address_label,phone_number_label,birth_date_label,partner_label,firstNameLabel,lastNameLabel,addressLabel,phoneNumberLabel,usernameLabel,textView11,textView12;
     FloatingActionButton settingBtn;
     public ProfileFragment() {
@@ -65,7 +76,6 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-
     public void initStyle()
     {
         if(user.getTheme_r()!=0)
@@ -87,6 +97,7 @@ public class ProfileFragment extends Fragment {
 
         }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -123,7 +134,7 @@ public class ProfileFragment extends Fragment {
         textView12=rootView.findViewById(R.id.textView12);
         jobProfile=rootView.findViewById(R.id.jobProfile);
 
-
+       //loadGif(image);
 
         usernameLabel.setText(user.getUsername());
 
@@ -191,6 +202,22 @@ public class ProfileFragment extends Fragment {
         birth_date.setText(user.getBirth_date());
         }
 
+        ImageRepository.getInstance().loadPicutreOf(user.getUsername().toString(),0.5f,0.5f, new ImageRepository.getPictureCallBack() {
+            @Override
+            public void onResponse(Bitmap picUrl) {
+                if(picUrl==null)
+                {
+                    image.setImageResource(R.drawable.default_avatar);
+
+                }else{
+                    image.setImageBitmap(picUrl);
+                }
+            }
+        });
+
+
+
+
 
 
         PostRepository.getInstance().getAllPostOf(user.getUsername(), new PostRepository.getAllPostCallBack() {
@@ -217,8 +244,6 @@ public class ProfileFragment extends Fragment {
         });
 
 
-
-
 initStyle();
 settingBtn.setOnClickListener(new View.OnClickListener() {
     @Override
@@ -234,12 +259,33 @@ settingBtn.setOnClickListener(new View.OnClickListener() {
     }
 });
 
-
-
         return rootView;
     }
 
 
+    private void loadGif(ImageView iv){
 
+        try {
+            ImageDecoder.Source source =
+                    ImageDecoder.createSource(getResources(), R.drawable.glow);
+
+            Drawable drawable = ImageDecoder.decodeDrawable(source);
+            iv.setImageDrawable(drawable);
+
+            if (drawable instanceof AnimatedImageDrawable) {
+                ((AnimatedImageDrawable) drawable).start();
+                Toast.makeText(getContext(),
+                        "Animation started",
+                        Toast.LENGTH_LONG).show();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(getContext(),
+                    "IOException: \n" + e.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }
+
+    }
 
 }

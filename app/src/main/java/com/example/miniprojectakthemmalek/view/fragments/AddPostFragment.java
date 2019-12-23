@@ -2,6 +2,9 @@ package com.example.miniprojectakthemmalek.view.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -9,16 +12,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.Post;
 import com.example.miniprojectakthemmalek.model.entities.User;
+import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
+import com.example.miniprojectakthemmalek.view.AuthentificationActivity;
 import com.example.miniprojectakthemmalek.view.HomeActivity;
+import com.example.miniprojectakthemmalek.view.ProfileActivity;
+import com.example.miniprojectakthemmalek.view.utils.Base_Home;
+import com.example.miniprojectakthemmalek.view.utils.GeoCoder.GeoLocationManager;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.mikhaellopez.circularimageview.CircularImageView;
+
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 
 public class AddPostFragment extends Fragment {
@@ -34,6 +51,13 @@ public class AddPostFragment extends Fragment {
     TextView usernamelabel;
     FloatingActionButton moveToPost;
 String username;
+ImageButton movetoprofile;
+ImageButton movetobasehome;
+SwitchCompat positionSwitch;
+    Post post;
+CircularImageView image;
+    private FusedLocationProviderClient client;
+
     public AddPostFragment() {
         // Required empty public constructor
     }
@@ -70,17 +94,79 @@ String username;
                              Bundle savedInstanceState) {
 
         View rootView =inflater.inflate(R.layout.dialog_add_post, container, false);
+
         et_post=rootView.findViewById(R.id.et_post);
         moveToPost=rootView.findViewById(R.id.moveToPost);
+        movetoprofile=rootView.findViewById(R.id.moveeee);
+        movetobasehome=rootView.findViewById(R.id.movetobasehome);
         usernamelabel=rootView.findViewById(R.id.usernamelabel);
+        positionSwitch=rootView.findViewById(R.id.positionSwitch);
+        image = rootView.findViewById(R.id.image);
+
         username= getArguments().getString("username");
        
         usernamelabel.setText(username);
+        movetoprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent =new Intent(getContext(), ProfileActivity.class);
+                intent.putExtra("username",username);
+                startActivity(intent);
+
+            }
+        });
+
+
+        ImageRepository.getInstance().loadPicutreOf(username,0.2f,0.2f, new ImageRepository.getPictureCallBack() {
+            @Override
+            public void onResponse(Bitmap picUrl) {
+                if(picUrl==null)
+                {
+                    image.setImageResource(R.drawable.default_avatar);
+
+                }else{
+                    image.setImageBitmap(picUrl);
+                }
+            }
+        });
 
 moveToPost.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        PostRepository.getInstance().addPost(new Post(username, et_post.getText().toString()), new PostRepository.addingCallback() {
+
+        if(positionSwitch.isChecked())
+        {
+
+            requestPermission();
+            client = LocationServices.getFusedLocationProviderClient(getContext());
+            if(ActivityCompat.checkSelfPermission(getContext(), ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED)
+            {
+                System.out.println("sssssssssssssssssss-------");
+                return;
+            }
+
+            client.getLastLocation().addOnSuccessListener(getActivity(),new OnSuccessListener<Location>(){
+                @Override
+                public void onSuccess(Location location) {
+                    if(location != null)
+                    {
+                        GeoLocationManager geoLocationManager=new GeoLocationManager(getContext(),42.668300,12.776731);
+                        post=new Post(username,et_post.getText().toString(),geoLocationManager.getAddress(getContext(),location.getLatitude(),location.getLongitude()));
+                    }
+                    // System.out.println("lat-----------> "+location.getLatitude());
+
+                }
+            });
+
+
+        }else{
+
+            post=new Post(username,et_post.getText().toString());
+
+        }
+
+        PostRepository.getInstance().addPost(post, new PostRepository.addingCallback() {
             @Override
             public void addingCallback(int code) {
                 if(code==200){
@@ -96,11 +182,29 @@ moveToPost.setOnClickListener(new View.OnClickListener() {
     }
 });
 
+        movetobasehome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent =new Intent(getContext(), Base_Home.class);
+                intent.putExtra("username",username);
+                startActivity(intent);
+
+            }
+        });
+
+
+
 
 
 
         return rootView;
     }
 
+
+    private void requestPermission()
+    {
+        ActivityCompat.requestPermissions(getActivity(),new String[]{ACCESS_FINE_LOCATION},1);
+    }
 
 }

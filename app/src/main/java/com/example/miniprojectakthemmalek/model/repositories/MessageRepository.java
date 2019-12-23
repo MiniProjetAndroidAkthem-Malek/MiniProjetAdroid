@@ -7,6 +7,7 @@ import com.example.miniprojectakthemmalek.model.entities.Follow;
 import com.example.miniprojectakthemmalek.model.entities.Message;
 import com.google.gson.JsonPrimitive;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -54,8 +55,38 @@ public class MessageRepository {
 
     }
 
-    public void getMessages(String sender,String receiver,final MessageRepository.getManyCallback getManyCallback) {
+    public void getMessages(final String sender, final String receiver, final MessageRepository.getManyCallback getManyCallback) {
         Call<List<Message>> call = iMessage.getAllMessageOf(sender,receiver);
+        call.enqueue(new Callback<List<Message>>() {
+            @Override
+            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+
+                if(response.body().isEmpty())
+                {
+
+                      getManyCallback.getManyOneFollow(null);
+
+                }else{
+
+                    getManyCallback.getManyOneFollow(response.body());
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Message>> call, Throwable t) {
+
+                t.printStackTrace();
+
+                getManyCallback.getManyOneFollow(null);
+            }
+        });
+    }
+
+
+    public void getMessages(String username,final MessageRepository.getManyCallback getManyCallback) {
+        Call<List<Message>> call = iMessage.getAllMessagesOf(username);
         call.enqueue(new Callback<List<Message>>() {
             @Override
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
@@ -80,6 +111,8 @@ public class MessageRepository {
             }
         });
     }
+
+
 
 
     public interface addingCallback

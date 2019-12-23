@@ -45,7 +45,7 @@ public class GroupsGridAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return groupList.get(position);
     }
 
     @Override
@@ -74,6 +74,27 @@ public class GroupsGridAdapter extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
+
+/*
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View gridView;
+
+        if (convertView == null) {
+            // get layout from xml file
+            gridView = inflater.inflate(R.layout.item_grid_view, null);
+            // pull views
+            TextView letterView =  gridView
+                    .findViewById(R.id.title);
+
+            // set values into views
+        } else {
+            gridView =  convertView;
+        }
+        return gridView;
+
+*/
 
         return textView;
     }

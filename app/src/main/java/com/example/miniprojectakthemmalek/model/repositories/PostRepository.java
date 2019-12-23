@@ -1,10 +1,14 @@
 package com.example.miniprojectakthemmalek.model.repositories;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.example.miniprojectakthemmalek.model.api.RetrofitInstance;
 import com.example.miniprojectakthemmalek.model.api.entityInterface.IPost;
 import com.example.miniprojectakthemmalek.model.api.entityInterface.IUser;
 import com.example.miniprojectakthemmalek.model.entities.Post;
 import com.example.miniprojectakthemmalek.model.entities.User;
+import com.example.miniprojectakthemmalek.view.adapter.PostAdapter;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
 import java.util.List;
@@ -73,10 +77,31 @@ public class PostRepository {
 
     }
 
-    public void getAllPost(final getAllPostCallBack allPostCallBack)
+
+    public void deleteUser(String  id,final addingCallback addingCallback)
+    {
+        Call<JsonObject> call = iPost.deletePost(id);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+                addingCallback.addingCallback(response.code());
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                t.printStackTrace();
+                addingCallback.addingCallback(0);
+
+            }
+        });
+
+    }
+
+    public void getAllPostByGroupName(String group_name,final getAllPostCallBack allPostCallBack)
 {
     Call<List<Post>> call;
-    call = iPost.getAllPosts();
+    call = iPost.getAllPostsByGroupName(group_name);
     call.enqueue(new Callback<List<Post>>() {
         @Override
         public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
@@ -113,6 +138,27 @@ public class PostRepository {
 
     }
 
+
+    public void getAllPost(final getAllPostCallBack allPostCallBack)
+    {
+        Call<List<Post>> call;
+        call = iPost.getAllPosts();
+        call.enqueue(new Callback<List<Post>>() {
+            @Override
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+
+         allPostCallBack.onResponse(response.body());
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Post>> call, Throwable t) {
+
+                t.printStackTrace();
+            }
+
+        });
+    }
 
     public void getAllPostOf(String username,final getAllPostCallBack allPostCallBack)
     {

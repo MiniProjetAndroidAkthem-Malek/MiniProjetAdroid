@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -14,17 +15,20 @@ import com.example.miniprojectakthemmalek.model.entities.Follow;
 import com.example.miniprojectakthemmalek.model.entities.Post;
 import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.repositories.FollowRepository;
+import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.List;
 
 public class OtherProfileActivity extends AppCompatActivity {
 
     String username,connectedUsername;
-    TextView followers, following, postsLabel,first_name_label,last_name_label,address_label,phone_number_label,birth_date_label,partner_label,firstNameLabel,lastNameLabel,addressLabel,phoneNumberLabel,usernameLabel,textView11,textView12;
+    TextView followers,partnerLabel,birth_date,jobProfile, following, postsLabel,first_name_label,last_name_label,address_label,phone_number_label,birth_date_label,partner_label,firstNameLabel,lastNameLabel,addressLabel,phoneNumberLabel,usernameLabel,textView11,textView12;
     AppCompatButton followBtn,chatBtn;
     LinearLayout layoutLinear;
+    CircularImageView image;
     int x=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,10 @@ public class OtherProfileActivity extends AppCompatActivity {
         followers=findViewById(R.id.followers);
         postsLabel=findViewById(R.id.postsLabel);
         chatBtn=findViewById(R.id.chatBtn);
+        partnerLabel=findViewById(R.id.partnerLabel);
+        birth_date=findViewById(R.id.birth_date);
+        jobProfile=findViewById(R.id.jobProfile);
+        image=findViewById(R.id.image);
 
         updateNumberOfFollows();
         initFollowBtn();
@@ -67,11 +75,89 @@ public class OtherProfileActivity extends AppCompatActivity {
         UserRepository.getInstance().getOneUser(username, new UserRepository.getOneUserCallBack() {
             @Override
             public void onResponse(User user) {
-                usernameLabel.setText(user.getUsername().toString());
-                firstNameLabel.setText(user.getFirst_name().toString());
-                lastNameLabel.setText(user.getLast_name().toString());
-                addressLabel.setText(user.getAddress().toString());
-                phoneNumberLabel.setText(user.getPhone_number().toString());
+
+
+                usernameLabel.setText(user.getUsername());
+
+                if(user.getFirst_name()==null || user.getFirst_name()=="" )
+                {
+                    firstNameLabel.setText("");
+                }else
+                {
+                    firstNameLabel.setText(user.getFirst_name());
+                }
+
+
+                if(user.getLast_name()==null || user.getLast_name()=="")
+                {
+                    lastNameLabel.setText("");
+
+                }else
+                {
+                    lastNameLabel.setText(user.getLast_name());
+                }
+
+
+                if(user.getJob()==null || user.getJob()=="")
+                {
+                    jobProfile.setText("");
+
+                }else
+                {
+                    jobProfile.setText(user.getJob());
+                }
+
+                if(user.getAddress()==null || user.getAddress()=="")
+                {
+                    addressLabel.setText("");
+
+                }else
+                {
+                    addressLabel.setText(user.getAddress());
+                }
+
+                if(user.getPhone_number()==null || user.getPhone_number()==0)
+                {
+
+                    phoneNumberLabel.setText("");
+
+                }else{
+
+                    phoneNumberLabel.setText(user.getPhone_number().toString());
+
+                }
+
+                if(user.getPartner()==null || user.getPartner()=="")
+                {
+                    partnerLabel.setText("");
+
+                }else {
+
+                    partnerLabel.setText(user.getPartner());
+                }
+
+                if(user.getBirth_date()==null || user.getBirth_date()=="")
+                {
+                    birth_date.setText("");
+                }else {
+                    birth_date.setText(user.getBirth_date());
+                }
+
+
+            }
+        });
+
+
+        ImageRepository.getInstance().loadPicutreOf(username,0.5f,0.5f, new ImageRepository.getPictureCallBack() {
+            @Override
+            public void onResponse(Bitmap picUrl) {
+                if(picUrl==null)
+                {
+                    image.setImageResource(R.drawable.default_avatar);
+
+                }else{
+                    image.setImageBitmap(picUrl);
+                }
             }
         });
 
@@ -79,10 +165,12 @@ public class OtherProfileActivity extends AppCompatActivity {
 chatBtn.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
+
         Intent intent=new Intent(getApplicationContext(),ChatActivity.class);
         intent.putExtra("username",username);
         intent.putExtra("ConnectedUsername",connectedUsername);
         startActivity(intent);
+
     }
 });
 

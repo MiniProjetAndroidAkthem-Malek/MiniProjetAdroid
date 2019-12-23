@@ -1,13 +1,19 @@
 package com.example.miniprojectakthemmalek.view.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Spinner;
 
 
 import androidx.appcompat.widget.Toolbar;
@@ -21,9 +27,11 @@ import com.example.miniprojectakthemmalek.model.api.entityInterface.IPost;
 import com.example.miniprojectakthemmalek.model.entities.Post;
 import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
+import com.example.miniprojectakthemmalek.view.ProfileActivity;
 import com.example.miniprojectakthemmalek.view.SessionManager;
 import com.example.miniprojectakthemmalek.view.adapter.AccountsAdapter;
 import com.example.miniprojectakthemmalek.view.adapter.PostAdapter;
+import com.example.miniprojectakthemmalek.view.utils.Base_Home;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -42,14 +50,19 @@ public class PostsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    Button movetoprofile;
+    ImageButton movetoprofile;
+    ImageButton movetobasehome;
+
     SessionManager sessionManager;
     User user;
     Toolbar toolbar;
     RecyclerView recyclerView;
     PostAdapter postAdapter;
-String username;
+    String username;
     FloatingActionButton moveToAddPost;
+    Spinner spinner;
+    int x=0;
+
     public PostsFragment() {
         // Required empty public constructor
     }
@@ -85,11 +98,32 @@ String username;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_posts, container, false);
-        movetoprofile=rootView.findViewById(R.id.movetoprofile);
+        movetoprofile=rootView.findViewById(R.id.moveee);
+        movetobasehome=rootView.findViewById(R.id.movebasehome);
         toolbar=rootView.findViewById(R.id.toolbar);
         recyclerView = rootView.findViewById(R.id.recyclerViewPost);
         moveToAddPost=rootView.findViewById(R.id.moveToAddPost);
         username = getArguments().getString("username");
+
+        spinner = rootView.findViewById(R.id.spinner);
+       /* ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.posts_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);*/
+
+        PostRepository.getInstance().getAllPost(new PostRepository.getAllPostCallBack() {
+            @Override
+            public void onResponse(List<Post> posts) {
+
+                postAdapter=new PostAdapter(getContext(),posts);
+                postAdapter.setUsername(username);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setAdapter(postAdapter);
+            }
+        });
+
+
 
         moveToAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,37 +134,82 @@ String username;
                 bundle.putString("username",username);
                 addPostFragment.setArguments(bundle);
 
-
-
                 getFragmentManager().beginTransaction().replace(R.id.frameHome,addPostFragment).commit();
 
             }
         });
-
-
-        IPost iPost = RetrofitInstance.getRetrofitInstance().create(IPost.class);
-
-        Call<List<Post>> call;
-        call = iPost.getAllPosts();
-        call.enqueue(new Callback<List<Post>>() {
+        movetoprofile.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+            public void onClick(View v) {
 
-                postAdapter=new PostAdapter(response.body());
-                postAdapter.setUsername(username);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                recyclerView.setAdapter(postAdapter);
+                Intent intent =new Intent(getContext(), ProfileActivity.class);
+                intent.putExtra("username",username);
+                startActivity(intent);
 
             }
-
-            @Override
-            public void onFailure(Call<List<Post>> call, Throwable t) {
-
-                t.printStackTrace();
-            }
-
         });
+
+
+        movetobasehome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent =new Intent(getContext(), Base_Home.class);
+                intent.putExtra("username",username);
+                startActivity(intent);
+
+            }
+        });
+
+spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        if(position==0)
+        {
+
+            PostRepository.getInstance().getAllPost(new PostRepository.getAllPostCallBack() {
+                @Override
+                public void onResponse(List<Post> posts) {
+
+                    postAdapter=new PostAdapter(getContext(),posts);
+                    postAdapter.setUsername(username);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    recyclerView.setAdapter(postAdapter);
+                }
+            });
+
+
+        }else if(position==1)
+        {
+
+            PostRepository.getInstance().getAllPostOf(username,new PostRepository.getAllPostCallBack() {
+                @Override
+                public void onResponse(List<Post> posts) {
+
+                    postAdapter=new PostAdapter(getContext(),posts);
+                    postAdapter.setUsername(username);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    recyclerView.setAdapter(postAdapter);
+                }
+            });
+
+
+
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+});
+
+
 
 
         return rootView;

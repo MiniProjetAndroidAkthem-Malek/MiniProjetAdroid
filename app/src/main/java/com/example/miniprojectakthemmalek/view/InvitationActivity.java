@@ -9,7 +9,6 @@ import android.os.Bundle;
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.Invitation;
 import com.example.miniprojectakthemmalek.model.repositories.InvitationRepository;
-import com.example.miniprojectakthemmalek.view.adapter.AccountsAdapter;
 import com.example.miniprojectakthemmalek.view.adapter.InvitationAdapter;
 
 import java.util.List;
@@ -27,6 +26,8 @@ public class InvitationActivity extends AppCompatActivity {
 
         connectedUsername=getIntent().getStringExtra("username");
 
+
+        System.out.println("---------> "+connectedUsername);
     InvitationRepository.getInstance().getReceivedForUser(connectedUsername, new InvitationRepository.getManyCallback() {
         @Override
         public void getMany(List<Invitation> invitationList) {

@@ -27,22 +27,22 @@ public class CardWizardLight extends AppCompatActivity {
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
     private String about_title_array[] = {
-            "Ready to Travel",
-            "Pick the Ticket",
-            "Flight to Destination",
-            "Enjoy Holiday"
+            "Ready to Become a Volks member?",
+            "Put your questions",
+            "Help people",
+            "Enjoy a better life"
     };
     private String about_description_array[] = {
-            "Choose your destination, plan Your trip. Pick the best place for Your holiday",
-            "Select the day, pick Your ticket. We give you the best prices. We guarantee!",
-            "Safe and Comfort flight is our priority. Professional crew and services.",
-            "Enjoy your holiday, Dont forget to feel the moment and take a photo!",
+            "We try to make Volks the world's biggest community of parents",
+            "Put your own questions and you will find answers. We guarantee!",
+            "If the subject looks familar to you, you can answers and help people !",
+            "Enjoy your expirence, Dont forget to feel the moment and take a photo!",
     };
     private int about_images_array[] = {
-            R.drawable.img_wizard_1,
+            R.drawable.volks,
             R.drawable.img_wizard_2,
             R.drawable.img_wizard_3,
-            R.drawable.img_wizard_4
+            R.drawable.family
     };
 
     @Override

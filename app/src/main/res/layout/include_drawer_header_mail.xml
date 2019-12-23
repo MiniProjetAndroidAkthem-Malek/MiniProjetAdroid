@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/material_bg_2" />
+        app:srcCompat="@drawable/material_bg_1" />
 
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/avatar"
@@ -20,7 +20,7 @@
         app:civ_shadow="true"
         app:civ_shadow_radius="0"
         android:layout_margin="@dimen/spacing_large"
-        android:src="@drawable/photo_male_6"
+        android:src="@drawable/default_avatar"
         app:civ_border_width="2dp" />
 
     <LinearLayout
@@ -32,17 +32,20 @@
 
         <TextView
 
+            android:id="@+id/connectedUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_medium"
-            android:text="John Miller"
+            android:text="Akthem Arfaoui"
+            android:textStyle="bold"
+            android:textSize="20dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
         <TextView
-            android:id="@+id/email"
+            android:id="@+id/connectedUserJob"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="johnmiller@mail.com"
+            android:text="akthemarfaoui@mail.com"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     </LinearLayout>

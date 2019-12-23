@@ -4,15 +4,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.miniprojectakthemmalek.R;
+import com.example.miniprojectakthemmalek.model.entities.GroupUser;
 import com.example.miniprojectakthemmalek.model.entities.Invitation;
+import com.example.miniprojectakthemmalek.model.entities.Role;
+import com.example.miniprojectakthemmalek.model.entities.Status;
 import com.example.miniprojectakthemmalek.model.entities.User;
+import com.example.miniprojectakthemmalek.model.repositories.GroupUserRepository;
 import com.example.miniprojectakthemmalek.model.repositories.InvitationRepository;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
 import com.example.miniprojectakthemmalek.view.SessionManager;
@@ -46,10 +49,13 @@ public class InvitationAdapter extends RecyclerView.Adapter<InvitationAdapter.In
     public void onBindViewHolder(@NonNull final InvitationViewHolder holder, final int position) {
 
         final Invitation single_invitation=this.invitationList.get(position);
+
+        if(single_invitation.getType().equals("PARTNERSHIP"))
+        {
+
         holder.content_txt_view.setText(single_invitation.getContent());
         holder.title_txt_view.setText("Partner's invitation from "+single_invitation.getSender());
        final SessionManager sessionManager = new SessionManager(holder.itemView.getContext());
-
         holder.bt_decline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,6 +118,77 @@ public class InvitationAdapter extends RecyclerView.Adapter<InvitationAdapter.In
                 notifyDataSetChanged();
             }
         });
+
+        }else if(single_invitation.getType().equals("GROUP_ADMIN"))
+        {
+
+            holder.content_txt_view.setText(single_invitation.getContent());
+            holder.title_txt_view.setText("Group admin invitation from "+single_invitation.getSender());
+
+            holder.bt_accept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    GroupUser groupUser=new GroupUser(single_invitation.getReceiver(),single_invitation.getSender(), Role.ADMIN, Status.COMFIRMED);
+
+                    GroupUserRepository.getInstance().updateUser(groupUser, new GroupUserRepository.addingCallback() {
+                        @Override
+                        public void addingCallback(int code) {
+
+                        }
+                    });
+
+                    InvitationRepository.getInstance().deleteInvitionFor(single_invitation.getReceiver(), single_invitation.getSender(), new InvitationRepository.addingCallback() {
+                        @Override
+                        public void addingCallback(int code) {
+
+                            if(code !=0)
+                            {
+
+                            }
+
+                        }
+                    });
+
+
+                    invitationList.remove(position);
+                    notifyDataSetChanged();
+
+                }
+            });
+
+            holder.bt_decline.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    InvitationRepository.getInstance().deleteInvitionFor(single_invitation.getReceiver(), single_invitation.getSender(), new InvitationRepository.addingCallback() {
+                        @Override
+                        public void addingCallback(int code) {
+
+                            if(code !=0)
+                            {
+
+                            }
+
+                        }
+                    });
+
+                    GroupUserRepository.getInstance().deleteUser(single_invitation.getReceiver(), single_invitation.getSender(), new GroupUserRepository.addingCallback() {
+                        @Override
+                        public void addingCallback(int code) {
+
+                        }
+                    });
+
+                    invitationList.remove(position);
+                    notifyDataSetChanged();
+
+                }
+            });
+
+
+        }
 
 
     }

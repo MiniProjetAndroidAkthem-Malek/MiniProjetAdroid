@@ -10,8 +10,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.Post;
@@ -26,13 +30,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity  {
 
+    Button movetoprofile;
     SessionManager sessionManager;
     User user;
     Toolbar toolbar;
     NavigationView navigationView;
+    TextView connectedUserName,connectedUserJob;
 
+    Spinner spinner;
     public void initStyle()
     {
 
@@ -49,27 +56,34 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline_feed);
 
+
+
         toolbar=findViewById(R.id.toolbar);
         navigationView=findViewById(R.id.nav_view);
 
 
-       sessionManager=new SessionManager(this);
+        View headerView = navigationView.getHeaderView(0);
+        TextView connectedUserName = headerView.findViewById(R.id.connectedUserName);
+        TextView connectedUserJob = headerView.findViewById(R.id.connectedUserJob);
+
+        sessionManager=new SessionManager(this);
         if(getIntent().hasExtra("username"))
         {
             user = sessionManager.getUser(getIntent().getStringExtra("username"),1);
         }
 
-     PostsFragment postsFragment =    new PostsFragment();
+
+
+
+        connectedUserName.setText(user.getUsername());
+        connectedUserJob.setText(user.getJob());
+        PostsFragment postsFragment =    new PostsFragment();
        Bundle bundle = new Bundle();
        bundle.putString("username",user.getUsername().toString());
        postsFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.frameHome,postsFragment).commit();
 
-      System.out.println("home="+sessionManager.getAllUsers());
-
       initStyle();
-
-
 
       navigationView.getHeaderView(0).setOnClickListener(new View.OnClickListener() {
           @Override
@@ -118,7 +132,6 @@ public class HomeActivity extends AppCompatActivity {
 
       });
     }
-
 
 
 }

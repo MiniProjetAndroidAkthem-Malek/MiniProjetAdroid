@@ -1,13 +1,22 @@
 package com.example.miniprojectakthemmalek.view.fragments;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.fragment.app.Fragment;
 
@@ -18,23 +27,34 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.Invitation;
 import com.example.miniprojectakthemmalek.model.entities.Status;
 import com.example.miniprojectakthemmalek.model.entities.User;
+import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 import com.example.miniprojectakthemmalek.model.repositories.InvitationRepository;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
 import com.example.miniprojectakthemmalek.view.AuthentificationActivity;
 import com.example.miniprojectakthemmalek.view.SessionManager;
+import com.example.miniprojectakthemmalek.view.utils.ImageManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hootsuite.nachos.NachoTextView;
 import com.hootsuite.nachos.terminator.ChipTerminatorHandler;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class SettingsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,22 +66,34 @@ public class SettingsFragment extends Fragment {
     private String mParam2;
     EditText firstnameSettings,lastnameSettings,addressSettings,phonenumberSettings,jobSettings,partnerSettings;
     Button bt_change,logoutSettings;
-    FloatingActionButton fab_done;
+    FloatingActionButton fab_done,fabAdd,fabUpload;
     int x=0;
     SessionManager sessionManager;
     User user;
    AppCompatButton deletemyaccount,bt_pick_color;
     AppCompatSeekBar red,green,blue;
 
-
+    CircularImageView imageView;
     AppCompatAutoCompleteTextView partnerAutocomplete;
     NachoTextView nachoTextView;
     List<String> selectedUsernames;
+    ImageManager imageManager;
+
+
+
+    Uri picUri;
+    private ArrayList<String> permissionsToRequest;
+    private ArrayList<String> permissionsRejected = new ArrayList<>();
+    private ArrayList<String> permissions = new ArrayList<>();
+    private final static int ALL_PERMISSIONS_RESULT = 107;
+    private final static int IMAGE_RESULT = 200;
+    Bitmap mBitmap;
 
 
     int r=0;
     int g=0;
     int b=0;
+
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -113,6 +145,11 @@ public class SettingsFragment extends Fragment {
         logoutSettings=rootView.findViewById(R.id.logoutSettings);
         bt_pick_color = rootView.findViewById(R.id.bt_pick_color);
         nachoTextView=rootView.findViewById(R.id.et_tag);
+        imageView=rootView.findViewById(R.id.imageView);
+
+        fabAdd=rootView.findViewById(R.id.fabAdd);
+        fabUpload=rootView.findViewById(R.id.fabUpload);
+         imageManager=new ImageManager(getContext());
         selectedUsernames=new ArrayList<String>();
 
         red=rootView.findViewById(R.id.red);
@@ -120,12 +157,12 @@ public class SettingsFragment extends Fragment {
         blue = rootView.findViewById(R.id.blue);
 
         red.setMax(255);
-        red.setMin(0);
+        //red.setMin(0);
 
-        green.setMin(0);
+        //green.setMin(0);
         green.setMax(255);
 
-        blue.setMin(0);
+        //blue.setMin(0);
         blue.setMax(255);
 
         user = sessionManager.getUser(getArguments().getString("username"),1);
@@ -181,6 +218,8 @@ public class SettingsFragment extends Fragment {
 
             }
         });
+
+
 
 blue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
     @Override
@@ -370,9 +409,181 @@ blue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
         });
 
 
+        ImageRepository.getInstance().loadPicutreOf(user.getUsername().toString(),0.5f,0.5f, new ImageRepository.getPictureCallBack() {
+            @Override
+            public void onResponse(Bitmap picUrl) {
+                if(picUrl==null)
+                {
+                    imageView.setImageResource(R.drawable.default_avatar);
+
+                }else{
+                    imageView.setImageBitmap(picUrl);
+                }
+            }
+        });
+
+
+
+
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivityForResult(imageManager.getPickImageChooserIntent(), IMAGE_RESULT);
+
+            }
+        });
+
+
+        fabUpload.setVisibility(View.INVISIBLE);
+
+
+        fabUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mBitmap != null) {
+                    imageManager.multipartImageUpload(mBitmap, user.getUsername().toString());
+                    fabUpload.setVisibility(View.INVISIBLE);
+                } else {
+
+
+                }
+            }
+        });
+
+        askPermissions();
 
         return rootView;
     }
+
+
+    private ArrayList<String> findUnAskedPermissions(ArrayList<String> wanted) {
+        ArrayList<String> result = new ArrayList<String>();
+
+        for (String perm : wanted) {
+            if (!hasPermission(perm)) {
+                result.add(perm);
+            }
+        }
+
+        return result;
+    }
+
+    private boolean hasPermission(String permission) {
+        if (canMakeSmores()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+                return (getActivity().checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED);
+
+            }
+        }
+        return true;
+    }
+
+    private void askPermissions() {
+        permissions.add(CAMERA);
+        permissions.add(WRITE_EXTERNAL_STORAGE);
+        permissions.add(READ_EXTERNAL_STORAGE);
+        permissionsToRequest = findUnAskedPermissions(permissions);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+
+            if (permissionsToRequest.size() > 0)
+                requestPermissions(permissionsToRequest.toArray(new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
+        }
+    }
+
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(getContext())
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+    }
+
+    private boolean canMakeSmores() {
+        return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        switch (requestCode) {
+
+            case ALL_PERMISSIONS_RESULT:
+                for (String perms : permissionsToRequest) {
+                    if (!hasPermission(perms)) {
+                        permissionsRejected.add(perms);
+                    }
+                }
+
+                if (permissionsRejected.size() > 0) {
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (shouldShowRequestPermissionRationale(permissionsRejected.get(0))) {
+                            showMessageOKCancel("These permissions are mandatory for the application. Please allow access.",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            requestPermissions(permissionsRejected.toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
+                                        }
+                                    });
+                            return;
+                        }
+                    }
+
+                }
+
+                break;
+        }
+
+    }
+
+/*
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelable("pic_uri", picUri);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        picUri = savedInstanceState.getParcelable("pic_uri");
+
+    }
+*/
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if (resultCode == Activity.RESULT_OK) {
+
+          //  ImageView imageView = findViewById(R.id.imageView);
+
+            if (requestCode == IMAGE_RESULT) {
+
+                String filePath = imageManager.getImageFilePath(data);
+                if (filePath != null) {
+                    fabUpload.setVisibility(View.VISIBLE);
+                    mBitmap = BitmapFactory.decodeFile(filePath);
+                    imageView.setImageBitmap(mBitmap);
+                }
+            }
+
+        }
+
+    }
+
+
 
     public void disableEditing(EditText editText)
     {
@@ -426,11 +637,7 @@ public void partnerAutoComplete()
 }
 
 
-public void updateColor(AppCompatButton bt_pick_color,int r,int g ,int b)
-{
 
-
-}
 
 
 }

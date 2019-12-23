@@ -23,5 +23,7 @@ Call<JsonPrimitive> addMessage(@Body Message message);
 @GET("/message/getAll/{sender}/{receiver}")
 Call<List<Message>> getAllMessageOf(@Path("sender") String sender,@Path("receiver") String receiver);
 
+@GET("/message/getAll/{username}")
+Call<List<Message>> getAllMessagesOf(@Path("username") String username);
 
 }

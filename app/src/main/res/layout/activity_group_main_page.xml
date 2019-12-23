@@ -123,20 +123,20 @@
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
-                                <ImageView
-                                    android:layout_width="@dimen/spacing_large"
-                                    android:layout_height="@dimen/spacing_large"
-                                    android:layout_marginEnd="@dimen/spacing_medium"
-                                    android:layout_marginRight="@dimen/spacing_medium"
-                                    android:tint="@color/grey_20"
-                                    app:srcCompat="@drawable/ic_location" />
 
-                                <TextView
+                                <androidx.appcompat.widget.AppCompatButton
+                                    android:id="@+id/bt_join"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="San Francisco, CA"
-                                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                                    android:textColor="@color/grey_40" />
+                                    android:layout_marginTop="@dimen/spacing_large"
+                                    android:background="@drawable/btn_rounded_red"
+                                    style="@style/Widget.AppCompat.Button.Borderless"
+                                    android:paddingLeft="@dimen/spacing_mlarge"
+                                    android:paddingRight="@dimen/spacing_mlarge"
+                                    android:text="Join"
+                                    android:textColor="@android:color/white" />
+
+
                             </LinearLayout>
 
                         </LinearLayout>
@@ -536,5 +536,17 @@
 
 
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/settingsAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end|right"
+        android:layout_margin="@dimen/spacing_smlarge"
+        android:clickable="true"
+        android:tint="@android:color/white"
+        app:fabSize="normal"
+        app:rippleColor="@android:color/white"
+        app:srcCompat="@drawable/ic_create" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

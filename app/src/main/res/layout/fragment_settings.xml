@@ -14,13 +14,14 @@
             android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:background="@color/purple_500">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:contentScrim="?attr/colorPrimary"
+                app:contentScrim="@color/purple_400"
                 app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Headline"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -31,7 +32,7 @@
                     app:contentInsetStartWithNavigation="0dp"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                    app:title="Evans Collins" />
+                    app:title="Akthem Arfaoui" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -72,10 +73,105 @@
                             android:layout_marginLeft="@dimen/spacing_large"
                             android:layout_marginStart="@dimen/spacing_large"
                             android:layout_marginTop="@dimen/spacing_large"
+                            android:text="Profile picture"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:gravity="center_vertical"
+                            android:minHeight="@dimen/spacing_xxlarge"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/spacing_large"
+                            android:paddingRight="@dimen/spacing_large">
+                            <com.mikhaellopez.circularimageview.CircularImageView
+
+                                android:id="@+id/imageView"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:src="@drawable/default_avatar"
+                                app:civ_border="true"
+                                app:civ_shadow="true"
+                                app:civ_shadow_radius="0"
+                                app:civ_border_color="@color/purple_500"
+                                app:civ_border_width="2dp"
+                                android:layout_gravity="center_horizontal"
+
+                                />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_horizontal"
+
+                                >
+
+                                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                                    android:id="@+id/fabUpload"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:srcCompat="@android:drawable/stat_sys_upload"
+                                    android:layout_marginTop="20dp"
+                                    android:clickable="true"
+                                    android:tint="@color/grey_60"
+                                    app:backgroundTint="@android:color/white"
+                                    app:elevation="1dp"
+                                    app:fabSize="normal"
+                                    />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="15dp"
+                               />
+
+                        </LinearLayout>
+
+
+
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spacing_middle" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/spacing_middle">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/spacing_middle"
+                            android:layout_marginLeft="@dimen/spacing_large"
+                            android:layout_marginStart="@dimen/spacing_large"
+                            android:layout_marginTop="@dimen/spacing_large"
                             android:text="Info"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                             android:textColor="@color/colorPrimaryDark"
                             android:textStyle="bold" />
+
+
+
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
@@ -253,7 +349,7 @@ android:weightSum="3"
                             android:layout_marginLeft="-4dp"
                             android:layout_marginRight="-4dp"
                             android:layout_marginTop="@dimen/spacing_large"
-                            android:background="@drawable/btn_rect_primary"
+                            android:background="@color/purple_500"
                             android:text="Change"
                             android:textAllCaps="false"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
@@ -267,7 +363,7 @@ android:weightSum="3"
                             android:layout_marginLeft="-4dp"
                             android:layout_marginRight="-4dp"
                             android:layout_marginTop="@dimen/spacing_large"
-                            android:background="@drawable/btn_rect_primary"
+                            android:background="@color/purple_500"
                             android:text="Logout"
                             android:textAllCaps="false"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
@@ -768,7 +864,7 @@ android:weightSum="3"
         </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/fabAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/spacing_mlarge"

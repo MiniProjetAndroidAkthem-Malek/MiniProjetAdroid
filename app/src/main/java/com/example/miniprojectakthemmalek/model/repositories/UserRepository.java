@@ -160,28 +160,6 @@ public void deleteUser(String  username)
 }
 
 
-public void uploadPhotos(File photo,String username)
-{
-    RequestBody requestImage = RequestBody.create(MediaType.parse("image"), photo);
-    MultipartBody.Part body = MultipartBody.Part.createFormData("image", photo.getName(), requestImage);
-    Call<String> call = iUser.updatePhoto(body,
-            RequestBody.create(MediaType.parse("text/plain"),username));
-
-    call.enqueue(new Callback<String>() {
-        @Override
-        public void onResponse(Call<String> call, Response<String> response) {
-            System.out.println(response.body());
-        }
-
-        @Override
-        public void onFailure(Call<String> call, Throwable t) {
-
-            t.printStackTrace();
-
-        }
-    });
-
-}
 
 public interface getOneUserCallBack
 {

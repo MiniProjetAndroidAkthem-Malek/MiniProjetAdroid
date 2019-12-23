@@ -15,6 +15,12 @@ public class Post {
     @SerializedName("description")
     String description;
 
+    @SerializedName("group_name")
+    String group_name;
+
+    @SerializedName("position")
+    String position;
+
     public Post(String username, String description) {
         this.username = username;
         this.description = description;
@@ -26,6 +32,18 @@ public class Post {
         this.description = description;
     }
 
+    public Post(String username, String description, String position) {
+        this.username = username;
+        this.description = description;
+        this.position = position;
+    }
+
+    public Post(String username, String description, String group_name, String position) {
+        this.username = username;
+        this.description = description;
+        this.group_name = group_name;
+        this.position = position;
+    }
 
     public int getId() {
         return id;
@@ -57,6 +75,22 @@ public class Post {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getGroup_name() {
+        return group_name;
+    }
+
+    public void setGroup_name(String group_name) {
+        this.group_name = group_name;
     }
 
     @Override

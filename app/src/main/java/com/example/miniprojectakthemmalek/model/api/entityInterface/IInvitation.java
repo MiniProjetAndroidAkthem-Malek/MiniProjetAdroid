@@ -23,7 +23,7 @@ Call<JsonPrimitive> addInvitation(@Body Invitation invitation);
 @GET("/invitation/getAll/{sender}")
 Call<List<Invitation>> getSendedInvitationForUser(@Path("sender") String username);
 
-@GET("/invitation/getAll/{receiver}")
+@GET("/invitation/getAllByReceiver/{receiver}")
 Call<List<Invitation>> getReceivedInvitationForUser(@Path("receiver") String username);
 
 @GET("/invitation/get/{sender}/{receiver}")

@@ -52,8 +52,6 @@ public class PostGroupAdapter extends RecyclerView.Adapter<PostGroupAdapter.Post
         holder.username_text_view.setText(single_post.getUsername());
         holder.description_text_view.setText(single_post.getDescription());
 
-
-
     }
 
     @Override
@@ -75,6 +73,7 @@ public class PostGroupAdapter extends RecyclerView.Adapter<PostGroupAdapter.Post
 
             username_text_view=itemView.findViewById(R.id.usernamePost);
             description_text_view=itemView.findViewById(R.id.descriptionPost);
+
         }
 
 

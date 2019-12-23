@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.balysv.materialripple.MaterialRippleLayout;
 import com.example.miniprojectakthemmalek.R;
@@ -44,7 +45,7 @@ public class PasswordFragment extends Fragment {
 String username;
 SessionManager sessionManager;
     private View parent_view;
-ProgressBar progress_bar;
+
     ImageButton backAccount;
 
 public PasswordFragment() {
@@ -85,16 +86,11 @@ public PasswordFragment() {
 
         username=getArguments().getString("username");
 
-       // System.out.println("isWifiOn --------> "+isWifiOn(getContext()));
-      //  System.out.println("isInternetConnection --------> "+isConnectingToInternet(getContext()));
-
         passwordTextInput=rootView.findViewById(R.id.passwordTextInput);
         connectBtn=rootView.findViewById(R.id.connectBtn);
         sessionManager=new SessionManager(getContext());
         parent_view = rootView.findViewById(android.R.id.content);
         backAccount=rootView.findViewById(R.id.backAccount);
-        progress_bar=rootView.findViewById(R.id.progress_bar);
-
 
         backAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,16 +99,13 @@ public PasswordFragment() {
             }
         });
 
-        runProgress(progress_bar);
-        progress_bar.setVisibility(View.INVISIBLE);
 
         connectBtn.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
 
-
-        //progress_bar.setVisibility(View.VISIBLE);
-
+      //  System.out.println("isWifiOn --------> "+isWifiOn(getContext()));
+      // System.out.println("isInternetConnection --------> "+isInternetConnection(getContext()));
 
         UserRepository.getInstance().getOneUser(username, new UserRepository.getOneUserCallBack() {
             @Override
@@ -131,21 +124,27 @@ public PasswordFragment() {
                             sessionManager.updateConnectionStatusForUser(user.getUsername(),1);
                         }
 
+
+
+
                         Intent intentHome =new Intent(getContext(), HomeActivity.class);
                         intentHome.putExtra("username",user.getUsername());
                         startActivity(intentHome);
-          //              progress_bar.setVisibility(View.INVISIBLE);
 
                     }else  {
 
-                     //   Snackbar.make(parent_view, "Wrong password or username", Snackbar.LENGTH_SHORT).show();
-            //            progress_bar.setVisibility(View.INVISIBLE);
+
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(getContext(),"wrong password Bro !", duration);
+                        toast.show();
 
                     }
 
                 }else{
 
-              //      progress_bar.setVisibility(View.INVISIBLE);
+
+
 
                 }
             }
