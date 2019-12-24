@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/material_bg_1" />
+        app:srcCompat="@drawable/pp" />
 
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/avatar"
@@ -39,14 +39,16 @@
             android:text="Akthem Arfaoui"
             android:textStyle="bold"
             android:textSize="20dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/white_transparency"/>
 
         <TextView
             android:id="@+id/connectedUserJob"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="akthemarfaoui@mail.com"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/white_transparency"/>
 
     </LinearLayout>
 
