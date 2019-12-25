@@ -27,6 +27,7 @@ import com.example.miniprojectakthemmalek.model.api.entityInterface.IPost;
 import com.example.miniprojectakthemmalek.model.entities.Post;
 import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
+import com.example.miniprojectakthemmalek.view.HomeActivity;
 import com.example.miniprojectakthemmalek.view.ProfileActivity;
 import com.example.miniprojectakthemmalek.view.SessionManager;
 import com.example.miniprojectakthemmalek.view.adapter.AccountsAdapter;
@@ -154,7 +155,7 @@ public class PostsFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent intent =new Intent(getContext(), Base_Home.class);
+                Intent intent =new Intent(getContext(), HomeActivity.class);
                 intent.putExtra("username",username);
                 startActivity(intent);
 

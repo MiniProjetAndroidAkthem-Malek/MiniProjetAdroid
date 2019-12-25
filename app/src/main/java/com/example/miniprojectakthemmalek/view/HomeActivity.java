@@ -3,16 +3,19 @@ package com.example.miniprojectakthemmalek.view;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -33,6 +36,10 @@ import java.util.Date;
 public class HomeActivity extends AppCompatActivity  {
 
     Button movetoprofile;
+    TextView movetogroups;
+    NestedScrollView nested_scroll_view;
+    TextView movetoposts;
+    FrameLayout frameHome;
     SessionManager sessionManager;
     User user;
     Toolbar toolbar;
@@ -60,7 +67,48 @@ public class HomeActivity extends AppCompatActivity  {
 
         toolbar=findViewById(R.id.toolbar);
         navigationView=findViewById(R.id.nav_view);
+        movetogroups=findViewById(R.id.movetogroups);
+        movetoposts=findViewById(R.id.movetoposts);
+        nested_scroll_view=findViewById(R.id.nested_scroll_view);
+        frameHome=findViewById(R.id.frameHome);
 
+
+        movetoposts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                focusOnView();
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        movetogroups.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(getApplicationContext(),ShowGroupsActivity.class);
+                intent.putExtra("username",user.getUsername());
+                startActivity(intent);
+            }
+        });
 
         View headerView = navigationView.getHeaderView(0);
         TextView connectedUserName = headerView.findViewById(R.id.connectedUserName);
@@ -132,6 +180,16 @@ public class HomeActivity extends AppCompatActivity  {
 
       });
     }
+
+    private void focusOnView(){
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                nested_scroll_view.scrollTo(0, frameHome.getTop());
+            }
+        });
+    }
+
 
 
 }

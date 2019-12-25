@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.miniprojectakthemmalek.CommentActivity;
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.Post;
+import com.example.miniprojectakthemmalek.model.entities.comment;
 import com.example.miniprojectakthemmalek.model.entities.like_posts;
 import com.example.miniprojectakthemmalek.model.repositories.CommentRepository;
 import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
@@ -37,6 +38,8 @@ import com.example.miniprojectakthemmalek.model.repositories.like_postsRepositor
 import com.example.miniprojectakthemmalek.view.OtherProfileActivity;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
+import org.w3c.dom.Comment;
+
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -44,11 +47,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
 
     private List<Post> post_list;
+
     private String username;
     private ColorDrawable mBackground = new ColorDrawable();
     private int backgroundColor = Color.parseColor("#b80f0a");
     private Paint  mClearPaint = new Paint();
     Context context;
+
 
     int x = 0;
 
@@ -132,6 +137,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 holder.likes.setText(like_posts.size() + " Likes");
             }
         });
+        CommentRepository.getInstance().getPostComments(single_post.getId(), new CommentRepository.getManyCallback() {
+            @Override
+            public void getManyOneFollow(List<comment> like_posts) {
+                holder.show_comments.setText(like_posts.size()+" Comments");
+            }
+        });
+
 
 
 

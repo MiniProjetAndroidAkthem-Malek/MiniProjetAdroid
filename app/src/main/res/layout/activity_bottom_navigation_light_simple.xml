@@ -24,7 +24,7 @@
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="@color/colorPrimaryLight"
+                android:tint="@color/purple_500"
                 app:srcCompat="@drawable/ic_menu" />
 
             <View
@@ -37,7 +37,7 @@
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="@color/colorPrimaryLight"
+                android:tint="@color/purple_500"
                 app:srcCompat="@drawable/ic_search" />
 
         </LinearLayout>
