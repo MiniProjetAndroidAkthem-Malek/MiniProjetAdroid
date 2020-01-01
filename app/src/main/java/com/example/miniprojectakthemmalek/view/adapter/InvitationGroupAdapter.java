@@ -8,15 +8,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.miniprojectakthemmalek.R;
-import com.example.miniprojectakthemmalek.model.entities.Group;
 import com.example.miniprojectakthemmalek.model.entities.GroupUser;
-import com.example.miniprojectakthemmalek.model.entities.Invitation;
-import com.example.miniprojectakthemmalek.model.entities.Status;
-import com.example.miniprojectakthemmalek.model.repositories.GroupRepository;
+import com.example.miniprojectakthemmalek.model.entities.Enums.Status;
 import com.example.miniprojectakthemmalek.model.repositories.GroupUserRepository;
 import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 
@@ -110,15 +106,16 @@ public class InvitationGroupAdapter extends RecyclerView.Adapter<InvitationGroup
 
                         if(code==200)
                         {
-                        groupUsers.remove(position);
 
-                        notifyDataSetChanged();
 
                         }
 
 
                     }
                 });
+
+                groupUsers.remove(position);
+                notifyDataSetChanged();
 
 
             }

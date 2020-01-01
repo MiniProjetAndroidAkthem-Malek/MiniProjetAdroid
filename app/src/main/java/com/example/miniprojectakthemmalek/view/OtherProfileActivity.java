@@ -11,15 +11,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.miniprojectakthemmalek.R;
+import com.example.miniprojectakthemmalek.model.entities.Activities;
+import com.example.miniprojectakthemmalek.model.entities.Enums.ActivityType;
 import com.example.miniprojectakthemmalek.model.entities.Follow;
 import com.example.miniprojectakthemmalek.model.entities.Post;
 import com.example.miniprojectakthemmalek.model.entities.User;
+import com.example.miniprojectakthemmalek.model.repositories.ActivitiesRepository;
 import com.example.miniprojectakthemmalek.model.repositories.FollowRepository;
 import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 public class OtherProfileActivity extends AppCompatActivity {
@@ -65,7 +70,7 @@ public class OtherProfileActivity extends AppCompatActivity {
         });
 
 
-        followBtn.setOnClickListener(new View.OnClickListener() {
+         followBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateFollowBtn();
@@ -167,7 +172,9 @@ chatBtn.setOnClickListener(new View.OnClickListener() {
     public void onClick(View v) {
 
         Intent intent=new Intent(getApplicationContext(),ChatActivity.class);
+
         intent.putExtra("username",username);
+        intent.putExtra("redirect",1);
         intent.putExtra("ConnectedUsername",connectedUsername);
         startActivity(intent);
 
@@ -261,7 +268,20 @@ chatBtn.setOnClickListener(new View.OnClickListener() {
                             public void addingCallback(int code) {
                                 if(code==200)
                                 {
+
                                     updateNumberOfFollows();
+
+                                    Date date= new Date(System.currentTimeMillis());
+                                    long time = date. getTime();
+                                    Timestamp ts = new Timestamp(time);
+
+
+                                    ActivitiesRepository.getInstance().addActivities(new Activities(connectedUsername, username, ActivityType.FOLLOW), new ActivitiesRepository.addingCallback() {
+                                        @Override
+                                        public void addingCallback(int code) {
+
+                                        }
+                                    });
 
                                 }
                             }

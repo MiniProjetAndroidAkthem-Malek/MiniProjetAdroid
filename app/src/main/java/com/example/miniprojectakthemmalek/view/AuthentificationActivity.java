@@ -2,96 +2,48 @@ package com.example.miniprojectakthemmalek.view;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.app.Activity;
-import android.app.Service;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.graphics.Bitmap;
-import android.location.Location;
-import android.location.LocationManager;
-import android.net.Uri;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.IBinder;
 import android.os.StrictMode;
-import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.JsonReader;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.api.RetrofitInstance;
 import com.example.miniprojectakthemmalek.model.api.entityInterface.IUser;
-import com.example.miniprojectakthemmalek.model.entities.Follow;
-import com.example.miniprojectakthemmalek.model.entities.Invitation;
-import com.example.miniprojectakthemmalek.model.entities.Post;
+import com.example.miniprojectakthemmalek.model.entities.Children;
+import com.example.miniprojectakthemmalek.model.entities.Message;
 import com.example.miniprojectakthemmalek.model.entities.User;
-import com.example.miniprojectakthemmalek.model.repositories.FollowRepository;
-import com.example.miniprojectakthemmalek.model.repositories.GeoLocationRepository;
-import com.example.miniprojectakthemmalek.model.repositories.GroupPostsRepository;
-import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
-import com.example.miniprojectakthemmalek.model.repositories.InvitationRepository;
-import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
+import com.example.miniprojectakthemmalek.model.repositories.ChildrenRepository;
+import com.example.miniprojectakthemmalek.model.repositories.MessageRepository;
+import com.example.miniprojectakthemmalek.model.repositories.NotificationRepositories.NotificationRepository;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
-import com.example.miniprojectakthemmalek.view.database.AppDatabase;
 import com.example.miniprojectakthemmalek.view.fragments.AccountsFragment;
-import com.example.miniprojectakthemmalek.view.utils.GeoCoder.GeoLocationManager;
-import com.example.miniprojectakthemmalek.view.utils.JavaMailApi.SendMail;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.miniprojectakthemmalek.view.utils.ImageManager;
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.example.miniprojectakthemmalek.view.utils.Tools;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.gson.JsonElement;
 
-import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
-
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
-import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 
 public class AuthentificationActivity extends AppCompatActivity {
@@ -102,6 +54,9 @@ public class AuthentificationActivity extends AppCompatActivity {
     TextView signup;
     TextInputEditText username, password;
     IUser iUser = RetrofitInstance.getRetrofitInstance().create(IUser.class);
+    User newuser;
+    LoginButton loginButton;
+    ImageManager imageManager;
 
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -110,17 +65,71 @@ public class AuthentificationActivity extends AppCompatActivity {
     private ImageView mImageView;
 
     SessionManager sessionManager;
-
+    CallbackManager callbackManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_simple_light);
 
+      /*try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "com.example.miniprojectakthemmalek",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.i("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
 
+                System.out.println("---------------------> "+Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        }
+        catch (PackageManager.NameNotFoundException e) {
+        }
+        catch (NoSuchAlgorithmException e) {
+        }
+
+*/
+
+
+
+MessageRepository.getInstance().getDiscussionsByConnectedUsername("userTest", new MessageRepository.getManyCallback() {
+    @Override
+    public void getManyOneFollow(List<Message> messages) {
+        System.out.println("------>discussions "+messages);
+    }
+});
+
+      //  LoginManager.getInstance().logOut();
 
         sessionManager = new SessionManager(this);
         sessionManager.synchroniseWithDatabase();
+        loginButton=findViewById(R.id.login_button);
+        imageManager=new ImageManager(getApplicationContext());
+
+        callbackManager=CallbackManager.Factory.create();
+        loginButton.setReadPermissions(Arrays.asList("email","public_profile"));
+
+       // System.out.println("----------------->"+userIsLogged());
+
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });
+
+        checkStatusAndRedirect();
 
         parent_view = findViewById(android.R.id.content);
         signin = findViewById(R.id.signin);
@@ -131,7 +140,7 @@ public class AuthentificationActivity extends AppCompatActivity {
         Tools.setSystemBarLight(this);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.accountFrame, new AccountsFragment()).commit();
-        System.out.println(sessionManager.getAllUsers());
+       // System.out.println(sessionManager.getAllUsers());
 
 
         signup.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +156,165 @@ public class AuthentificationActivity extends AppCompatActivity {
 
 
 
-      }
+
+
+
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        callbackManager.onActivityResult(requestCode,resultCode,data);
+
+         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    AccessTokenTracker tokenTracker =new AccessTokenTracker() {
+        @Override
+        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+
+            if(currentAccessToken==null)
+            {
+
+
+            }else {
+
+
+                loadUserProfile(currentAccessToken);
+
+            }
+        }
+    };
+
+
+    private  void loadUserProfile(AccessToken newAccessToken)
+    {
+
+        GraphRequest request =GraphRequest.newMeRequest(newAccessToken, new GraphRequest.GraphJSONObjectCallback() {
+            @Override
+            public void onCompleted(JSONObject object, GraphResponse response) {
+
+                try {
+                    String first_name=object.getString("first_name");
+                    String last_name=object.getString("last_name");
+                    String email=object.getString("email");
+                    String id=object.getString("id");
+                    String name=object.getString("name");
+
+                    final String image_url ="https://graph.facebook.com/"+id+"/picture?type=normal";
+
+                    System.out.println("firstName---> "+first_name);
+                    System.out.println("lastName---> "+last_name);
+                    System.out.println("email---> "+email);
+                    System.out.println("name---> "+name);
+                    System.out.println(image_url);
+
+                    name = name.replaceAll(" ","");
+                    newuser =new User(name,first_name,last_name);
+
+                UserRepository.getInstance().getOneUser( name, new UserRepository.getOneUserCallBack() {
+                    @Override
+                    public void onResponse(User user) {
+
+                        if(user==null)
+                        {
+
+                            URL url = null;
+                            try {
+
+                                url = new URL(image_url);
+                                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                                imageManager.multipartImageUpload(bmp,newuser.getUsername());
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            UserRepository.getInstance().addUser(newuser, new UserRepository.addingCallback() {
+                                @Override
+                                public void addingCallback(int code) {
+
+                                }
+                            });
+
+                        }
+                    }
+                });
+
+
+                        sessionManager.openSessionForUser(newuser);
+                        sessionManager.initRememberMeStatus();
+                        sessionManager.updateConnectionStatusForUser(newuser.getUsername(),1);
+                        sessionManager.updateRememberStatusForUser(newuser.getUsername(),1);
+                        Intent intentHome =new Intent(getApplicationContext(), HomeActivity.class);
+                        intentHome.putExtra("username",newuser.getUsername());
+                        startActivity(intentHome);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
+
+        Bundle parameters = new Bundle();
+
+        parameters.putString("fields","first_name,last_name,email,id,name");
+
+        request.setParameters(parameters);
+        request.executeAsync();
+
+    }
+
+
+    public void checkStatusAndRedirect()
+    {
+
+        if(userIsLogged())
+        {
+
+
+            User user=sessionManager.getUserByRemeberMe(1);
+            System.out.println(sessionManager.getAllUsers());
+
+            //    System.out.println("------------>"+sessionManager.getUser("Malek Belaib"));
+
+            if(user!=null)
+            {
+                sessionManager.updateConnectionStatusForUser(user.getUsername(),1);
+
+                Intent intentHome =new Intent(getApplicationContext(), HomeActivity.class);
+                intentHome.putExtra("username",user.getUsername());
+                startActivity(intentHome);
+            //    System.out.println("------------>"+user);
+
+            }
+
+        }
+
+
+    }
+
+
+    public boolean userIsLogged()
+    {
+
+        if(AccessToken.getCurrentAccessToken()==null)
+        {
+
+
+            return false;
+
+        }else
+        {
+            return true;
+        }
+
+    }
 
 
 

@@ -23,6 +23,10 @@ Call<JsonPrimitive> addLike(@Body  like_posts like_posts);
 @GET("/like_posts/getAll/{id_post}")
 Call<List<like_posts>> getPostLikes(@Path("id_post") int id_post);
 
+
+@GET("/like_posts/getAllByUsernameAndId/{id_post}/{username}")
+Call<List<like_posts>> getPostLikesByUsernameAndId(@Path("id_post") int id_post,@Path("username") String username);
+
 @DELETE("/like_posts/delete/{username}/{id_post}")
 Call<JsonPrimitive> Dislike(@Path("username") String username, @Path("id_post") int id_post);
 

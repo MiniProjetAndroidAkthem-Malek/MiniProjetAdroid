@@ -214,6 +214,58 @@
 
             </RelativeLayout>
 
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_large"
+                android:layout_marginRight="@dimen/spacing_large"
+                android:layout_marginTop="@dimen/spacing_middle"
+                android:background="@android:color/white"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_large">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Description"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/grey_90" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="10dp" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/spacing_xlarge"
+                        android:layout_marginRight="@dimen/spacing_xlarge"
+                        android:layout_marginTop="@dimen/spacing_large"
+                        android:gravity="center"
+                        android:lineSpacingExtra="2dp"
+                        android:text="@string/middle_lorem_ipsum"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/grey_90" />
+
+
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="10dp" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -340,6 +392,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/postCardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/spacing_large"
@@ -353,7 +406,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                 <LinearLayout
+                    android:id="@+id/editPost"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -375,10 +430,11 @@
                         android:orientation="horizontal"
                         android:padding="@dimen/spacing_large">
 
-                        <com.mikhaellopez.circularimageview.CircularImageView
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/usernameCircleImageView"
                             android:layout_width="@dimen/spacing_xxlarge"
                             android:layout_height="@dimen/spacing_xxlarge"
-                            android:src="@drawable/photo_male_8"
+                            android:src="@drawable/default_avatar"
                             app:civ_shadow="true"
                             app:civ_shadow_radius="0"
                             app:civ_border="false" />
@@ -409,21 +465,16 @@
                                 android:layout_marginTop="@dimen/spacing_small"
                                 android:gravity="center_vertical">
 
-                                <ImageView
-                                    android:layout_width="@dimen/spacing_mlarge"
-                                    android:layout_height="@dimen/spacing_mlarge"
-                                    android:tint="@color/colorPrimary"
-                                    app:srcCompat="@drawable/ic_public" />
-
-                                <View
+                                  <View
                                     android:layout_width="@dimen/spacing_medium"
                                     android:layout_height="0dp" />
 
                                 <TextView
+                                    android:id="@+id/rolePost"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:gravity="center_vertical"
-                                    android:text="Public"
+                                    android:text="Role"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                                     android:textColor="@color/colorPrimary" />
 
@@ -496,7 +547,9 @@
 
                     </LinearLayout>
 
-
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="10dp" />
                     <Button
                         android:id="@+id/add_post"
                         android:layout_width="match_parent"
@@ -513,7 +566,9 @@
                 </LinearLayout>
 
 
-
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="10dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewPosts"

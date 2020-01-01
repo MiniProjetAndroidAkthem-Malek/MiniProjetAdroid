@@ -11,24 +11,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.Group;
 import com.example.miniprojectakthemmalek.model.entities.GroupUser;
 import com.example.miniprojectakthemmalek.model.entities.Invitation;
-import com.example.miniprojectakthemmalek.model.entities.Role;
-import com.example.miniprojectakthemmalek.model.entities.Status;
+import com.example.miniprojectakthemmalek.model.entities.Enums.Role;
+import com.example.miniprojectakthemmalek.model.entities.Enums.Status;
 import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.repositories.GroupRepository;
 import com.example.miniprojectakthemmalek.model.repositories.GroupUserRepository;
 import com.example.miniprojectakthemmalek.model.repositories.InvitationRepository;
+import com.example.miniprojectakthemmalek.model.repositories.NotificationRepositories.NotificationRepository;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
 import com.example.miniprojectakthemmalek.view.adapter.AdminGroupAdapter;
 import com.example.miniprojectakthemmalek.view.adapter.InvitationGroupAdapter;
-import com.hootsuite.nachos.NachoTextView;
-import com.hootsuite.nachos.terminator.ChipTerminatorHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +115,6 @@ public class SettingsGroupActivity extends AppCompatActivity {
                     if(group.getCreator().toString().equals(connectedUsername))
                     {
 
-
                         invitationCardView.setVisibility(View.VISIBLE);
                         adminsGroupCardView.setVisibility(View.VISIBLE);
 
@@ -193,8 +190,10 @@ public class SettingsGroupActivity extends AppCompatActivity {
                                                 @Override
                                                 public void addingCallback(int code) {
 
-                                                    if(code==200)
-                                                        adminAutocomplete.setText("");
+                                                        if(code==200)
+                                                            adminAutocomplete.setText("");
+                                                        NotificationRepository.getInstance().sendNotificationToPatner("A creator of group want you to become an admin for his group","Volks",selectedUsername);
+
 
 
                                                 }
@@ -224,18 +223,13 @@ public class SettingsGroupActivity extends AppCompatActivity {
                         }
                     });
 
-
                 }
-
 
             }
 
             }
 
         });
-
-
-
 
         GroupUserRepository.getInstance().getUserGroupByRoleAndStatus(groupName,Role.ADMIN.toString(), Status.COMFIRMED.toString(), new GroupUserRepository.getAllGroupCallBack() {
             @Override
@@ -250,9 +244,6 @@ public class SettingsGroupActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
-
 }
-

@@ -56,12 +56,11 @@ Context context;
     private final static int IMAGE_RESULT = 200;
 
 
+    public ImageManager(Context context)
+    {
+        this.context=context;
+    }
 
-
-public ImageManager(Context context)
-{
-this.context=context;
-}
     private Uri getCaptureImageOutputUri() {
         Uri outputFileUri = null;
         File getImage = context.getExternalFilesDir("");
@@ -92,8 +91,11 @@ this.context=context;
     }
 
     public void multipartImageUpload(Bitmap mBitmap,String username) {
+
         try {
+
             File filesDir = context.getFilesDir();
+
             File file = new File(filesDir, username + ".png");
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -110,6 +112,7 @@ this.context=context;
             RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload");
 
             ImageRepository.getInstance().uploadPhotos(body,name);
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

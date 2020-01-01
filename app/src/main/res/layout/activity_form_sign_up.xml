@@ -154,11 +154,6 @@
                                        android:layout_gravity="center_vertical"
                                        ></TextView>
 
-
-
-
-
-
                                     <DatePicker
                                         android:id="@+id/birth_date"
                                         android:layout_width="wrap_content"

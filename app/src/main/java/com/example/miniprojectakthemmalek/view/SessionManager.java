@@ -53,6 +53,10 @@ public class SessionManager {
     {
         return database.userDao().getOne(username,isActive);
     }
+    public User getUserByRemeberMe(int rememberMe)
+    {
+        return database.userDao().getOneByRememberMe(rememberMe);
+    }
 
 
     public User getUserByStatusEqualTo(int isActive)
@@ -111,6 +115,11 @@ public class SessionManager {
         database.userDao().updateRememberStatus(username,rememberMe);
     }
 
+    public void initRememberMeStatus()
+    {
+        database.userDao().initRememberStatus();
+
+    }
 
     public List<User> getAllUsers()
     {

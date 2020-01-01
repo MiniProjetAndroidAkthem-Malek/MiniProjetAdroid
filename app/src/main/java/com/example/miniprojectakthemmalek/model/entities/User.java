@@ -89,6 +89,13 @@ public class User implements Serializable {
     int theme_b;
 
 
+    @Ignore
+    public User(String username, String first_name, String last_name) {
+        this.username = username;
+        this.first_name = first_name;
+        this.last_name = last_name;
+    }
+
     public User(String username, String password, String sexe, String birth_date, int numChildren, int numDisableChildren) {
         this.username = username;
         this.password = password;
@@ -304,22 +311,8 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id &&
-                rememberMe == user.rememberMe &&
-                theme_r == user.theme_r &&
-                theme_g == user.theme_g &&
-                theme_b == user.theme_b &&
-                Objects.equals(username, user.username) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(first_name, user.first_name) &&
-                Objects.equals(last_name, user.last_name) &&
-                Objects.equals(phone_number, user.phone_number) &&
-                Objects.equals(address, user.address) &&
-                Objects.equals(sexe, user.sexe) &&
-                Objects.equals(partner, user.partner);
+        return Objects.equals(username, user.username);
     }
-
 
     @Override
     public String toString() {

@@ -56,7 +56,7 @@
             <FrameLayout
                 android:id="@+id/accountFrame"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="200dp"
 
                 >
 
@@ -70,7 +70,7 @@
             <Button
                 android:id="@+id/signin"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="22dp"
                 android:layout_marginLeft="-4dp"
                 android:layout_marginRight="-4dp"
                 android:background="@drawable/btn_purple_a400"
@@ -78,6 +78,13 @@
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/login_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </com.facebook.login.widget.LoginButton>
 
             <View
                 android:layout_width="0dp"

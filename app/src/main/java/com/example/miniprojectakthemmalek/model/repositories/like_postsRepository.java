@@ -22,7 +22,9 @@ public class like_postsRepository {
         return instance;
     }
 
+
     Ilike_posts ilike_posts = RetrofitInstance.getRetrofitInstance().create(Ilike_posts.class);
+
 
     public void addlike_posts(like_posts like_posts, final like_postsRepository.addingCallback callback )
     {
@@ -91,6 +93,29 @@ public void dislike(String  username,int id_post, final like_postsRepository.del
             }
         });
     }
+
+
+    public void getPostLikesByUsernameAndId(int id_post,String username,final like_postsRepository.getManyCallback getManyCallback) {
+        Call<List<like_posts>> call = ilike_posts.getPostLikesByUsernameAndId(id_post,username);
+        call.enqueue(new Callback<List<like_posts>>() {
+            @Override
+            public void onResponse(Call<List<like_posts>> call, Response<List<like_posts>> response) {
+
+                getManyCallback.getManyOneFollow(response.body());
+
+            }
+
+            @Override
+            public void onFailure(Call<List<like_posts>> call, Throwable t) {
+
+                t.printStackTrace();
+
+                getManyCallback.getManyOneFollow(null);
+            }
+        });
+    }
+
+
 
     public interface addingCallback
     {

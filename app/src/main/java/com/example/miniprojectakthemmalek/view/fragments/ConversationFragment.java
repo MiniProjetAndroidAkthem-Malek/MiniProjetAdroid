@@ -22,6 +22,7 @@ import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.Message;
 import com.example.miniprojectakthemmalek.model.repositories.MessageRepository;
 import com.example.miniprojectakthemmalek.view.adapter.MessageAdapter;
+import com.example.miniprojectakthemmalek.view.utils.Constants;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
@@ -85,7 +86,6 @@ public class ConversationFragment extends Fragment {
         }
     }
 
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -95,7 +95,7 @@ public class ConversationFragment extends Fragment {
 
         try {
 
-            socket = IO.socket("http://192.168.8.100:3000");
+            socket = IO.socket("http://"+ Constants.IP_ADDRESS +":3000");
             socket.connect();
             socket.emit("join",connectedUsername);
 
@@ -117,7 +117,7 @@ public class ConversationFragment extends Fragment {
 
         try {
 
-            socket = IO.socket("http://192.168.8.100:3000");
+            socket = IO.socket("http://"+Constants.IP_ADDRESS+":3000");
             socket.connect();
             socket.emit("join",connectedUsername);
 
@@ -148,6 +148,7 @@ public class ConversationFragment extends Fragment {
 
                 if(messages != null)
                 {
+
                     messageList.addAll(messages);
 
                     messageAdapter.setMessageList(messageList);
@@ -157,11 +158,6 @@ public class ConversationFragment extends Fragment {
                     rvChatMessages.setAdapter(messageAdapter);
 
                 }
-
-
-                //System.out.println(messages);
-
-
             }
         });
 

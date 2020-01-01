@@ -24,11 +24,19 @@ User getOne(String username);
 @Query("select * from t_user where isActive= :isActive")
 User getOne(int isActive);
 
+
+@Query("select * from t_user where rememberMe= :remembreMe")
+User getOneByRememberMe(int remembreMe);
+
 @Query("select * from t_user where isActive= :isActive and username =:username")
 User getOne(String username, int isActive);
 
 @Query("update t_user set isActive=:isActive where username=:username ")
 void updateConnectionStatus(String username,int isActive);
+
+@Query("update t_user set rememberMe=0 ")
+void initRememberStatus();
+
 
 @Query("update t_user set rememberMe=:rememberMe where username=:username ")
 void updateRememberStatus(String username,int rememberMe);

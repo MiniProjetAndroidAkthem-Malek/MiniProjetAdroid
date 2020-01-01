@@ -112,6 +112,34 @@ public class MessageRepository {
         });
     }
 
+    public void getDiscussionsByConnectedUsername(String connectedUsername, final MessageRepository.getManyCallback getManyCallback) {
+        Call<List<Message>> call = iMessage.getDiscussionsOfUsername(connectedUsername);
+        call.enqueue(new Callback<List<Message>>() {
+            @Override
+            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+
+                if(response.body().isEmpty())
+                {
+
+                    getManyCallback.getManyOneFollow(null);
+
+                }else{
+
+                    getManyCallback.getManyOneFollow(response.body());
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Message>> call, Throwable t) {
+
+                t.printStackTrace();
+
+                getManyCallback.getManyOneFollow(null);
+            }
+        });
+    }
 
 
 

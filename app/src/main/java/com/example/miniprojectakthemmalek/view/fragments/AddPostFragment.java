@@ -1,11 +1,9 @@
 package com.example.miniprojectakthemmalek.view.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
@@ -20,12 +18,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.miniprojectakthemmalek.R;
+import com.example.miniprojectakthemmalek.model.entities.Activities;
+import com.example.miniprojectakthemmalek.model.entities.Enums.ActivityType;
 import com.example.miniprojectakthemmalek.model.entities.Post;
-import com.example.miniprojectakthemmalek.model.entities.User;
+import com.example.miniprojectakthemmalek.model.repositories.ActivitiesRepository;
 import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
-import com.example.miniprojectakthemmalek.view.AuthentificationActivity;
-import com.example.miniprojectakthemmalek.view.HomeActivity;
 import com.example.miniprojectakthemmalek.view.ProfileActivity;
 import com.example.miniprojectakthemmalek.view.utils.Base_Home;
 import com.example.miniprojectakthemmalek.view.utils.GeoCoder.GeoLocationManager;
@@ -33,6 +31,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.JsonPrimitive;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -166,17 +165,31 @@ moveToPost.setOnClickListener(new View.OnClickListener() {
 
         }
 
-        PostRepository.getInstance().addPost(post, new PostRepository.addingCallback() {
+        PostRepository.getInstance().addPost(post, new PostRepository.getLastInsertedCallBack() {
             @Override
-            public void addingCallback(int code) {
-                if(code==200){
+            public void onResponse(JsonPrimitive id) {
 
-                    PostsFragment postsFragment =    new PostsFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("username",username);
-                    postsFragment.setArguments(bundle);
-                    getFragmentManager().beginTransaction().replace(R.id.frameHome,postsFragment).commit();
-                }
+                System.out.println("-------------------------- "+post.getId());
+
+                ActivitiesRepository.getInstance().addActivities(new Activities(username, ""+id, ActivityType.POST), new ActivitiesRepository.addingCallback() {
+                    @Override
+                    public void addingCallback(int code) {
+
+
+
+                    }
+                });
+
+
+
+                PostsFragment postsFragment =    new PostsFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("username",username);
+                postsFragment.setArguments(bundle);
+                getFragmentManager().beginTransaction().replace(R.id.frameHome,postsFragment).commit();
+
+
+
             }
         });
     }

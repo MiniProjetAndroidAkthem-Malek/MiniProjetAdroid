@@ -45,14 +45,29 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        ConversationFragment conversationFragment=new ConversationFragment();
-        Bundle bundle =new Bundle();
-        bundle.putString("username",getIntent().getStringExtra("username"));
-        bundle.putString("ConnectedUsername",getIntent().getStringExtra("ConnectedUsername"));
-        conversationFragment.setArguments(bundle);
+        if(getIntent().getIntExtra("redirect",0)==1)
+        {
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.chatFrameLayout,conversationFragment).commit();
-        //getSupportFragmentManager().beginTransaction().replace(R.id.chatFrameLayout,new DiscussionFragment()).commit();
+            ConversationFragment conversationFragment=new ConversationFragment();
+            Bundle bundle =new Bundle();
+            bundle.putString("username",getIntent().getStringExtra("username"));
+            bundle.putString("ConnectedUsername",getIntent().getStringExtra("ConnectedUsername"));
+            conversationFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.chatFrameLayout,conversationFragment).commit();
+
+
+        }else if(getIntent().getIntExtra("redirect",0)==2)
+        {
+
+            DiscussionFragment discussionFragment=new DiscussionFragment();
+            Bundle bundle2 =new Bundle();
+            bundle2.putString("connectedUsername",getIntent().getStringExtra("connectedUsername"));
+            discussionFragment.setArguments(bundle2);
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.chatFrameLayout,discussionFragment).commit();
+
+        }
+
 
     }
 

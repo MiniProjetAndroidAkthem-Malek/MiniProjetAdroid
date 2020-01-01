@@ -118,11 +118,10 @@ public class PostsFragment extends Fragment {
                 postAdapter=new PostAdapter(getContext(),posts);
                 postAdapter.setUsername(username);
                 recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,true));
                 recyclerView.setAdapter(postAdapter);
             }
         });
-
 
 
         moveToAddPost.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +137,7 @@ public class PostsFragment extends Fragment {
 
             }
         });
+
         movetoprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,7 +148,6 @@ public class PostsFragment extends Fragment {
 
             }
         });
-
 
         movetobasehome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,7 +174,7 @@ spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     postAdapter=new PostAdapter(getContext(),posts);
                     postAdapter.setUsername(username);
                     recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,true));
                     recyclerView.setAdapter(postAdapter);
                 }
             });
@@ -191,11 +190,10 @@ spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     postAdapter=new PostAdapter(getContext(),posts);
                     postAdapter.setUsername(username);
                     recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,true));
                     recyclerView.setAdapter(postAdapter);
                 }
             });
-
 
 
         }

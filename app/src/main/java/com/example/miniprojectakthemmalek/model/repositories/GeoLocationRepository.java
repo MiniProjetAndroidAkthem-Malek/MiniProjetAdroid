@@ -28,28 +28,8 @@ public class GeoLocationRepository {
         return instance;
     }
 
-    ILocate iLocate = RetrofitInstance.getRetrofitGoogleApiInstance().create(ILocate.class);
 
-    public void getAllPostOf(Double lat,Double lon,final getAdresses getAdresses)
-    {
-        Call<JsonElement> call;
-        call = iLocate.getAddress("40.714224,-73.961452","AIzaSyBIEZtZepvood6udPAFCJ0JSJt22NMq1ao");
-        call.enqueue(new Callback<JsonElement>() {
-            @Override
-            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
 
-                System.out.println(response.code());
-                getAdresses.onResponse(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<JsonElement> call, Throwable t) {
-
-                t.printStackTrace();
-            }
-        });
-
-    }
 
 
     public interface getAdresses

@@ -19,8 +19,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.Follow;
 import com.example.miniprojectakthemmalek.model.entities.Post;
@@ -28,14 +26,19 @@ import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.repositories.FollowRepository;
 import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
+import com.example.miniprojectakthemmalek.view.ProfileActivity;
 import com.example.miniprojectakthemmalek.view.SessionManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import pl.droidsonroids.gif.GifDrawable;
+import pl.droidsonroids.gif.GifTextView;
 
 
 public class ProfileFragment extends Fragment {
@@ -50,10 +53,11 @@ public class ProfileFragment extends Fragment {
 
     SessionManager sessionManager;
     User user;
-    Toolbar toolbar;
+   // Toolbar toolbar;
     CircleImageView image;
     TextView jobProfile,birth_date, partnerLabel, postsLabel,first_name_label,last_name_label,address_label,phone_number_label,birth_date_label,partner_label,firstNameLabel,lastNameLabel,addressLabel,phoneNumberLabel,usernameLabel,textView11,textView12;
     FloatingActionButton settingBtn;
+    GifTextView imageLoading;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -82,12 +86,13 @@ public class ProfileFragment extends Fragment {
         {
          int rgb = Color.rgb(user.getTheme_r(),user.getTheme_g(),user.getTheme_b());
 
-        toolbar.setBackgroundColor(rgb);
-        image.setBorderColor(rgb);
+      //  toolbar.setBackgroundColor(rgb);
+       // image.setBorderColor(rgb);
         textView11.setTextColor(rgb);
         textView12.setTextColor(rgb);
 
         first_name_label.setTextColor(rgb);
+
         last_name_label.setTextColor(rgb);
         address_label.setTextColor(rgb);
         phone_number_label.setTextColor(rgb);
@@ -114,9 +119,11 @@ public class ProfileFragment extends Fragment {
         addressLabel=rootView.findViewById(R.id.addressLabel);
         phoneNumberLabel=rootView.findViewById(R.id.phoneNumberLabel);
         usernameLabel=rootView.findViewById(R.id.usernameLabel);
-        settingBtn=rootView.findViewById(R.id.settingsAdd);
 
-            toolbar = rootView.findViewById(R.id.toolbar);
+        settingBtn=rootView.findViewById(R.id.settingsAdd);
+        imageLoading = rootView.findViewById(R.id.imageLoading);
+
+           // toolbar = rootView.findViewById(R.id.toolbar);
             image=rootView.findViewById(R.id.image);
         postsLabel=rootView.findViewById(R.id.postsLabel);
 
@@ -134,9 +141,10 @@ public class ProfileFragment extends Fragment {
         textView12=rootView.findViewById(R.id.textView12);
         jobProfile=rootView.findViewById(R.id.jobProfile);
 
-       //loadGif(image);
 
-        usernameLabel.setText(user.getUsername());
+        imageLoading.setVisibility(View.VISIBLE);
+        image.setVisibility(View.GONE);
+          usernameLabel.setText(user.getUsername());
 
         if(user.getFirst_name()==null || user.getFirst_name()=="" )
         {
@@ -145,7 +153,6 @@ public class ProfileFragment extends Fragment {
         {
             firstNameLabel.setText(user.getFirst_name());
         }
-
 
         if(user.getLast_name()==null || user.getLast_name()=="")
         {
@@ -199,7 +206,7 @@ public class ProfileFragment extends Fragment {
         {
             birth_date.setText("");
         }else {
-        birth_date.setText(user.getBirth_date());
+        birth_date.setText(user.getBirth_date().toString().substring(0,10));
         }
 
         ImageRepository.getInstance().loadPicutreOf(user.getUsername().toString(),0.5f,0.5f, new ImageRepository.getPictureCallBack() {
@@ -207,18 +214,19 @@ public class ProfileFragment extends Fragment {
             public void onResponse(Bitmap picUrl) {
                 if(picUrl==null)
                 {
+                    image.setVisibility(View.VISIBLE);
                     image.setImageResource(R.drawable.default_avatar);
-
+                    imageLoading.setVisibility(View.GONE);
                 }else{
+                    image.setVisibility(View.VISIBLE);
                     image.setImageBitmap(picUrl);
+
+                    imageLoading.setVisibility(View.GONE);
                 }
+
+
             }
         });
-
-
-
-
-
 
         PostRepository.getInstance().getAllPostOf(user.getUsername(), new PostRepository.getAllPostCallBack() {
             @Override
@@ -255,7 +263,6 @@ settingBtn.setOnClickListener(new View.OnClickListener() {
 
         getFragmentManager().beginTransaction().replace(R.id.frameProfile,settingsFragment).commit();
 
-
     }
 });
 
@@ -285,6 +292,11 @@ settingBtn.setOnClickListener(new View.OnClickListener() {
                     "IOException: \n" + e.getMessage(),
                     Toast.LENGTH_LONG).show();
         }
+
+    }
+
+    public void showLoaderImage()
+    {
 
     }
 

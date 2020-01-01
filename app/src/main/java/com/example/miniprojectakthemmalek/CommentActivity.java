@@ -61,17 +61,19 @@ public class CommentActivity extends AppCompatActivity {
         commenter = findViewById(R.id.commenter);
         circleImageView = findViewById(R.id.circleImageView);
 
-
-
-
         movetoprofile=findViewById(R.id.moveeee);
         movetobasehome=findViewById(R.id.movetobasehome);
         usernamelabel=findViewById(R.id.usernamelabel);
         comments=findViewById(R.id.comments);
+
         username= getIntent().getStringExtra("username");
+
         description= getIntent().getStringExtra("post");
+
         id_post=getIntent().getIntExtra("id_post",0);
+
         usernamelabel.setText(username);
+
         movetoprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,10 +87,6 @@ public class CommentActivity extends AppCompatActivity {
 
 
         et_post.setText(description);
-
-
-
-
 
         ImageRepository.getInstance().loadPicutreOf(username,0.1f,0.1f, new ImageRepository.getPictureCallBack() {
             @Override

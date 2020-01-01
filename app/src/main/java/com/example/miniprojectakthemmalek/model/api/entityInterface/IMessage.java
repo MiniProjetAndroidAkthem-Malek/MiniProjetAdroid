@@ -26,4 +26,7 @@ Call<List<Message>> getAllMessageOf(@Path("sender") String sender,@Path("receive
 @GET("/message/getAll/{username}")
 Call<List<Message>> getAllMessagesOf(@Path("username") String username);
 
+@GET("/message/getDiscussionsOfUsername/{connectedUsername}")
+Call<List<Message>> getDiscussionsOfUsername(@Path("connectedUsername") String connectedUsername);
+
 }

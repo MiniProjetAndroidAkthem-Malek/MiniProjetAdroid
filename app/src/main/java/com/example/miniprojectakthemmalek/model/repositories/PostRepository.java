@@ -31,7 +31,7 @@ public class PostRepository {
 
     IPost iPost = RetrofitInstance.getRetrofitInstance().create(IPost.class);
 
-    public void addPost(Post post, final addingCallback callback )
+    public void addPost(Post post, final getLastInsertedCallBack callback )
     {
         Call<JsonPrimitive> call ;
 
@@ -40,30 +40,7 @@ public class PostRepository {
             @Override
             public void onResponse(Call<JsonPrimitive> call, Response<JsonPrimitive> response) {
 
-                callback.addingCallback(response.code());
-
-            }
-
-            @Override
-            public void onFailure(Call<JsonPrimitive> call, Throwable t) {
-
-                t.printStackTrace();
-
-            }
-        });
-
-    }
-
-    public void addPost(final Post post, final addingPostCallback callback )
-    {
-        Call<JsonPrimitive> call ;
-
-        call =  iPost.addPost(post);
-        call.enqueue(new Callback<JsonPrimitive>() {
-            @Override
-            public void onResponse(Call<JsonPrimitive> call, Response<JsonPrimitive> response) {
-
-                callback.addingCallback(post);
+                callback.onResponse(response.body());
 
             }
 
@@ -117,6 +94,27 @@ public class PostRepository {
     });
 
 }
+
+
+public void getPostById(String id,final getAllPostCallBack allPostCallBack)
+    {
+        Call<List<Post>> call;
+        call = iPost.getAllPostsById(id);
+        call.enqueue(new Callback<List<Post>>() {
+            @Override
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+
+                allPostCallBack.onResponse(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Post>> call, Throwable t) {
+
+                t.printStackTrace();
+            }
+        });
+
+    }
 
     public void getPost(String username , String description,final getAllPostCallBack allPostCallBack)
     {
@@ -179,9 +177,39 @@ public class PostRepository {
         });
 
     }
+
+    public void updateDescriptionPost(Post post,final addingCallback addingCallback)
+    {
+        Call<JsonObject> call ;
+        call = iPost.updateDescription(post);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+                addingCallback.addingCallback(response.code());
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+                t.printStackTrace();
+
+            }
+        });
+
+    }
+
+
+
+
 public interface getAllPostCallBack
 {
     public void onResponse(List<Post> posts);
+}
+
+public interface getLastInsertedCallBack
+{
+    public void onResponse(JsonPrimitive id);
 }
 
     public interface addingCallback

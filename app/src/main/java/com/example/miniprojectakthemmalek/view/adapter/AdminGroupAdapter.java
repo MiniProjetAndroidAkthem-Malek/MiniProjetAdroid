@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.GroupUser;
-import com.example.miniprojectakthemmalek.model.entities.Role;
+import com.example.miniprojectakthemmalek.model.entities.Enums.Role;
 import com.example.miniprojectakthemmalek.model.repositories.GroupUserRepository;
 import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 
@@ -92,13 +92,13 @@ public class AdminGroupAdapter extends RecyclerView.Adapter<AdminGroupAdapter.Ad
                     public void addingCallback(int code) {
                         if (code==200)
                         {
-                            groupUsers.remove(position);
 
-                            notifyDataSetChanged();
 
                         }
                     }
                 });
+                groupUsers.remove(position);
+                notifyDataSetChanged();
 
             }
         });

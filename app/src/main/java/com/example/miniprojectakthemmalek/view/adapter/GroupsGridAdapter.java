@@ -1,20 +1,19 @@
 package com.example.miniprojectakthemmalek.view.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridLayout;
-import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.Group;
-import com.example.miniprojectakthemmalek.view.GroupMainPageActivity;
+import com.example.miniprojectakthemmalek.model.entities.GroupUser;
+import com.example.miniprojectakthemmalek.model.entities.Post;
+import com.example.miniprojectakthemmalek.model.entities.Enums.Status;
+import com.example.miniprojectakthemmalek.model.repositories.GroupUserRepository;
+import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
 
 import java.util.List;
 
@@ -24,6 +23,9 @@ public class GroupsGridAdapter extends BaseAdapter {
     private Context context;
     private List<Group> groupList;
     String username;
+    LayoutInflater inflater;
+
+
 
     public GroupsGridAdapter(Context context, List<Group> groupList) {
         this.context = context;
@@ -56,46 +58,39 @@ public class GroupsGridAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        final Group single_group=groupList.get(position);
 
-        TextView textView = new TextView(context);
-        textView.setLayoutParams(new GridView.LayoutParams(400, 200));
-        textView.setBackgroundColor(Color.CYAN);
-        textView.setText(single_group.getName().toString());
+        if(inflater == null)
+        {
+            inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+        }
+        if(convertView == null)
+        {
+            convertView = inflater.inflate(R.layout.item_grid_view,null);
+        }
 
-        textView.setOnClickListener(new View.OnClickListener() {
+        TextView titleGroup = convertView.findViewById(R.id.title);
+        titleGroup.setText(groupList.get(position).getName());
+
+        TextView content=convertView.findViewById(R.id.content);
+        content.setText(groupList.get(position).getDescription());
+
+        final TextView postNumber=convertView.findViewById(R.id.postNumber);
+        final TextView membersNumber=convertView.findViewById(R.id.membersNumber);
+
+        PostRepository.getInstance().getAllPostByGroupName(groupList.get(position).getName(), new PostRepository.getAllPostCallBack() {
             @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(context, GroupMainPageActivity.class);
-                intent.putExtra("group_name",single_group.getName());
-                intent.putExtra("username",username);
-
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+            public void onResponse(List<Post> posts) {
+                postNumber.setText(""+posts.size());
             }
         });
 
-/*
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        GroupUserRepository.getInstance().getUserGroupByStatus(groupList.get(position).getName(), Status.COMFIRMED.toString(), new GroupUserRepository.getAllGroupCallBack() {
+            @Override
+            public void onResponse(List<GroupUser> list) {
+                membersNumber.setText(""+list.size());
+            }
+        });
 
-        View gridView;
-
-        if (convertView == null) {
-            // get layout from xml file
-            gridView = inflater.inflate(R.layout.item_grid_view, null);
-            // pull views
-            TextView letterView =  gridView
-                    .findViewById(R.id.title);
-
-            // set values into views
-        } else {
-            gridView =  convertView;
-        }
-        return gridView;
-
-*/
-
-        return textView;
+        return convertView;
     }
 }

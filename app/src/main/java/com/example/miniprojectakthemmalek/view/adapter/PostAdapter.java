@@ -52,10 +52,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     int x = 0;
 
+
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -75,6 +75,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         PostViewHolder postViewHolder = new PostViewHolder(item);
 
         return postViewHolder;
+
     }
 
     @Override
@@ -82,8 +83,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         System.out.println(this.post_list.get(position));
         final Post single_post = this.post_list.get(position);
-
-
 
         holder.username_text_view.setText(single_post.getUsername());
         holder.description_text_view.setText(single_post.getDescription());
@@ -132,8 +131,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 holder.likes.setText(like_posts.size() + " Likes");
             }
         });
-
-
 
         holder.like.setOnClickListener(new View.OnClickListener() {
 

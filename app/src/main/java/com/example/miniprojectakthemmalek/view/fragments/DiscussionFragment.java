@@ -29,8 +29,9 @@ public class DiscussionFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    DiscussionAdapter discussionAdapter;
     RecyclerView recyclerView;
+    String connectedUsername;
 
     public DiscussionFragment() {
         // Required empty public constructor
@@ -70,23 +71,21 @@ public class DiscussionFragment extends Fragment {
 
         View rootView =inflater.inflate(R.layout.fragment_discussion, container, false);
         recyclerView = rootView.findViewById(R.id.discussionRecyclerView);
+        connectedUsername=getArguments().getString("connectedUsername");
+        discussionAdapter=new DiscussionAdapter();
 
-
-    MessageRepository.getInstance().getMessages("malek", new MessageRepository.getManyCallback() {
+        discussionAdapter.setFragmentManager(getFragmentManager());
+    MessageRepository.getInstance().getDiscussionsByConnectedUsername(connectedUsername, new MessageRepository.getManyCallback() {
         @Override
         public void getManyOneFollow(List<Message> messages) {
 
             List<Message> messageList = new ArrayList<Message>();
 
-            messageList.add(messages.get(messageList.size()));
-
-            System.out.println("-------->"+messages);
-            DiscussionAdapter discussionAdapter=new DiscussionAdapter();
-            discussionAdapter.setMessageList(messages);
+            discussionAdapter.setConnectedUsername(connectedUsername);
+            discussionAdapter.setMessageList(getLastMessage(messages));
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setHasFixedSize(false);
             recyclerView.setAdapter(discussionAdapter);
-
 
         }
     });
@@ -98,7 +97,55 @@ public class DiscussionFragment extends Fragment {
 
 
 
+    public List<Message> getLastMessage(List<Message> messageList)
+    {
+        List<Message> senderList=new ArrayList<Message>();
+        List<Message> receiverList=new ArrayList<Message>();
+        List<Message> finalList=new ArrayList<Message>();
+        for(Message m :messageList )
+        {
 
+            if(m.getSender().equals(connectedUsername))
+            {
+                senderList.add(m);
+            }else if(m.getReceiver().equals(connectedUsername))
+            {
+                receiverList.add(m);
+            }
+
+        }
+
+        for(Message senderMessage : senderList)
+        {
+            Message receiverMessage=getMessageBySenderAndReceiver(receiverList,senderMessage.getReceiver(),senderMessage.getSender());
+
+            if(senderMessage.getId()>receiverMessage.getId())
+            {
+                finalList.add(senderMessage);
+
+            }else{
+
+                finalList.add(receiverMessage);
+
+            }
+        }
+
+            return finalList;
+    }
+
+
+public Message getMessageBySenderAndReceiver(List<Message> messageList,String sender,String receiver)
+{
+    Message message=new Message();
+    for(Message m:messageList)
+    {
+        if(m.getSender().equals(sender) && m.getReceiver().equals(receiver))
+        {
+            return m;
+        }
+    }
+return message;
+}
 
 
 }

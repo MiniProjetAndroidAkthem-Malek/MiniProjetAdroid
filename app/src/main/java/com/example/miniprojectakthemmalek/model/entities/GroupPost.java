@@ -1,5 +1,7 @@
 package com.example.miniprojectakthemmalek.model.entities;
 
+import com.example.miniprojectakthemmalek.model.entities.Enums.Role;
+import com.example.miniprojectakthemmalek.model.entities.Enums.Status;
 import com.google.gson.annotations.SerializedName;
 
 public class GroupPost {

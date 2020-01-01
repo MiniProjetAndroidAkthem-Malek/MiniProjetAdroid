@@ -10,11 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.miniprojectakthemmalek.R;
+import com.example.miniprojectakthemmalek.model.entities.Activities;
+import com.example.miniprojectakthemmalek.model.entities.Enums.ActivityType;
 import com.example.miniprojectakthemmalek.model.entities.GroupUser;
 import com.example.miniprojectakthemmalek.model.entities.Invitation;
-import com.example.miniprojectakthemmalek.model.entities.Role;
-import com.example.miniprojectakthemmalek.model.entities.Status;
+import com.example.miniprojectakthemmalek.model.entities.Enums.Role;
+import com.example.miniprojectakthemmalek.model.entities.Enums.Status;
 import com.example.miniprojectakthemmalek.model.entities.User;
+import com.example.miniprojectakthemmalek.model.repositories.ActivitiesRepository;
 import com.example.miniprojectakthemmalek.model.repositories.GroupUserRepository;
 import com.example.miniprojectakthemmalek.model.repositories.InvitationRepository;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
@@ -135,8 +138,20 @@ public class InvitationAdapter extends RecyclerView.Adapter<InvitationAdapter.In
                         @Override
                         public void addingCallback(int code) {
 
+
+
+
                         }
                     });
+
+
+                    ActivitiesRepository.getInstance().addActivities(new Activities(single_invitation.getReceiver().toString(), single_invitation.getSender(), ActivityType.GROUP_JOIN), new ActivitiesRepository.addingCallback() {
+                        @Override
+                        public void addingCallback(int code) {
+
+                        }
+                    });
+
 
                     InvitationRepository.getInstance().deleteInvitionFor(single_invitation.getReceiver(), single_invitation.getSender(), new InvitationRepository.addingCallback() {
                         @Override

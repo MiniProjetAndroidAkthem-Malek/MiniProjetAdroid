@@ -16,7 +16,6 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.fragment.app.Fragment;
 
@@ -27,13 +26,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.Invitation;
-import com.example.miniprojectakthemmalek.model.entities.Status;
 import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 import com.example.miniprojectakthemmalek.model.repositories.InvitationRepository;
@@ -41,6 +37,7 @@ import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
 import com.example.miniprojectakthemmalek.view.AuthentificationActivity;
 import com.example.miniprojectakthemmalek.view.SessionManager;
 import com.example.miniprojectakthemmalek.view.utils.ImageManager;
+import com.facebook.login.LoginManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hootsuite.nachos.NachoTextView;
 import com.hootsuite.nachos.terminator.ChipTerminatorHandler;
@@ -52,9 +49,7 @@ import java.util.List;
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-import static android.Manifest.permission.CAMERA;
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
 public class SettingsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -303,20 +298,20 @@ blue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
         }else{
 
-        partnerAutocomplete.setText(user.getPartner().toString());
-
+            partnerAutocomplete.setText(user.getPartner().toString());
 
         }
-
 
         logoutSettings.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
 
+        LoginManager.getInstance().logOut();
+
         sessionManager.updateConnectionStatusForUser(user.getUsername(),0);
+        sessionManager.initRememberMeStatus();
         Intent intent=new Intent(getContext(), AuthentificationActivity.class);
         startActivity(intent);
-
 
     }
 });
@@ -335,7 +330,9 @@ blue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
                         UserRepository.getInstance().deleteUser(user.getUsername());
                         sessionManager.deleteSessionForUser(user.getUsername());
-
+                        sessionManager.updateConnectionStatusForUser(user.getUsername(),0);
+                        sessionManager.initRememberMeStatus();
+                        LoginManager.getInstance().logOut();
                         Intent intent=new Intent(getContext(), AuthentificationActivity.class);
                         startActivity(intent);
 
@@ -344,7 +341,8 @@ blue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                         .setNegativeButton("Cancel ", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //Action for "Cancel".
+
+
                             }
                         });
                 final AlertDialog alert = dialog.create();
@@ -365,11 +363,9 @@ blue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 if(selectedUsernames.size()>0)
                 {
 
-
                     InvitationRepository.getInstance().getInvitationForUser(user.getUsername(), selectedUsernames.get(0).toString(), new InvitationRepository.getManyCallback() {
                         @Override
                         public void getMany(List<Invitation> invitationList) {
-
                             if(invitationList.size()==0)
                             {
 
@@ -381,14 +377,9 @@ blue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                                 });
 
                             }
-
-
                         }
                     });
-
                 }
-
-
 
                 UserRepository.getInstance().updateUser(user);
                 sessionManager.updateUser(user);

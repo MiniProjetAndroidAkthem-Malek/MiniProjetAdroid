@@ -112,6 +112,26 @@ public class GroupUserRepository {
     }
 
 
+public void getUserGroupByStatus(String group_name,String status,final getAllGroupCallBack getAllGroupCallBack) {
+        Call<List<GroupUser>> call = iGroupUser.getGroupUserByStatus(group_name,status);
+        call.enqueue(new Callback<List<GroupUser>>() {
+            @Override
+            public void onResponse(Call<List<GroupUser>> call, Response<List<GroupUser>> response) {
+
+                getAllGroupCallBack.onResponse(response.body());
+
+            }
+
+            @Override
+            public void onFailure(Call<List<GroupUser>> call, Throwable t) {
+
+                t.printStackTrace();
+
+                getAllGroupCallBack.onResponse(null);
+            }
+        });
+    }
+
     public void updateUser(GroupUser groupUser,final addingCallback addingCallback)
     {
         Call<JsonObject> call ;

@@ -40,5 +40,8 @@ Call<List<GroupUser>> getGroupUser(@Path("group_name") String group_name,@Path("
 @GET("/group_user/getGroupUserByStatusAndRole/{group_name}/{status}/{role}")
 Call<List<GroupUser>> getGroupUserByRoleAndStatus(@Path("group_name") String group_name,@Path("status") String status,@Path("role") String role);
 
+@GET("/group_user/getGroupUserByStatus/{group_name}/{status}")
+Call<List<GroupUser>> getGroupUserByStatus(@Path("group_name") String group_name,@Path("status") String status);
+
 
 }
