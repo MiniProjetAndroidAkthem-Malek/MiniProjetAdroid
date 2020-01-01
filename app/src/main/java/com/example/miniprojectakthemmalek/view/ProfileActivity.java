@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.miniprojectakthemmalek.model.entities.User;
@@ -18,6 +20,7 @@ public class ProfileActivity extends AppCompatActivity {
     User user;
 
     TextView firstNameLabel,lastNameLabel,addressLabel,phoneNumberLabel,usernameLabel;
+    LinearLayout FollowingLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,19 @@ public class ProfileActivity extends AppCompatActivity {
         profileFragment.setArguments(bundle);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.frameProfile,profileFragment).commit();
+
+        FollowingLayout=findViewById(R.id.FollowingLayout);
+       // FollowingLayout.setOnClickListener(new View.OnClickListener() {
+         //   @Override
+         //   public void onClick(View v) {
+       //        Intent intent =new Intent(getApplicationContext(),ShowFriendsActivity.class);
+      //          intent.putExtra("username",user.getUsername());
+
+    //            startActivity(intent);
+     //       }
+    //    });
+
+
 
        /* firstNameLabel=findViewById(R.id.firstNameLabel);
         lastNameLabel=findViewById(R.id.lastNameLabel);

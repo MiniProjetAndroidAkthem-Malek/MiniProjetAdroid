@@ -27,7 +27,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="20dp"
         android:background="@color/purple_500"
         app:contentInsetStartWithNavigation="0dp"
         app:layout_scrollFlags="scroll|enterAlways"
@@ -51,22 +51,13 @@ app:logo="@drawable/vol"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/spacing_smlarge"
-                android:layout_marginRight="@dimen/spacing_smlarge"
-                android:text="Recommended"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/grey_90"
-                app:fontFamily="sans-serif-medium" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
-                android:layout_marginLeft="@dimen/spacing_smlarge"
+                android:layout_marginLeft="0dp"
                 android:layout_marginTop="@dimen/spacing_middle"
-                android:layout_marginRight="@dimen/spacing_smlarge"
+                android:layout_marginRight="0dp"
                 app:cardBackgroundColor="@color/grey_10"
                 app:cardCornerRadius="3dp"
                 app:cardElevation="0dp"
@@ -75,55 +66,29 @@ app:logo="@drawable/vol"
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:weightSum="10">
 
-                    <ImageView
-                        android:id="@+id/image_1"
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/viewpager"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/photo_female_1" />
+
+                      android:layout_weight="8" />
+                    <LinearLayout
+                        android:id="@+id/layoutDotss"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        />
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_small"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/spacing_xmedium"
-                    android:layout_height="@dimen/spacing_xmedium"
-                    android:layout_margin="@dimen/spacing_small"
-                    android:tint="@color/grey_20"
-                    app:srcCompat="@drawable/shape_circle" />
-
-                <ImageView
-                    android:layout_width="@dimen/spacing_xmedium"
-                    android:layout_height="@dimen/spacing_xmedium"
-                    android:layout_margin="@dimen/spacing_small"
-                    android:tint="@color/grey_20"
-                    app:srcCompat="@drawable/shape_circle" />
-
-                <ImageView
-                    android:layout_width="@dimen/spacing_xmedium"
-                    android:layout_height="@dimen/spacing_xmedium"
-                    android:layout_margin="@dimen/spacing_small"
-                    android:tint="@color/colorPrimaryLight"
-                    app:srcCompat="@drawable/shape_circle" />
-
-                <ImageView
-                    android:layout_width="@dimen/spacing_xmedium"
-                    android:layout_height="@dimen/spacing_xmedium"
-                    android:layout_margin="@dimen/spacing_small"
-                    android:tint="@color/grey_20"
-                    app:srcCompat="@drawable/shape_circle" />
-
-            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -238,7 +203,7 @@ app:logo="@drawable/vol"
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:layout_marginTop="@dimen/spacing_middle"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/spacing_smlarge"
@@ -249,23 +214,43 @@ app:logo="@drawable/vol"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="@color/purple_500"
+                    app:cardBackgroundColor="@color/transparent"
                     app:cardCornerRadius="3dp"
                     app:cardElevation="0dp"
-                    app:cardUseCompatPadding="false">
+                    app:cardUseCompatPadding="false"
+                    android:id="@+id/gotoeventss">
 
-                    <RelativeLayout
+
+                <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp">
+                        android:layout_height="match_parent">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:weightSum="5">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/events2"
+                            android:tint="@color/purple_500"
+                            android:layout_gravity="center"
+                            app:civ_border_color="@color/purple_500"
+                            app:civ_border_width="1dp"
+                            android:layout_weight="4"></de.hdodenhof.circleimageview.CircleImageView>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:text="EVENTS"
+                            android:text="Events"
+                            android:id="@+id/gotoevents"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@android:color/white" />
-
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:textSize="11dp"
+                            android:layout_weight="1"/>
+                        </LinearLayout>
                     </RelativeLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -278,61 +263,88 @@ app:logo="@drawable/vol"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="@color/purple_500"
+                    app:cardBackgroundColor="@color/transparent"
                     app:cardCornerRadius="3dp"
                     app:cardElevation="0dp"
-                    app:cardUseCompatPadding="false">
+                    app:cardUseCompatPadding="false"
+                    android:id="@+id/gotogroups">
 
-                    <RelativeLayout
+
+                <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp">
+                        android:layout_height="match_parent">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:weightSum="5">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/events"
+                            android:tint="@color/purple_500"
+                            android:layout_gravity="center"
+                            app:civ_border_color="@color/purple_500"
+                            app:civ_border_width="1dp"
+                            android:layout_weight="4"></de.hdodenhof.circleimageview.CircleImageView>
 
                         <TextView
                             android:id="@+id/movetogroups"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:text="GROUPS"
+                            android:text="Groups"
+
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@android:color/white" />
+                            android:textSize="11dp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"/>
+                        </LinearLayout>
 
                     </RelativeLayout>
 
                 </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_middle"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/spacing_smlarge"
-                android:paddingRight="@dimen/spacing_smlarge"
-                android:visibility="visible">
-
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="@color/purple_500"
+                    app:cardBackgroundColor="@color/transparent"
                     app:cardCornerRadius="3dp"
                     app:cardElevation="0dp"
-                    app:cardUseCompatPadding="false">
+                    app:cardUseCompatPadding="false"
+                    android:id="@+id/gotoposts">
+                    >
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
+                        android:layout_height="match_parent">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:weightSum="5">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/posts"
+                            android:tint="@color/purple_500"
+                            android:layout_gravity="center"
+                            app:civ_border_color="@color/purple_500"
+                            app:civ_border_width="1dp"
+                            android:layout_weight="4"></de.hdodenhof.circleimageview.CircleImageView>
                         <TextView
                             android:id="@+id/movetoposts"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:text="POSTS"
+                            android:text="Posts"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@android:color/white" />
-
+                            android:layout_gravity="center"
+                            android:textStyle="bold"
+                            android:textSize="11dp"
+                            android:layout_weight="1"/>
+                        </LinearLayout>
                     </RelativeLayout>
 
                 </androidx.cardview.widget.CardView>
@@ -343,28 +355,48 @@ app:logo="@drawable/vol"
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="@color/purple_500"
+                    app:cardBackgroundColor="@color/transparent"
                     app:cardCornerRadius="3dp"
                     app:cardElevation="0dp"
-                    app:cardUseCompatPadding="false">
+                    app:cardUseCompatPadding="false"
+                    android:id="@+id/gotofriends">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
+                        android:layout_height="match_parent">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:weightSum="5">
+<de.hdodenhof.circleimageview.CircleImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/friends"
+    android:tint="@color/purple_500"
+    android:layout_gravity="center"
+    app:civ_border_color="@color/purple_500"
+    app:civ_border_width="1dp"
+    android:layout_weight="4"></de.hdodenhof.circleimageview.CircleImageView>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:text="NEWS"
+                            android:text="Friends"
+                            android:textSize="11dp"
+                            android:textStyle="bold"
+                            android:id="@+id/friends"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@android:color/white" />
-
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            />
+                        </LinearLayout>
                     </RelativeLayout>
 
                 </androidx.cardview.widget.CardView>
+
 
             </LinearLayout>
 
@@ -377,62 +409,44 @@ app:logo="@drawable/vol"
                 android:paddingRight="@dimen/spacing_smlarge"
                 android:visibility="visible">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/purple_500"
-                    app:cardCornerRadius="3dp"
-                    app:cardElevation="0dp"
-                    app:cardUseCompatPadding="false">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:text="FRIENDS"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@android:color/white" />
-
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <View
-                    android:layout_width="@dimen/spacing_middle"
-                    android:layout_height="0dp" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/purple_500"
-                    app:cardCornerRadius="3dp"
-                    app:cardElevation="0dp"
-                    app:cardUseCompatPadding="false">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:text="SICKNESS"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textColor="@android:color/white" />
-
-                    </RelativeLayout>
-
-                </androidx.cardview.widget.CardView>
 
             </LinearLayout>
 
+
+n           <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <View
+                android:layout_width="20dp"
+                android:layout_height="match_parent"></View>
+
+            <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Hey Volk, you want to add a new Post?"
+                android:drawableRight="@drawable/ic_people_outline"
+                android:backgroundTint="@color/purple_500"
+                android:textStyle="bold"
+                android:drawablePadding="8dp"
+                />
+            <View
+                android:layout_width="20dp"
+                android:layout_height="match_parent"></View>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/movetozddposts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end|right"
+                android:layout_margin="@dimen/spacing_smlarge"
+                android:clickable="true"
+                android:tint="@android:color/white"
+                app:fabSize="normal"
+                app:rippleColor="@android:color/white"
+                app:srcCompat="@drawable/ic_create"
+                />
+        </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/spacing_mlarge" />
@@ -447,7 +461,10 @@ app:logo="@drawable/vol"
             </FrameLayout>
 
 
+
         </LinearLayout>
+
+
     </androidx.core.widget.NestedScrollView>
 
 
