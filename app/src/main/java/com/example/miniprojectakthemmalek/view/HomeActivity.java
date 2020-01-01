@@ -124,7 +124,7 @@ public class HomeActivity extends AppCompatActivity  {
         moveToAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // focusOnView();
+                focusOnView();
 
                 AddPostFragment addPostFragment =    new AddPostFragment();
                 Bundle bundle = new Bundle();
@@ -139,14 +139,14 @@ public class HomeActivity extends AppCompatActivity  {
         initComponent();
 
 
-       /* movetoposts.setOnClickListener(new View.OnClickListener() {
+        movetoposts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 focusOnView();
             }
         });
 
-*/
+
 
         gotoevents.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,7 +211,7 @@ gotogroups.setOnClickListener(new View.OnClickListener() {
 gotoposts.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-      //  focusOnView();
+      focusOnView();
 
     }
 });
@@ -403,6 +403,23 @@ gotoposts.setOnClickListener(new View.OnClickListener() {
 
     }
 
+
+    public void focusOnView()
+    {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+
+                nested_scroll_view.scrollTo(0,frameHome.getTop());
+
+            }
+        });
+
+
+
+
+
+    }
 
     public class MyViewPagerAdapter extends PagerAdapter {
         private LayoutInflater layoutInflater;
