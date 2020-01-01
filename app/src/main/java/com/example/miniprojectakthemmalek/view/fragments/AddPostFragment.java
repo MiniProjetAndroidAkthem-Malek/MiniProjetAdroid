@@ -50,8 +50,6 @@ public class AddPostFragment extends Fragment {
     TextView usernamelabel;
     FloatingActionButton moveToPost;
 String username;
-ImageButton movetoprofile;
-ImageButton movetobasehome;
 SwitchCompat positionSwitch;
     Post post;
 CircularImageView image;
@@ -96,8 +94,6 @@ CircularImageView image;
 
         et_post=rootView.findViewById(R.id.et_post);
         moveToPost=rootView.findViewById(R.id.moveToPost);
-        movetoprofile=rootView.findViewById(R.id.moveeee);
-        movetobasehome=rootView.findViewById(R.id.movetobasehome);
         usernamelabel=rootView.findViewById(R.id.usernamelabel);
         positionSwitch=rootView.findViewById(R.id.positionSwitch);
         image = rootView.findViewById(R.id.image);
@@ -105,16 +101,6 @@ CircularImageView image;
         username= getArguments().getString("username");
        
         usernamelabel.setText(username);
-        movetoprofile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent =new Intent(getContext(), ProfileActivity.class);
-                intent.putExtra("username",username);
-                startActivity(intent);
-
-            }
-        });
 
 
         ImageRepository.getInstance().loadPicutreOf(username,0.2f,0.2f, new ImageRepository.getPictureCallBack() {
@@ -195,16 +181,6 @@ moveToPost.setOnClickListener(new View.OnClickListener() {
     }
 });
 
-        movetobasehome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent =new Intent(getContext(), Base_Home.class);
-                intent.putExtra("username",username);
-                startActivity(intent);
-
-            }
-        });
 
 
 

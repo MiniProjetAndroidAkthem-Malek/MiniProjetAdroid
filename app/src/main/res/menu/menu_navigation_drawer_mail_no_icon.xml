@@ -33,16 +33,16 @@
         android:id="@+id/grp_6"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_group6"
+            android:id="@+id/nav_add_event"
             android:title="Add new event"
             app:actionLayout="@layout/badge_navigation_plain" />
         <item
-            android:id="@+id/nav_priority_inbox6"
-            android:title="Show my events"
+            android:id="@+id/nav_all_events"
+            android:title="Show all events"
             app:actionLayout="@layout/badge_navigation_colored" />
         <item
-            android:id="@+id/nav_all_groups6"
-            android:title="Show recents events"
+            android:id="@+id/nav_my_events"
+            android:title="Show My events"
             app:actionLayout="@layout/badge_navigation_colored" />
     </group>
     <item

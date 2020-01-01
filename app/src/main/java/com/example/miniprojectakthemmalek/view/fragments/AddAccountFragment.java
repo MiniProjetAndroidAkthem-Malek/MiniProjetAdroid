@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.balysv.materialripple.MaterialRippleLayout;
 import com.example.miniprojectakthemmalek.R;
@@ -126,8 +127,9 @@ public class AddAccountFragment extends Fragment {
 
                         }else{
 
-                            Snackbar.make(parent_view, "Wrong password or username", Snackbar.LENGTH_SHORT).show();
-
+                            Toast toast=Toast.makeText(getContext(),"wrong ya bro",Toast.LENGTH_SHORT);
+                            toast.setMargin(50,50);
+                            toast.show();
                         }
                     }
                 });

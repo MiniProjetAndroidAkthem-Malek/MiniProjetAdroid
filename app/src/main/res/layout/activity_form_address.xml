@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <include layout="@layout/toolbar" />
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -26,13 +26,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/linearlayout">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_xxxlarge"
+                android:text="CREATE EVENT"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@color/grey_60" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/spacing_medium"
-                android:text="FIRST NAME"
+                android:text="EVENT NAME"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@color/grey_60" />
 
@@ -44,64 +52,30 @@
                 android:minHeight="@dimen/spacing_xmlarge"
                 android:paddingLeft="@dimen/spacing_middle"
                 android:paddingRight="@dimen/spacing_middle"
-                android:text="John" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_medium"
-                android:layout_marginTop="@dimen/spacing_large"
-                android:text="LAST NAME"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/grey_60" />
-
-            <EditText
-                style="@style/EditText.Flat.Grey"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/spacing_xmlarge"
-                android:background="@drawable/edit_text_round_bg_white"
-                android:minHeight="@dimen/spacing_xmlarge"
-                android:paddingLeft="@dimen/spacing_middle"
-                android:paddingRight="@dimen/spacing_middle"
-                android:text="Smith" />
+                android:text=""
+                android:id="@+id/EventsNameEt"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/spacing_medium"
                 android:layout_marginTop="@dimen/spacing_large"
-                android:text="EMAIL"
+                android:text="DESCRIPTION"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/grey_60" />
+                android:textColor="@color/grey_60"
+                />
 
             <EditText
                 style="@style/EditText.Flat.Grey"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/spacing_xmlarge"
+                android:layout_height="100dp"
                 android:background="@drawable/edit_text_round_bg_white"
                 android:minHeight="@dimen/spacing_xmlarge"
                 android:paddingLeft="@dimen/spacing_middle"
                 android:paddingRight="@dimen/spacing_middle"
-                android:text="john.smith@mail.com" />
+                android:text=""
+                android:id="@+id/EventsDescriptionEt"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_medium"
-                android:layout_marginTop="@dimen/spacing_large"
-                android:text="PHONE"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/grey_60" />
-
-            <EditText
-                style="@style/EditText.Flat.Grey"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/spacing_xmlarge"
-                android:background="@drawable/edit_text_round_bg_white"
-                android:minHeight="@dimen/spacing_xmlarge"
-                android:paddingLeft="@dimen/spacing_middle"
-                android:paddingRight="@dimen/spacing_middle"
-                android:text="083 2374 2342" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -124,19 +98,18 @@
                         android:textColor="@color/grey_60" />
 
                     <EditText
-                        android:id="@+id/et_state"
+                        android:id="@+id/EventStateEt"
                         style="@style/EditText.Flat.Grey"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/spacing_xmlarge"
                         android:background="@drawable/edit_text_round_bg_white"
-                        android:drawableEnd="@drawable/ic_expand_arrow"
-                        android:drawableRight="@drawable/ic_expand_arrow"
-                        android:editable="false"
-                        android:focusable="false"
+
+
                         android:minHeight="@dimen/spacing_xmlarge"
                         android:paddingLeft="@dimen/spacing_middle"
                         android:paddingRight="@dimen/spacing_middle"
-                        android:text="California" />
+                        android:text=""
+                        />
 
                 </LinearLayout>
 
@@ -154,7 +127,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/spacing_medium"
-                        android:text="ZIP CODE"
+                        android:text="COUNTRY"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textColor="@color/grey_60" />
 
@@ -166,39 +139,17 @@
                         android:minHeight="@dimen/spacing_xmlarge"
                         android:paddingLeft="@dimen/spacing_middle"
                         android:paddingRight="@dimen/spacing_middle"
-                        android:text="6625" />
+                        android:text=""
+                        android:id="@+id/EventsContryEt"/>
+
 
                 </LinearLayout>
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_medium"
-                android:layout_marginTop="@dimen/spacing_large"
-                android:text="COUNTRY"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="@color/grey_60" />
-
-            <EditText
-                android:id="@+id/et_country"
-                style="@style/EditText.Flat.Grey"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/spacing_xmlarge"
-                android:background="@drawable/edit_text_round_bg_white"
-                android:drawableEnd="@drawable/ic_expand_arrow"
-                android:drawableRight="@drawable/ic_expand_arrow"
-                android:editable="false"
-                android:minHeight="@dimen/spacing_xmlarge"
-                android:paddingLeft="@dimen/spacing_middle"
-                android:focusable="false"
-                android:paddingRight="@dimen/spacing_middle"
-                android:text="United State" />
-
 
             <Button
-                android:id="@+id/bt_submit"
+                android:id="@+id/addEventBtn"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
@@ -206,6 +157,7 @@
                 android:layout_marginRight="-4dp"
                 android:layout_marginTop="@dimen/spacing_large"
                 android:background="@drawable/btn_rect_primary"
+                android:backgroundTint="@color/purple_500"
                 android:text="SUBMIT"
                 android:textAllCaps="false"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"

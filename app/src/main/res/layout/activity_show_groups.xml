@@ -7,7 +7,17 @@
     tools:context=".view.ShowGroupsActivity"
     android:orientation="vertical"
     >
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/purple_500"
+        app:contentInsetStartWithNavigation="0dp"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:logo="@drawable/vol"
 
+        />
     <GridView
         android:id="@+id/gridView"
         android:layout_width="match_parent"

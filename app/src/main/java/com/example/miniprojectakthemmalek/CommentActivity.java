@@ -21,6 +21,7 @@ import com.example.miniprojectakthemmalek.model.entities.comment;
 import com.example.miniprojectakthemmalek.model.repositories.CommentRepository;
 import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
+import com.example.miniprojectakthemmalek.view.HomeActivity;
 import com.example.miniprojectakthemmalek.view.ProfileActivity;
 import com.example.miniprojectakthemmalek.view.SessionManager;
 import com.example.miniprojectakthemmalek.view.adapter.CommentAdapter;
@@ -112,7 +113,7 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent =new Intent(getApplicationContext(), Base_Home.class);
+                Intent intent =new Intent(getApplicationContext(), HomeActivity.class);
                 intent.putExtra("username",username);
                 startActivity(intent);
 
