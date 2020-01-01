@@ -2,34 +2,23 @@ package com.example.miniprojectakthemmalek.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.miniprojectakthemmalek.R;
+import com.example.miniprojectakthemmalek.model.entities.Enums.Role;
 import com.example.miniprojectakthemmalek.model.entities.Event;
 import com.example.miniprojectakthemmalek.model.entities.EventUser;
-import com.example.miniprojectakthemmalek.model.entities.Group;
-import com.example.miniprojectakthemmalek.model.entities.GroupUser;
-import com.example.miniprojectakthemmalek.model.entities.Role;
-import com.example.miniprojectakthemmalek.model.entities.Status;
 import com.example.miniprojectakthemmalek.model.repositories.EventUserRepository;
-import com.example.miniprojectakthemmalek.model.repositories.GroupUserRepository;
-import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 import com.example.miniprojectakthemmalek.view.EventMainPageActivity;
-import com.example.miniprojectakthemmalek.view.GroupMainPageActivity;
 
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventsViewHolder> {
     private Context context;
@@ -81,6 +70,7 @@ String connectedUsername;
 
 
                 Intent intent=new Intent(v.getContext(), EventMainPageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("Event_name",single_event.getNom());
                 intent.putExtra("Event_Description",single_event.getDescription());
                 intent.putExtra("Event_State",single_event.getState());
@@ -120,7 +110,7 @@ String connectedUsername;
             public void onResponse(List<EventUser> list) {
                     System.out.println("200000");
                     if (list.size()!=0) {
-                    if(list.get(0).getRole()==Role.ADMIN || list.get(0).getRole()==Role.USER ) {
+                    if(list.get(0).getRole()== Role.ADMIN || list.get(0).getRole()==Role.USER ) {
                         holder.participate.setVisibility(View.GONE);
                     }
 

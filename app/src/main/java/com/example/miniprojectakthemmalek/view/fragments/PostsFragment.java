@@ -98,11 +98,10 @@ public class PostsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_posts, container, false);
-        movetoprofile=rootView.findViewById(R.id.moveee);
-        movetobasehome=rootView.findViewById(R.id.movebasehome);
+
         toolbar=rootView.findViewById(R.id.toolbar);
         recyclerView = rootView.findViewById(R.id.recyclerViewPost);
-        moveToAddPost=rootView.findViewById(R.id.moveToAddPost);
+
         username = getArguments().getString("username");
 
         spinner = rootView.findViewById(R.id.spinner);
@@ -124,41 +123,6 @@ public class PostsFragment extends Fragment {
         });
 
 
-        moveToAddPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                AddPostFragment addPostFragment =    new AddPostFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("username",username);
-                addPostFragment.setArguments(bundle);
-
-                getFragmentManager().beginTransaction().replace(R.id.frameHome,addPostFragment).commit();
-
-            }
-        });
-
-        movetoprofile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent =new Intent(getContext(), ProfileActivity.class);
-                intent.putExtra("username",username);
-                startActivity(intent);
-
-            }
-        });
-
-        movetobasehome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent =new Intent(getContext(), Base_Home.class);
-                intent.putExtra("username",username);
-                startActivity(intent);
-
-            }
-        });
 
 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
     @Override

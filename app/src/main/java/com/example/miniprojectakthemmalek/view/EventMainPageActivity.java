@@ -9,9 +9,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.miniprojectakthemmalek.R;
+import com.example.miniprojectakthemmalek.model.entities.Enums.Role;
 import com.example.miniprojectakthemmalek.model.entities.Event;
 import com.example.miniprojectakthemmalek.model.entities.EventUser;
-import com.example.miniprojectakthemmalek.model.entities.Role;
+
 import com.example.miniprojectakthemmalek.model.repositories.EventRepository;
 import com.example.miniprojectakthemmalek.model.repositories.EventUserRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -53,7 +54,7 @@ public class EventMainPageActivity extends AppCompatActivity {
             public void onResponse(List<EventUser> list) {
                 System.out.println("200000");
                 if (list.size()!=0) {
-                    if(list.get(0).getRole()==Role.ADMIN  ) {
+                    if(list.get(0).getRole()== Role.ADMIN  ) {
                         JoinEventBtn.setVisibility(View.GONE);
                         UnjoinEventBtn.setVisibility(View.GONE);
                     }

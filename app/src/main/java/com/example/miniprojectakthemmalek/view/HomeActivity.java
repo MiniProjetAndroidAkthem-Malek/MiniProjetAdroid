@@ -3,10 +3,17 @@ package com.example.miniprojectakthemmalek.view;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.Menu;
 import android.os.Handler;
@@ -117,7 +124,7 @@ public class HomeActivity extends AppCompatActivity  {
         moveToAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                focusOnView();
+               // focusOnView();
 
                 AddPostFragment addPostFragment =    new AddPostFragment();
                 Bundle bundle = new Bundle();
@@ -129,16 +136,17 @@ public class HomeActivity extends AppCompatActivity  {
             }
         });
 
+        initComponent();
 
 
-        movetoposts.setOnClickListener(new View.OnClickListener() {
+       /* movetoposts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 focusOnView();
             }
         });
 
-
+*/
 
         gotoevents.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,7 +211,7 @@ gotogroups.setOnClickListener(new View.OnClickListener() {
 gotoposts.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        focusOnView();
+      //  focusOnView();
 
     }
 });

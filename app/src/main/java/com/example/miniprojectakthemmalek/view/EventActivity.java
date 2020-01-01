@@ -12,12 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.miniprojectakthemmalek.R;
+import com.example.miniprojectakthemmalek.model.entities.Enums.Role;
 import com.example.miniprojectakthemmalek.model.entities.Event;
 import com.example.miniprojectakthemmalek.model.entities.EventUser;
 import com.example.miniprojectakthemmalek.model.entities.Group;
 import com.example.miniprojectakthemmalek.model.entities.GroupUser;
-import com.example.miniprojectakthemmalek.model.entities.Role;
-import com.example.miniprojectakthemmalek.model.entities.Status;
 import com.example.miniprojectakthemmalek.model.repositories.EventRepository;
 import com.example.miniprojectakthemmalek.model.repositories.EventUserRepository;
 import com.example.miniprojectakthemmalek.model.repositories.FollowRepository;
