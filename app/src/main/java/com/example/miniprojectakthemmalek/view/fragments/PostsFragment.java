@@ -32,6 +32,7 @@ import com.example.miniprojectakthemmalek.view.SessionManager;
 import com.example.miniprojectakthemmalek.view.adapter.AccountsAdapter;
 import com.example.miniprojectakthemmalek.view.adapter.PostAdapter;
 import com.example.miniprojectakthemmalek.view.utils.Base_Home;
+import com.example.miniprojectakthemmalek.view.utils.ItemAnimation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -61,6 +62,9 @@ public class PostsFragment extends Fragment {
     String username;
     FloatingActionButton moveToAddPost;
     Spinner spinner;
+    private int animation_type = ItemAnimation.BOTTOM_UP;
+
+
     int x=0;
 
     public PostsFragment() {
@@ -114,7 +118,7 @@ public class PostsFragment extends Fragment {
             @Override
             public void onResponse(List<Post> posts) {
 
-                postAdapter=new PostAdapter(getContext(),posts);
+                postAdapter=new PostAdapter(posts,getContext(),animation_type);
                 postAdapter.setUsername(username);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,true));
@@ -135,7 +139,7 @@ spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onResponse(List<Post> posts) {
 
-                    postAdapter=new PostAdapter(getContext(),posts);
+                    postAdapter=new PostAdapter(posts,getContext(),animation_type);
                     postAdapter.setUsername(username);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,true));
@@ -151,7 +155,7 @@ spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onResponse(List<Post> posts) {
 
-                    postAdapter=new PostAdapter(getContext(),posts);
+                    postAdapter=new PostAdapter(posts,getContext(),animation_type);
                     postAdapter.setUsername(username);
                     recyclerView.setHasFixedSize(true);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,true));

@@ -36,6 +36,7 @@ import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
 import com.example.miniprojectakthemmalek.model.repositories.like_postsRepository;
 import com.example.miniprojectakthemmalek.view.OtherProfileActivity;
+import com.example.miniprojectakthemmalek.view.utils.ItemAnimation;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import org.w3c.dom.Comment;
@@ -56,6 +57,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
 
     int x = 0;
+    private int animation_type = 0;
+
 
 
     public String getUsername() {
@@ -65,10 +68,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         this.username = username;
     }
 
-    public PostAdapter(Context context, List<Post> postList) {
-
-        this.context=context;
-        post_list = postList;
+    public PostAdapter(List<Post> post_list, Context context, int animation_type) {
+        this.post_list = post_list;
+        this.context = context;
+        this.animation_type = animation_type;
     }
 
     @NonNull
@@ -202,6 +205,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         });
         System.out.println("**********"+x);
+
+
+        setAnimation(holder.itemView, position);
+
     }
 
 
@@ -320,6 +327,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     return post_list.size();
 
 }
+
+
+
+    private int lastPosition = -1;
+    private boolean on_attach = true;
+
+    private void setAnimation(View view, int position) {
+        if (position > lastPosition) {
+            ItemAnimation.animate(view, on_attach ? position : -1, animation_type);
+            lastPosition = position;
+        }
+    }
+
+
 
 
     public static class PostViewHolder extends RecyclerView.ViewHolder {

@@ -5,33 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_large"
-        android:fitsSystemWindows="false"
-        android:lineSpacingExtra="@dimen/spacing_medium"
-        android:text="@string/long_lorem_ipsum"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/grey_80"
-        android:visibility="gone"
-        app:fontFamily="serif" />
-
     <RelativeLayout
-        android:id="@+id/lyt_article_cover"
+        android:id="@+id/lyt_article_cover2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
-            android:id="@+id/image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/imagee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/image_28"
+            app:srcCompat="@drawable/helps"
             app:layout_collapseMode="parallax" />
 
         <View
@@ -58,7 +45,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Guide to the new volks"
+                android:text="volk !"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="@color/grey_3"
                 app:fontFamily="serif" />
@@ -84,4 +71,134 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/lyt_article_cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/mockupv"
+            app:layout_collapseMode="parallax" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_gradient"
+            android:fitsSystemWindows="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/spacing_large"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Together"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/grey_10" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="we can make a better world"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="@color/grey_3"
+                app:fontFamily="serif" />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="2dp"
+                android:layout_marginBottom="@dimen/spacing_middle"
+                android:layout_marginTop="@dimen/spacing_middle"
+                android:background="@color/grey_10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_middle"
+                android:text="Slide to read"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/grey_20"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/lyt_article_cover3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imageee"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/hhhhhhh"
+            app:layout_collapseMode="parallax" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_gradient"
+            android:fitsSystemWindows="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/spacing_large"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="welcome"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/grey_10" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="volk !"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="@color/grey_3"
+                app:fontFamily="serif" />
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="2dp"
+                android:layout_marginBottom="@dimen/spacing_middle"
+                android:layout_marginTop="@dimen/spacing_middle"
+                android:background="@color/grey_10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_middle"
+                android:text="Slide to read"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/grey_20"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 </RelativeLayout>

@@ -28,6 +28,7 @@ import com.example.miniprojectakthemmalek.view.adapter.CommentAdapter;
 import com.example.miniprojectakthemmalek.view.fragments.PostsFragment;
 import com.example.miniprojectakthemmalek.view.fragments.ProfileFragment;
 import com.example.miniprojectakthemmalek.view.utils.Base_Home;
+import com.example.miniprojectakthemmalek.view.utils.ItemAnimation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -39,6 +40,8 @@ public class CommentActivity extends AppCompatActivity {
     TextView et_post;
     EditText et_comment;
     Button commenter;
+    private int animation_type = ItemAnimation.FADE_IN;
+
 
     TextView usernamelabel;
 
@@ -62,8 +65,6 @@ public class CommentActivity extends AppCompatActivity {
         commenter = findViewById(R.id.commenter);
         circleImageView = findViewById(R.id.circleImageView);
 
-        movetoprofile=findViewById(R.id.moveeee);
-        movetobasehome=findViewById(R.id.movetobasehome);
         usernamelabel=findViewById(R.id.usernamelabel);
         comments=findViewById(R.id.comments);
 
@@ -75,16 +76,6 @@ public class CommentActivity extends AppCompatActivity {
 
         usernamelabel.setText(username);
 
-        movetoprofile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent =new Intent(getApplicationContext(), ProfileActivity.class);
-                intent.putExtra("username",username);
-                startActivity(intent);
-
-            }
-        });
 
 
         et_post.setText(description);
@@ -109,17 +100,6 @@ public class CommentActivity extends AppCompatActivity {
 
 
 
-        movetobasehome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent =new Intent(getApplicationContext(), HomeActivity.class);
-                intent.putExtra("username",username);
-                startActivity(intent);
-
-            }
-        });
-
 
         CommentRepository.getInstance().getPostComments(id_post, new CommentRepository.getManyCallback() {
             @Override
@@ -128,7 +108,7 @@ public class CommentActivity extends AppCompatActivity {
                if(like_posts.size()>0)
                {
 
-                commentAdapter = new CommentAdapter();
+                commentAdapter = new CommentAdapter(like_posts,animation_type);
                 commentAdapter.setCommentList(like_posts);
 
                 commentAdapter.setConnectedUsername(username);
@@ -159,7 +139,7 @@ public class CommentActivity extends AppCompatActivity {
                                      if(like_posts.size()>0)
                                      {
 
-                                         commentAdapter = new CommentAdapter();
+                                         commentAdapter = new CommentAdapter(like_posts,animation_type);
                                          commentAdapter.setCommentList(like_posts);
                                         commentAdapter.setConnectedUsername(username);
                                          comments.setAdapter(commentAdapter);
