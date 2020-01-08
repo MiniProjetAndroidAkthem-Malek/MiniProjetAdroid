@@ -180,82 +180,34 @@ android:background="@color/grey_5">
 
 
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:orientation="vertical">
-    <EditText
-        android:id="@+id/et_comment"
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:background="@color/grey_50"
-        android:fontFamily="sans-serif"
-        android:hint="Type Comment"></EditText>
-
-    <Button
-        android:id="@+id/commenter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/purple_500"
-        android:fontFamily="casual"
-        android:text="commenter"
-        android:textColor="@color/white_transparency"
-        android:textStyle="bold"></Button>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:background="@drawable/bg_gradient_soft" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@android:color/white"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:weightSum="3">
+        <EditText
+            android:id="@+id/et_comment"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="@color/grey_50"
+            android:fontFamily="sans-serif"
+            android:hint="Type Comment"
+            android:layout_weight="2"></EditText>
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <Button
+            android:id="@+id/commenter"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:background="@color/purple_500"
+            android:drawableEnd="@drawable/ic_done"
+            android:backgroundTint="@color/purple_500"
             android:layout_weight="1"
-            android:gravity="center"
-            android:padding="@dimen/spacing_medium">
+            ></Button>
 
-            <ImageButton
-                android:layout_width="?attr/actionBarSize"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:onClick="clickAction"
-                android:tint="@color/purple_500"
-                app:srcCompat="@drawable/ic_home"
-                android:id="@+id/movetobasehome"/>
 
-        </LinearLayout>
-
-        <View
-            android:layout_width="?attr/actionBarSize"
-            android:layout_height="0dp" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="@dimen/spacing_medium">
-
-            <ImageButton
-                android:layout_width="?attr/actionBarSize"
-                android:id="@+id/moveeee"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:onClick="clickAction"
-                android:tint="@color/purple_500"
-                app:srcCompat="@drawable/ic_person" />
-
-        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
 
 
 

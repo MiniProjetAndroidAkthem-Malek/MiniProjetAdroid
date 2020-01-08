@@ -68,8 +68,7 @@
                             android:orientation="vertical"
                             android:paddingLeft="@dimen/spacing_large"
                             android:paddingRight="@dimen/spacing_large">
-                            <com.mikhaellopez.circularimageview.CircularImageView
-
+                            <de.hdodenhof.circleimageview.CircleImageView
                                 android:id="@+id/imageView"
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
@@ -90,6 +89,28 @@
                                 android:gravity="center_horizontal"
 
                                 >
+                                <LinearLayout
+                                    android:id="@+id/loadingUpload"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/spacing_medium"
+                                    android:orientation="vertical"
+                                    android:visibility="gone"
+                                    >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Uploading..." />
+
+                                    <ProgressBar
+                                        android:id="@+id/progress_indeterminate"
+                                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:indeterminate="true" />
+
+                                </LinearLayout>
 
                                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                                     android:id="@+id/fabUpload"
@@ -169,6 +190,21 @@
 
                         </com.google.android.material.textfield.TextInputLayout>
 
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/StateEventSettings"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="State"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:singleLine="true" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
 
                         <View
                             android:layout_width="match_parent"
@@ -204,16 +240,27 @@
                             android:layout_height="wrap_content">
 
                             <AutoCompleteTextView
-                                android:id="@+id/StateEventSettings"
+                                android:id="@+id/PlaceEventSettings"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="State"
+                                android:hint="Place"
                                 android:inputType="text"
                                 android:maxLines="1"
                                 android:singleLine="true" />
 
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
 
                         </com.google.android.material.textfield.TextInputLayout>
+
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">

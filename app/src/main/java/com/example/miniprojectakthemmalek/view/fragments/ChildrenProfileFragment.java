@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.Children;
 import com.example.miniprojectakthemmalek.model.repositories.ChildrenRepository;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -29,8 +30,8 @@ public class ChildrenProfileFragment extends Fragment {
     private String mParam2;
     int id;
     TextView descriptionProfileChildren,birthdayChildrenProfile,childrenNameProfile;
-
-
+    FloatingActionButton fab;
+    String connectedUsername;
     public ChildrenProfileFragment() {
         // Required empty public constructor
     }
@@ -71,7 +72,8 @@ public class ChildrenProfileFragment extends Fragment {
         descriptionProfileChildren=rootView.findViewById(R.id.descriptionProfileChildren);
         birthdayChildrenProfile=rootView.findViewById(R.id.birthdayChildrenProfile);
         childrenNameProfile=rootView.findViewById(R.id.childrenNameProfile);
-
+        fab=rootView.findViewById(R.id.fab);
+        connectedUsername=getArguments().getString("connectedUsername");
 
         ChildrenRepository.getInstance().getChildrenById(id, new ChildrenRepository.getAllCallBack() {
             @Override
@@ -79,7 +81,10 @@ public class ChildrenProfileFragment extends Fragment {
                 if(childrenList.size()!=0)
                 {
                     Children children=childrenList.get(0);
-
+                    if(children.getParent().equals(connectedUsername))
+                    {
+                        fab.setVisibility(View.VISIBLE);
+                    }
                     descriptionProfileChildren.setText(children.getDescription().toString());
                     birthdayChildrenProfile.setText(children.getBirthday().toString().substring(0,10));
                     childrenNameProfile.setText(children.getName().toString());

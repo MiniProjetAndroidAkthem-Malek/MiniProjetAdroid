@@ -62,8 +62,7 @@ public class CommentActivity extends AppCompatActivity {
         commenter = findViewById(R.id.commenter);
         circleImageView = findViewById(R.id.circleImageView);
 
-        movetoprofile=findViewById(R.id.moveeee);
-        movetobasehome=findViewById(R.id.movetobasehome);
+
         usernamelabel=findViewById(R.id.usernamelabel);
         comments=findViewById(R.id.comments);
 
@@ -74,18 +73,6 @@ public class CommentActivity extends AppCompatActivity {
         id_post=getIntent().getIntExtra("id_post",0);
 
         usernamelabel.setText(username);
-
-        movetoprofile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent =new Intent(getApplicationContext(), ProfileActivity.class);
-                intent.putExtra("username",username);
-                startActivity(intent);
-
-            }
-        });
-
 
         et_post.setText(description);
 
@@ -109,16 +96,6 @@ public class CommentActivity extends AppCompatActivity {
 
 
 
-        movetobasehome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent =new Intent(getApplicationContext(), HomeActivity.class);
-                intent.putExtra("username",username);
-                startActivity(intent);
-
-            }
-        });
 
 
         CommentRepository.getInstance().getPostComments(id_post, new CommentRepository.getManyCallback() {

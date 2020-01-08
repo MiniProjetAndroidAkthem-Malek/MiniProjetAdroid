@@ -23,7 +23,10 @@ import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
 import com.example.miniprojectakthemmalek.view.ErrorHandlerActivity;
 import com.example.miniprojectakthemmalek.view.HomeActivity;
+import com.example.miniprojectakthemmalek.view.NoInternet;
 import com.example.miniprojectakthemmalek.view.SessionManager;
+import com.example.miniprojectakthemmalek.view.SignUpActivity;
+import com.example.miniprojectakthemmalek.view.utils.NetworkCheck;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -106,49 +109,62 @@ public PasswordFragment() {
 
       //  System.out.println("isWifiOn --------> "+isWifiOn(getContext()));
       // System.out.println("isInternetConnection --------> "+isInternetConnection(getContext()));
+        if(NetworkCheck.isNetworkAvailable(getContext())==true){
 
-        UserRepository.getInstance().getOneUser(username, new UserRepository.getOneUserCallBack() {
-            @Override
-            public void onResponse(User user) {
-                if(user !=null)
-                {
-                    if(user.getUsername().equals(username) && user.getPassword().equals(passwordTextInput.getText().toString()))
+
+            UserRepository.getInstance().getOneUser(username, new UserRepository.getOneUserCallBack() {
+                @Override
+                public void onResponse(User user) {
+
+
+                    if(user !=null)
                     {
-                        System.out.println("sssss = "+user);
-                        if(sessionManager.getUser(user.getUsername())==null)
+                        if(user.getUsername().equals(username) && user.getPassword().equals(passwordTextInput.getText().toString()))
                         {
-                            sessionManager.openSessionForUser(user);
+                            System.out.println("sssss = "+user);
+                            if(sessionManager.getUser(user.getUsername())==null)
+                            {
+                                sessionManager.openSessionForUser(user);
 
-                        }else
-                        {
-                            sessionManager.updateConnectionStatusForUser(user.getUsername(),1);
+                            }else
+                            {
+                                sessionManager.updateConnectionStatusForUser(user.getUsername(),1);
+                            }
+
+
+
+
+                            Intent intentHome =new Intent(getContext(), HomeActivity.class);
+                            intentHome.putExtra("username",user.getUsername());
+                            intentHome.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intentHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intentHome);
+
+                        }else  {
+
+
+                            int duration = Toast.LENGTH_SHORT;
+
+                            Toast toast = Toast.makeText(getContext(),"wrong password Bro !", duration);
+                            toast.show();
+
                         }
 
+                    }else{
 
 
 
-                        Intent intentHome =new Intent(getContext(), HomeActivity.class);
-                        intentHome.putExtra("username",user.getUsername());
-                        startActivity(intentHome);
-
-                    }else  {
-
-
-                        int duration = Toast.LENGTH_SHORT;
-
-                        Toast toast = Toast.makeText(getContext(),"wrong password Bro !", duration);
-                        toast.show();
 
                     }
-
-                }else{
-
-
-
-
                 }
-            }
-        });
+            });
+
+
+        }
+        else if (NetworkCheck.isNetworkAvailable(getContext())==false) {
+            Intent intent = new Intent(getContext(), NoInternet.class);
+            startActivity(intent);}
+
 
 
     }

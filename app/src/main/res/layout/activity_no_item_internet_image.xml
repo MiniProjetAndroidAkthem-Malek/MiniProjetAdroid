@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:text="Whoops!"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/purple_500"
                 android:textStyle="bold" />
 
             <TextView
@@ -46,11 +46,11 @@
                 android:text="No internet connections found. Check your connection or try again"
                 android:gravity="center"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/colorPrimary" />
+                android:textColor="@color/grey_90" />
 
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/bt_retry"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/retry"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_xlarge"

@@ -19,7 +19,10 @@ import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
 import com.example.miniprojectakthemmalek.view.HomeActivity;
+import com.example.miniprojectakthemmalek.view.NoInternet;
 import com.example.miniprojectakthemmalek.view.SessionManager;
+import com.example.miniprojectakthemmalek.view.SignUpActivity;
+import com.example.miniprojectakthemmalek.view.utils.NetworkCheck;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -99,41 +102,48 @@ public class AddAccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                UserRepository.getInstance().getOneUser(usernameAddAccount.getText().toString(), new UserRepository.getOneUserCallBack() {
-                    @Override
-                    public void onResponse(User user) {
-                        if(user !=null)
-                        {
-                            System.out.println(user);
-                            if(user.getUsername().equals(usernameAddAccount.getText().toString()) && user.getPassword().equals(passwordAddAccount.getText().toString()))
+                if(NetworkCheck.isNetworkAvailable(getContext())==true){
+                    UserRepository.getInstance().getOneUser(usernameAddAccount.getText().toString(), new UserRepository.getOneUserCallBack() {
+                        @Override
+                        public void onResponse(User user) {
+                            if(user !=null)
                             {
-
-                                System.out.println("sssss = "+user);
-                                if(sessionManager.getUser(user.getUsername())==null)
+                                System.out.println(user);
+                                if(user.getUsername().equals(usernameAddAccount.getText().toString()) && user.getPassword().equals(passwordAddAccount.getText().toString()))
                                 {
-                                    sessionManager.openSessionForUser(user);
 
-                                }else
-                                {
-                                    sessionManager.updateConnectionStatusForUser(user.getUsername(),1);
+                                    System.out.println("sssss = "+user);
+                                    if(sessionManager.getUser(user.getUsername())==null)
+                                    {
+                                        sessionManager.openSessionForUser(user);
+
+                                    }else
+                                    {
+                                        sessionManager.updateConnectionStatusForUser(user.getUsername(),1);
+                                    }
+
+
+                                    Intent intentHome =new Intent(getContext(), HomeActivity.class);
+                                    intentHome.putExtra("username",user.getUsername());
+                                    startActivity(intentHome);
+
                                 }
 
+                            }else{
 
-                                Intent intentHome =new Intent(getContext(), HomeActivity.class);
-                                intentHome.putExtra("username",user.getUsername());
-                                startActivity(intentHome);
-
+                                Toast toast=Toast.makeText(getContext(),"wrong ya bro",Toast.LENGTH_SHORT);
+                                toast.setMargin(50,50);
+                                toast.show();
                             }
-
-                        }else{
-
-                            Toast toast=Toast.makeText(getContext(),"wrong ya bro",Toast.LENGTH_SHORT);
-                            toast.setMargin(50,50);
-                            toast.show();
                         }
-                    }
-                });
+                    });}
+                else if (NetworkCheck.isNetworkAvailable(getContext())==false) {
+                    Intent intent = new Intent(getContext(), NoInternet.class);
+                    startActivity(intent);}
+
             }
+
+
         });
 
 

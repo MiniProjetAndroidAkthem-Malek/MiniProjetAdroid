@@ -3,6 +3,8 @@ package com.example.miniprojectakthemmalek.model.repositories;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.JsonReader;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.example.miniprojectakthemmalek.model.api.RetrofitInstance;
 import com.example.miniprojectakthemmalek.model.api.entityInterface.IFollow;
@@ -39,7 +41,7 @@ public class ImageRepository {
 
     IImage iImage = RetrofitInstance.getRetrofitInstance().create(IImage.class);
 
-    public void uploadPhotos(MultipartBody.Part body, RequestBody name)
+    public void uploadPhotos(MultipartBody.Part body, RequestBody name, final LinearLayout linearLayout)
     {
         Call<ResponseBody> call = iImage.addImage(body,name);
 
@@ -47,6 +49,14 @@ public class ImageRepository {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 System.out.println(response.body());
+                linearLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        linearLayout.setVisibility(View.GONE);
+
+                    }
+                });
             }
 
             @Override
@@ -88,6 +98,124 @@ public void loadPicutreOf(String username,final float width_scale,final float he
        }
     });
 }
+
+
+    public void uploadPhotosForEvent(MultipartBody.Part body, RequestBody name, final LinearLayout linearLayout)
+    {
+        Call<ResponseBody> call = iImage.addImageForEvent(body,name);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                System.out.println(response.body());
+
+                linearLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        linearLayout.setVisibility(View.GONE);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                t.printStackTrace();
+
+            }
+        });
+
+    }
+
+
+    public void loadPicutreOfEvent(String eventName,final float width_scale,final float height_scale,final getPictureCallBack getPictureCallBack)
+    {
+        Call<ResponseBody> call = iImage.getPictureForEvent(eventName);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        // display the image data in a ImageView or save it
+                        Bitmap bmp = BitmapFactory.decodeStream(response.body().byteStream());
+                        Bitmap resizedBmp = Bitmap.createScaledBitmap(bmp,(int)(bmp.getWidth()*width_scale), (int)(bmp.getHeight()*height_scale), true);
+
+                        getPictureCallBack.onResponse(resizedBmp);
+
+                    } else {
+                        getPictureCallBack.onResponse(null);
+                    }
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+
+    public void uploadPhotosForGroup(MultipartBody.Part body, RequestBody name, final LinearLayout linearLayout)
+    {
+        Call<ResponseBody> call = iImage.addImageForGroup(body,name);
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                System.out.println(response.body());
+
+                linearLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        linearLayout.setVisibility(View.GONE);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                t.printStackTrace();
+
+            }
+        });
+
+    }
+
+    public void loadPicutreOfGroup(String groupName,final float width_scale,final float height_scale,final getPictureCallBack getPictureCallBack)
+    {
+        Call<ResponseBody> call = iImage.getPictureForGroup(groupName);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        // display the image data in a ImageView or save it
+                        Bitmap bmp = BitmapFactory.decodeStream(response.body().byteStream());
+                        Bitmap resizedBmp = Bitmap.createScaledBitmap(bmp,(int)(bmp.getWidth()*width_scale), (int)(bmp.getHeight()*height_scale), true);
+
+                        getPictureCallBack.onResponse(resizedBmp);
+
+                    } else {
+                        getPictureCallBack.onResponse(null);
+                    }
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
+
+
 
 
     public interface addingCallback

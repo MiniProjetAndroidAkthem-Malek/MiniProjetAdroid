@@ -24,7 +24,7 @@ String connectedUsername;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_events);
-eventsRV= findViewById(R.id.eventsRV);
+            eventsRV= findViewById(R.id.eventsRV);
         connectedUsername=getIntent().getStringExtra("username");
 
         EventRepository.getInstance().getAllEvents(new EventRepository.getAllGroupCallBack() {

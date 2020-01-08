@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,6 +28,7 @@ import com.example.miniprojectakthemmalek.model.repositories.GroupUserRepository
 import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
 import com.example.miniprojectakthemmalek.view.adapter.PostGroupAdapter;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonPrimitive;
 
@@ -47,7 +50,7 @@ public class GroupMainPageActivity extends AppCompatActivity {
     CircleImageView usernameCircleImageView;
     TextView usernamelabel;
 
-
+    ImageView cover;
 
     LinearLayout editPost;
 
@@ -68,6 +71,7 @@ public class GroupMainPageActivity extends AppCompatActivity {
         add_post  =findViewById(R.id.add_post);
         settingsAdd=findViewById(R.id.settingsAdd);
         postCardView=findViewById(R.id.postCardView);
+        cover=findViewById(R.id.cover);
 
         usernameCircleImageView=findViewById(R.id.usernameCircleImageView);
         usernamelabel=findViewById(R.id.usernamelabel);
@@ -149,6 +153,19 @@ public class GroupMainPageActivity extends AppCompatActivity {
 
             }
         });
+
+
+        ImageRepository.getInstance().loadPicutreOfGroup(group_name, 0.7f, 0.5f, new ImageRepository.getPictureCallBack() {
+            @Override
+            public void onResponse(Bitmap picBitmap) {
+                cover.setImageBitmap(picBitmap);
+            }
+        });
+
+
+
+
+
 
 
         settingsAdd.setOnClickListener(new View.OnClickListener() {

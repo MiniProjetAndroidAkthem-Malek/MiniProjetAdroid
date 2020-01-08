@@ -34,6 +34,7 @@ public class GroupActivity extends AppCompatActivity {
     AppCompatAutoCompleteTextView adminAutocomplete;
     NachoTextView nachoTextView;
     List<String> selectedUsernames;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -27,8 +27,18 @@ public class Event {
     @SerializedName("date")
     Timestamp date;
 
+    @SerializedName("place")
+    String place;
+
 
     public Event() {
+    }
+
+
+    public Event(String nom, String description, String creator) {
+        this.nom = nom;
+        this.description = description;
+        this.creator = creator;
     }
 
     public Timestamp getDate() {
@@ -118,6 +128,14 @@ public class Event {
         this.description = description;
         this.state = state;
         this.contry = contry;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
     }
 
     @Override

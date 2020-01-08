@@ -58,11 +58,12 @@ android:orientation="horizontal">
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.mikhaellopez.circularimageview.CircularImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/image_profile"
                 android:layout_width="@dimen/spacing_xlarge"
                 android:layout_height="@dimen/spacing_xlarge"
                 android:foreground="@color/overlay_light_20"
-                android:src="@drawable/photo_male_7"
+                android:src="@drawable/default_avatar"
                 app:civ_shadow="true"
                 app:civ_shadow_radius="0"
                 app:civ_border="false" />

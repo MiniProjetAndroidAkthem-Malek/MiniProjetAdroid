@@ -24,7 +24,9 @@ import com.example.miniprojectakthemmalek.model.repositories.MessageRepository;
 import com.example.miniprojectakthemmalek.model.repositories.NotificationRepositories.NotificationRepository;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
 import com.example.miniprojectakthemmalek.view.fragments.AccountsFragment;
+import com.example.miniprojectakthemmalek.view.utils.GeoCoder.GeoLocationManager;
 import com.example.miniprojectakthemmalek.view.utils.ImageManager;
+import com.example.miniprojectakthemmalek.view.utils.NetworkCheck;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -36,6 +38,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.example.miniprojectakthemmalek.view.utils.Tools;
 import com.google.android.material.textfield.TextInputEditText;
+import com.mapbox.mapboxsdk.Mapbox;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,6 +74,10 @@ public class AuthentificationActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_simple_light);
+        System.out.println(NetworkCheck.isNetworkAvailable(getApplicationContext()));
+
+
+        //System.out.println(NetworkCheck.isInternetAvailable());
 
       /*try {
             PackageInfo info = getPackageManager().getPackageInfo(
@@ -91,7 +98,8 @@ public class AuthentificationActivity extends AppCompatActivity {
 
 */
 
-
+       // GeoLocationManager g=new GeoLocationManager(getApplicationContext(),0d,0d);
+       // g.getLatLonFromAdress();
 
 MessageRepository.getInstance().getDiscussionsByConnectedUsername("userTest", new MessageRepository.getManyCallback() {
     @Override
@@ -146,9 +154,15 @@ MessageRepository.getInstance().getDiscussionsByConnectedUsername("userTest", ne
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(NetworkCheck.isNetworkAvailable(getApplicationContext())==true){
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
-                startActivity(intent);
+                startActivity(intent);}
+                else if (NetworkCheck.isNetworkAvailable(getApplicationContext())==false) {
+                    Intent intent = new Intent(getApplicationContext(), NoInternet.class);
+                    startActivity(intent);}
+
             }
+
         });
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -225,7 +239,7 @@ MessageRepository.getInstance().getDiscussionsByConnectedUsername("userTest", ne
 
                                 url = new URL(image_url);
                                 Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                                imageManager.multipartImageUpload(bmp,newuser.getUsername());
+                                imageManager.multipartImageUpload(bmp,newuser.getUsername(),"profile",null);
 
                             } catch (IOException e) {
                                 e.printStackTrace();

@@ -88,7 +88,7 @@
                             android:orientation="vertical"
                             android:paddingLeft="@dimen/spacing_large"
                             android:paddingRight="@dimen/spacing_large">
-                            <com.mikhaellopez.circularimageview.CircularImageView
+                            <de.hdodenhof.circleimageview.CircleImageView
 
                                 android:id="@+id/imageView"
                                 android:layout_width="100dp"
@@ -110,7 +110,28 @@
                                 android:gravity="center_horizontal"
 
                                 >
+                                <LinearLayout
+                                    android:id="@+id/loadingUpload"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/spacing_medium"
+                                    android:orientation="vertical"
+                                    android:visibility="gone"
+                                    >
 
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Uploading..." />
+
+                                    <ProgressBar
+                                        android:id="@+id/progress_indeterminate"
+                                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:indeterminate="true" />
+
+                                </LinearLayout>
                                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                                     android:id="@+id/fabUpload"
                                     android:layout_width="wrap_content"

@@ -1,6 +1,7 @@
 package com.example.miniprojectakthemmalek.view.adapter;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,12 @@ import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.Activities;
 import com.example.miniprojectakthemmalek.model.entities.Enums.ActivityType;
 import com.example.miniprojectakthemmalek.model.entities.Post;
+import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ActivityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -112,9 +116,28 @@ public class ActivityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((FollowViewHolder) holder).usernameOther.setText(single_activity.getActWith());
 
 
+            ImageRepository.getInstance().loadPicutreOf(username, 0.2f, 0.2f, new ImageRepository.getPictureCallBack() {
+                @Override
+                public void onResponse(Bitmap picBitmap) {
+                    ((FollowViewHolder) holder).image_profile.setImageBitmap(picBitmap);
+
+                }
+            });
+
+
+
         }else if(single_activity.getActivityType()==ActivityType.POST){
 
             ((PostViewHolder) holder).username.setText(single_activity.getUsername());
+
+
+            ImageRepository.getInstance().loadPicutreOf(username, 0.2f, 0.2f, new ImageRepository.getPictureCallBack() {
+                @Override
+                public void onResponse(Bitmap picBitmap) {
+                    ((PostViewHolder) holder).image_profile.setImageBitmap(picBitmap);
+
+                }
+            });
 
 
             PostRepository.getInstance().getPostById("" + single_activity.getActWith(), new PostRepository.getAllPostCallBack() {
@@ -153,6 +176,14 @@ public class ActivityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         {
             ((GroupViewHolder) holder).username.setText(single_activity.getUsername());
             ((GroupViewHolder) holder).groupname.setText(single_activity.getActWith());
+
+            ImageRepository.getInstance().loadPicutreOf(username, 0.2f, 0.2f, new ImageRepository.getPictureCallBack() {
+                @Override
+                public void onResponse(Bitmap picBitmap) {
+                    ((GroupViewHolder) holder).image_profile.setImageBitmap(picBitmap);
+
+                }
+            });
         }
 
     }
@@ -165,6 +196,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public static class FollowViewHolder extends RecyclerView.ViewHolder {
 
         public TextView username,usernameOther;
+        CircleImageView image_profile;
 
 
         public FollowViewHolder(@NonNull View itemView)
@@ -173,6 +205,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             username=itemView.findViewById(R.id.username);
             usernameOther=itemView.findViewById(R.id.usernameOther);
+            image_profile=itemView.findViewById(R.id.image_profile);
 
         }
 
@@ -182,6 +215,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         public TextView username,postcontent;
         public LinearLayout postLinearLayout;
+        CircleImageView image_profile;
 
 
         public PostViewHolder(@NonNull View itemView)
@@ -191,6 +225,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             username=itemView.findViewById(R.id.username);
             postcontent=itemView.findViewById(R.id.postcontent);
             postLinearLayout=itemView.findViewById(R.id.postLinearLayout);
+            image_profile=itemView.findViewById(R.id.image_profile);
 
         }
 
@@ -200,6 +235,7 @@ public class ActivityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         public TextView username;
         public TextView groupname;
+        CircleImageView image_profile;
 
         public GroupViewHolder(@NonNull View itemView)
         {
@@ -207,6 +243,8 @@ public class ActivityAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             username=itemView.findViewById(R.id.username);
             groupname=itemView.findViewById(R.id.groupName);
+            image_profile=itemView.findViewById(R.id.image_profile);
+
         }
 
     }

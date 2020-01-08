@@ -35,8 +35,15 @@ public class GeoLocationManager   {
 
 
     Double latitude,longitude;
-
+    List<Address> address;
     Context context;
+
+    public GeoLocationManager(Context context)
+    {
+        this.context = context;
+
+    }
+
     public GeoLocationManager(Context context,Double latitude,Double longitude)
     {
         this.latitude=latitude;
@@ -63,6 +70,34 @@ public class GeoLocationManager   {
             e.printStackTrace();
             return null;
         }
+    }
+
+
+
+
+
+    public Address getLatLonFromAdress(String adress)
+    {
+        try {
+            Geocoder coder = new Geocoder(context, Locale.getDefault());
+
+            address = coder.getFromLocationName(adress,5);
+            if (address==null) {
+                return null;
+            }
+            Address location=address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            return location;
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
+
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.miniprojectakthemmalek.view;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 import androidx.appcompat.widget.AppCompatButton;
@@ -7,10 +8,20 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.miniprojectakthemmalek.R;
@@ -27,9 +38,17 @@ import com.example.miniprojectakthemmalek.model.repositories.NotificationReposit
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
 import com.example.miniprojectakthemmalek.view.adapter.AdminGroupAdapter;
 import com.example.miniprojectakthemmalek.view.adapter.InvitationGroupAdapter;
+import com.example.miniprojectakthemmalek.view.utils.ImageManager;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class SettingsGroupActivity extends AppCompatActivity {
 
@@ -42,7 +61,19 @@ public class SettingsGroupActivity extends AppCompatActivity {
     String connectedUsername,groupName;
     TextView adminsTextView,invitationTextView;
 
+    FloatingActionButton fabAdd,fabUpload;
+    CircleImageView imageView;
+
     AdminGroupAdapter adminGroupAdapter;
+    ImageManager imageManager;
+
+    private ArrayList<String> permissionsToRequest;
+    private ArrayList<String> permissionsRejected = new ArrayList<>();
+    private ArrayList<String> permissions = new ArrayList<>();
+    private final static int ALL_PERMISSIONS_RESULT = 107;
+    private final static int IMAGE_RESULT = 200;
+    Bitmap mBitmap;
+    LinearLayout loadingUpload;
 
 
     @Override
@@ -53,14 +84,18 @@ public class SettingsGroupActivity extends AppCompatActivity {
         adminAutocomplete = findViewById(R.id.adminAutocomplete);
         adminsGroupCardView=findViewById(R.id.adminsGroupCardView);
         recyclerViewAdmin=findViewById(R.id.recyclerViewAdmin);
-
+        fabAdd=findViewById(R.id.fabAdd);
+        imageView=findViewById(R.id.imageView);
+        fabUpload=findViewById(R.id.fabUpload);
         adminsTextView=findViewById(R.id.adminsTextView);
         invitationTextView=findViewById(R.id.invitationTextView);
+        loadingUpload=findViewById(R.id.loadingUpload);
 
         invitationCardView=findViewById(R.id.invitationCardView);
         addAdmin=findViewById(R.id.addAdmin);
         connectedUsername=getIntent().getStringExtra("username");
 
+        imageManager=new ImageManager(getApplicationContext());
 
         selectedUsernames=new ArrayList<String>();
 
@@ -207,8 +242,6 @@ public class SettingsGroupActivity extends AppCompatActivity {
 
                             }else{
 
-
-
                                 GroupUserRepository.getInstance().updateRoleUser(groupUser, new GroupUserRepository.addingCallback() {
                                     @Override
                                     public void addingCallback(int code) {
@@ -243,6 +276,151 @@ public class SettingsGroupActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivityForResult(imageManager.getPickImageChooserIntent(), IMAGE_RESULT);
+
+            }
+        });
+
+
+        fabUpload.setVisibility(View.INVISIBLE);
+
+
+        fabUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mBitmap != null) {
+                    loadingUpload.setVisibility(View.VISIBLE);
+
+                    imageManager.multipartImageUpload(mBitmap, groupName,"group",loadingUpload);
+                    fabUpload.setVisibility(View.INVISIBLE);
+                } else {
+
+
+                }
+            }
+        });
+
+        askPermissions();
+
+
+
+
+    }
+
+
+    private ArrayList<String> findUnAskedPermissions(ArrayList<String> wanted) {
+        ArrayList<String> result = new ArrayList<String>();
+
+        for (String perm : wanted) {
+            if (!hasPermission(perm)) {
+                result.add(perm);
+            }
+        }
+
+        return result;
+    }
+
+    private boolean hasPermission(String permission) {
+        if (canMakeSmores()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+                return (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED);
+
+            }
+        }
+        return true;
+    }
+
+    private void askPermissions() {
+        permissions.add(CAMERA);
+        permissions.add(WRITE_EXTERNAL_STORAGE);
+        permissions.add(READ_EXTERNAL_STORAGE);
+        permissionsToRequest = findUnAskedPermissions(permissions);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+
+            if (permissionsToRequest.size() > 0)
+                requestPermissions(permissionsToRequest.toArray(new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
+        }
+    }
+
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(getApplicationContext())
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+    }
+
+    private boolean canMakeSmores() {
+        return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        switch (requestCode) {
+
+            case ALL_PERMISSIONS_RESULT:
+                for (String perms : permissionsToRequest) {
+                    if (!hasPermission(perms)) {
+                        permissionsRejected.add(perms);
+                    }
+                }
+
+                if (permissionsRejected.size() > 0) {
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (shouldShowRequestPermissionRationale(permissionsRejected.get(0))) {
+                            showMessageOKCancel("These permissions are mandatory for the application. Please allow access.",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            requestPermissions(permissionsRejected.toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
+                                        }
+                                    });
+                            return;
+                        }
+                    }
+
+                }
+
+                break;
+        }
+
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if (resultCode == Activity.RESULT_OK) {
+
+            //  ImageView imageView = findViewById(R.id.imageView);
+
+            if (requestCode == IMAGE_RESULT) {
+
+                String filePath = imageManager.getImageFilePath(data);
+                if (filePath != null) {
+                    fabUpload.setVisibility(View.VISIBLE);
+                    mBitmap = BitmapFactory.decodeFile(filePath);
+                    imageView.setImageBitmap(mBitmap);
+                }
+            }
+
+        }
 
     }
 

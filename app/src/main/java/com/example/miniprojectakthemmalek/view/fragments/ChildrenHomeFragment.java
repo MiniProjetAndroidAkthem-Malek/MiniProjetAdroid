@@ -34,6 +34,8 @@ public class ChildrenHomeFragment extends Fragment {
     RecyclerView recyclerView;
     ChildrenAdapter childrenAdapter;
     String connectedUsername;
+    String username;
+
     public ChildrenHomeFragment() {
         // Required empty public constructor
     }
@@ -71,8 +73,17 @@ public class ChildrenHomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_children, container, false);
         connectedUsername=getArguments().getString("username");
+
+        username=getArguments().getString("connectedUsername");
+
         childrenAdd = rootView.findViewById(R.id.childrenAdd);
         recyclerView=rootView.findViewById(R.id.recyclerView);
+
+
+        if(username.equals(connectedUsername))
+        {
+        childrenAdd.setVisibility(View.VISIBLE);
+        }
 
 
         childrenAdd.setOnClickListener(new View.OnClickListener() {
@@ -89,12 +100,16 @@ public class ChildrenHomeFragment extends Fragment {
             }
         });
 
+
+
+
         ChildrenRepository.getInstance().getChildrenByParent(connectedUsername, new ChildrenRepository.getAllCallBack() {
             @Override
             public void onResponse(List<Children> childrenList) {
 
                 childrenAdapter=new ChildrenAdapter();
                 childrenAdapter.setChildrenList(childrenList);
+                childrenAdapter.setConnectedUsername(username);
                 childrenAdapter.setFragment(getFragmentManager());
                 recyclerView.setAdapter(childrenAdapter);
                 recyclerView.setHasFixedSize(true);

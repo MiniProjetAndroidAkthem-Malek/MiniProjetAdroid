@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,7 @@ public class ImageManager  {
 
 Context context;
 
+
     Uri picUri;
     private ArrayList<String> permissionsToRequest;
     private ArrayList<String> permissionsRejected = new ArrayList<>();
@@ -60,6 +62,7 @@ Context context;
     {
         this.context=context;
     }
+
 
     private Uri getCaptureImageOutputUri() {
         Uri outputFileUri = null;
@@ -90,7 +93,7 @@ Context context;
         return cursor.getString(column_index);
     }
 
-    public void multipartImageUpload(Bitmap mBitmap,String username) {
+    public void multipartImageUpload(Bitmap mBitmap, String username, String type, final LinearLayout linearLayout) {
 
         try {
 
@@ -111,8 +114,22 @@ Context context;
             MultipartBody.Part body = MultipartBody.Part.createFormData("upload", file.getName(), reqFile);
             RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload");
 
-            ImageRepository.getInstance().uploadPhotos(body,name);
+            if(type.equals("profile"))
+            {
 
+                ImageRepository.getInstance().uploadPhotos(body,name,linearLayout);
+
+            }else if(type.equals("event"))
+            {
+
+                ImageRepository.getInstance().uploadPhotosForEvent(body,name,linearLayout);
+
+
+            }else if (type.equals("group"))
+            {
+
+                ImageRepository.getInstance().uploadPhotosForGroup(body,name,linearLayout);
+            }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

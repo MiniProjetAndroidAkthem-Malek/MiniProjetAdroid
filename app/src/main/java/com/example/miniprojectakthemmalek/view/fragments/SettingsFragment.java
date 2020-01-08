@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
 import com.example.miniprojectakthemmalek.R;
@@ -83,6 +84,7 @@ public class SettingsFragment extends Fragment {
     private final static int ALL_PERMISSIONS_RESULT = 107;
     private final static int IMAGE_RESULT = 200;
     Bitmap mBitmap;
+    LinearLayout loadingUpload;
 
 
     int r=0;
@@ -144,6 +146,7 @@ public class SettingsFragment extends Fragment {
 
         fabAdd=rootView.findViewById(R.id.fabAdd);
         fabUpload=rootView.findViewById(R.id.fabUpload);
+        loadingUpload=rootView.findViewById(R.id.loadingUpload);
          imageManager=new ImageManager(getContext());
         selectedUsernames=new ArrayList<String>();
 
@@ -434,7 +437,9 @@ blue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             public void onClick(View v) {
 
                 if (mBitmap != null) {
-                    imageManager.multipartImageUpload(mBitmap, user.getUsername().toString());
+                    loadingUpload.setVisibility(View.VISIBLE);
+
+                    imageManager.multipartImageUpload(mBitmap, user.getUsername().toString(),"profile",loadingUpload);
                     fabUpload.setVisibility(View.INVISIBLE);
                 } else {
 

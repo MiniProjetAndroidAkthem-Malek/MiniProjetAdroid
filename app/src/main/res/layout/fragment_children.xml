@@ -50,6 +50,7 @@
         android:layout_alignParentRight="true"
         app:backgroundTint="@color/purple_500"
         app:fabSize="normal"
+        android:visibility="gone"
         app:rippleColor="@color/purple_500"
         app:srcCompat="@drawable/ic_add" />
 

@@ -76,7 +76,27 @@
                 android:text=""
                 android:id="@+id/EventsDescriptionEt"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                android:text="Place"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/grey_60" />
 
+            <EditText
+                android:id="@+id/EventPlaceEt"
+                style="@style/EditText.Flat.Grey"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spacing_xmlarge"
+                android:background="@drawable/edit_text_round_bg_white"
+
+
+                android:minHeight="@dimen/spacing_xmlarge"
+                android:paddingLeft="@dimen/spacing_middle"
+                android:paddingRight="@dimen/spacing_middle"
+                android:text=""
+                />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -131,16 +151,12 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:textColor="@color/grey_60" />
 
-                    <EditText
-                        style="@style/EditText.Flat.Grey"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/spacing_xmlarge"
-                        android:background="@drawable/edit_text_round_bg_white"
-                        android:minHeight="@dimen/spacing_xmlarge"
-                        android:paddingLeft="@dimen/spacing_middle"
-                        android:paddingRight="@dimen/spacing_middle"
-                        android:text=""
-                        android:id="@+id/EventsContryEt"/>
+            <Spinner
+                android:id="@+id/EventsContryEt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/countries_array"
+                ></Spinner>
 
 
                 </LinearLayout>

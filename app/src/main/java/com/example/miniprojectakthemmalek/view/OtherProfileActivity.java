@@ -21,228 +21,93 @@ import com.example.miniprojectakthemmalek.model.repositories.FollowRepository;
 import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
+import com.example.miniprojectakthemmalek.view.fragments.ActivityFragment;
+import com.example.miniprojectakthemmalek.view.fragments.ChildrenHomeFragment;
+import com.example.miniprojectakthemmalek.view.fragments.OtherProfileFragment;
+import com.example.miniprojectakthemmalek.view.fragments.ProfileFragment;
+import com.google.android.material.tabs.TabLayout;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class OtherProfileActivity extends AppCompatActivity {
 
-    String username,connectedUsername;
-    TextView followers,partnerLabel,birth_date,jobProfile, following, postsLabel,first_name_label,last_name_label,address_label,phone_number_label,birth_date_label,partner_label,firstNameLabel,lastNameLabel,addressLabel,phoneNumberLabel,usernameLabel,textView11,textView12;
-    AppCompatButton followBtn,chatBtn;
-    LinearLayout layoutLinear;
-    CircularImageView image;
-    int x=0;
+
+    String username;
+    String connectedUsername;
+    TabLayout tabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_profile);
+        tabLayout=findViewById(R.id.tabLayout);
 
         username=getIntent().getStringExtra("username");
         connectedUsername=getIntent().getStringExtra("ConnectedUsername");
 
-        firstNameLabel=findViewById(R.id.firstNameLabel);
-        lastNameLabel=findViewById(R.id.lastNameLabel);
-        addressLabel=findViewById(R.id.addressLabel);
-        phoneNumberLabel=findViewById(R.id.phoneNumberLabel);
-        usernameLabel=findViewById(R.id.usernameLabel);
-        followBtn=findViewById(R.id.followBtn);
-        layoutLinear=findViewById(R.id.layoutLinear);
-        following=findViewById(R.id.following);
-        followers=findViewById(R.id.followers);
-        postsLabel=findViewById(R.id.postsLabel);
-        chatBtn=findViewById(R.id.chatBtn);
-        partnerLabel=findViewById(R.id.partnerLabel);
-        birth_date=findViewById(R.id.birth_date);
-        jobProfile=findViewById(R.id.jobProfile);
-        image=findViewById(R.id.image);
 
-        updateNumberOfFollows();
-        initFollowBtn();
+        OtherProfileFragment otherProfileFragment=new OtherProfileFragment();
+        Bundle bundle=new Bundle();
+        bundle.putString("username",username);
+        bundle.putString("ConnectedUsername",connectedUsername);
+        otherProfileFragment.setArguments(bundle);
 
-        PostRepository.getInstance().getAllPostOf(username, new PostRepository.getAllPostCallBack() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.frameProfile,otherProfileFragment).commit();
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onResponse(List<Post> posts) {
-                postsLabel.setText(""+posts.size());
-            }
-        });
+            public void onTabSelected(TabLayout.Tab tab) {
 
-
-         followBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateFollowBtn();
-            }
-        });
-
-        UserRepository.getInstance().getOneUser(username, new UserRepository.getOneUserCallBack() {
-            @Override
-            public void onResponse(User user) {
-
-
-                usernameLabel.setText(user.getUsername());
-
-                if(user.getFirst_name()==null || user.getFirst_name()=="" )
-                {
-                    firstNameLabel.setText("");
-                }else
-                {
-                    firstNameLabel.setText(user.getFirst_name());
-                }
-
-
-                if(user.getLast_name()==null || user.getLast_name()=="")
-                {
-                    lastNameLabel.setText("");
-
-                }else
-                {
-                    lastNameLabel.setText(user.getLast_name());
-                }
-
-
-                if(user.getJob()==null || user.getJob()=="")
-                {
-                    jobProfile.setText("");
-
-                }else
-                {
-                    jobProfile.setText(user.getJob());
-                }
-
-                if(user.getAddress()==null || user.getAddress()=="")
-                {
-                    addressLabel.setText("");
-
-                }else
-                {
-                    addressLabel.setText(user.getAddress());
-                }
-
-                if(user.getPhone_number()==null || user.getPhone_number()==0)
+                if(tab.getPosition()==0)
                 {
 
-                    phoneNumberLabel.setText("");
+                    OtherProfileFragment otherProfileFragment=new OtherProfileFragment();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("username",username);
+                    bundle.putString("ConnectedUsername",connectedUsername);
+                    otherProfileFragment.setArguments(bundle);
 
-                }else{
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frameProfile,otherProfileFragment).commit();
 
-                    phoneNumberLabel.setText(user.getPhone_number().toString());
+
+                }else if(tab.getPosition()==1)
+                {
+
+                  ActivityFragment activityFragment=new ActivityFragment();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("username",username);
+                    activityFragment.setArguments(bundle);
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frameProfile,activityFragment).commit();
+
+
+                }else if (tab.getPosition()==2){
+
+                    ChildrenHomeFragment childrenHomeFragment=new ChildrenHomeFragment();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("username",username);
+                    bundle.putString("connectedUsername",connectedUsername);
+                    childrenHomeFragment.setArguments(bundle);
+
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frameProfile,childrenHomeFragment).commit();
 
                 }
-
-                if(user.getPartner()==null || user.getPartner()=="")
-                {
-                    partnerLabel.setText("");
-
-                }else {
-
-                    partnerLabel.setText(user.getPartner());
-                }
-
-                if(user.getBirth_date()==null || user.getBirth_date()=="")
-                {
-                    birth_date.setText("");
-                }else {
-                    birth_date.setText(user.getBirth_date());
-                }
-
 
             }
-        });
 
-
-        ImageRepository.getInstance().loadPicutreOf(username,0.5f,0.5f, new ImageRepository.getPictureCallBack() {
             @Override
-            public void onResponse(Bitmap picUrl) {
-                if(picUrl==null)
-                {
-                    image.setImageResource(R.drawable.default_avatar);
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-                }else{
-                    image.setImageBitmap(picUrl);
-                }
             }
-        });
 
-
-chatBtn.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-
-        Intent intent=new Intent(getApplicationContext(),ChatActivity.class);
-
-        intent.putExtra("username",username);
-        intent.putExtra("redirect",1);
-        intent.putExtra("ConnectedUsername",connectedUsername);
-        startActivity(intent);
-
-    }
-});
-
-
-
-    }
-
-
-    public void updateNumberOfFollows()
-    {
-
-        FollowRepository.getInstance().getWhatFollows(username, new FollowRepository.getManyCallback() {
             @Override
-            public void getManyOneFollow(List<Follow> follow) {
-                following.setText(""+follow.size());
-            }
-        });
-
-        FollowRepository.getInstance().getFollowing(username, new FollowRepository.getManyCallback() {
-            @Override
-            public void getManyOneFollow(List<Follow> follow) {
-                followers.setText(""+follow.size());
-            }
-        });
-    }
-
-    public AppCompatButton showFollowBtn()
-    {
-        AppCompatButton appCompatButton=(AppCompatButton) layoutLinear.getChildAt(1);
-        appCompatButton.setText("Follow");
-        chatBtn.setVisibility(View.INVISIBLE);
-
-        return appCompatButton;
-    }
-
-    public AppCompatButton showUnFollowBtn()
-    {
-
-        AppCompatButton appCompatButton=(AppCompatButton) layoutLinear.getChildAt(1);
-        appCompatButton.setText("Unfollow");
-        chatBtn.setVisibility(View.VISIBLE);
-
-        return appCompatButton;
-    }
-
-
-    public void initFollowBtn()
-    {
-        AppCompatButton appCompatButton=(AppCompatButton) layoutLinear.getChildAt(1);
-        appCompatButton.setText("Unfollow");
-
-        FollowRepository.getInstance().getOneFollow(connectedUsername, username, new FollowRepository.getOneCallback() {
-            @Override
-            public void getOneFollow(Follow follow) {
-
-                if(follow==null)
-                {
-                    x=1;
-                    showFollowBtn();
-
-                }else
-                {
-                    x=2;
-                    showUnFollowBtn();
-                }
+            public void onTabReselected(TabLayout.Tab tab) {
 
             }
         });
@@ -250,64 +115,7 @@ chatBtn.setOnClickListener(new View.OnClickListener() {
 
     }
 
-    public void updateFollowBtn()
-    {
-    x++;
-
-        if(x%2==0)
-        {
-            showUnFollowBtn();
-
-            FollowRepository.getInstance().getOneFollow(connectedUsername, username, new FollowRepository.getOneCallback() {
-                @Override
-                public void getOneFollow(Follow follow) {
-                    if(follow==null)
-                    {
-                        FollowRepository.getInstance().addFollow(new Follow(connectedUsername, username), new FollowRepository.addingCallback() {
-                            @Override
-                            public void addingCallback(int code) {
-                                if(code==200)
-                                {
-
-                                    updateNumberOfFollows();
-
-                                    Date date= new Date(System.currentTimeMillis());
-                                    long time = date. getTime();
-                                    Timestamp ts = new Timestamp(time);
 
 
-                                    ActivitiesRepository.getInstance().addActivities(new Activities(connectedUsername, username, ActivityType.FOLLOW), new ActivitiesRepository.addingCallback() {
-                                        @Override
-                                        public void addingCallback(int code) {
-
-                                        }
-                                    });
-
-                                }
-                            }
-                        });
-                    }
-                }
-            });
-
-        }else{
-
-            showFollowBtn();
-
-FollowRepository.getInstance().deleteUser(connectedUsername, username, new FollowRepository.deletingCallback() {
-    @Override
-    public void deletingCallback(int code) {
-        if(code==200)
-        {
-            updateNumberOfFollows();
-        }
-
-    }
-});
-
-        }
-
-
-    }
 
 }

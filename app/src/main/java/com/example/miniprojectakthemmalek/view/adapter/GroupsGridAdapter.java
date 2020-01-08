@@ -1,10 +1,13 @@
 package com.example.miniprojectakthemmalek.view.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.miniprojectakthemmalek.R;
@@ -13,6 +16,7 @@ import com.example.miniprojectakthemmalek.model.entities.GroupUser;
 import com.example.miniprojectakthemmalek.model.entities.Post;
 import com.example.miniprojectakthemmalek.model.entities.Enums.Status;
 import com.example.miniprojectakthemmalek.model.repositories.GroupUserRepository;
+import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
 
 import java.util.List;
@@ -76,6 +80,7 @@ public class GroupsGridAdapter extends BaseAdapter {
 
         final TextView postNumber=convertView.findViewById(R.id.postNumber);
         final TextView membersNumber=convertView.findViewById(R.id.membersNumber);
+        final ImageView image=convertView.findViewById(R.id.image);
 
         PostRepository.getInstance().getAllPostByGroupName(groupList.get(position).getName(), new PostRepository.getAllPostCallBack() {
             @Override
@@ -91,6 +96,12 @@ public class GroupsGridAdapter extends BaseAdapter {
             }
         });
 
+        ImageRepository.getInstance().loadPicutreOfGroup(groupList.get(position).getName(), 0.6f, 0.6f, new ImageRepository.getPictureCallBack() {
+            @Override
+            public void onResponse(Bitmap picBitmap) {
+                image.setImageBitmap(picBitmap);
+            }
+        });
         return convertView;
     }
 }

@@ -21,17 +21,7 @@
             android:icon="@drawable/ic_inbox"
             android:title="Inbox"
             app:actionLayout="@layout/badge_navigation_plain" />
-        <item
-            android:id="@+id/nav_priority_inbox"
-            android:icon="@drawable/ic_label"
-            android:title="Priority inbox"
-            app:actionLayout="@layout/badge_navigation_colored" />
-        <item
-            android:id="@+id/nav_social"
-            android:icon="@drawable/ic_peoples"
-            android:title="Social"
-            app:actionLayout="@layout/badge_navigation_colored" />
-    </group>
+                </group>
 
 
     <item

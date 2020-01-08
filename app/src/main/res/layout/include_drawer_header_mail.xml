@@ -13,7 +13,7 @@
         android:scaleType="centerCrop"
         app:srcCompat="@drawable/pp" />
 
-    <com.mikhaellopez.circularimageview.CircularImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avatar"
         android:layout_width="64dp"
         android:layout_height="64dp"

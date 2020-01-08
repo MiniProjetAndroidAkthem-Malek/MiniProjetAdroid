@@ -30,6 +30,7 @@ android:orientation="vertical"
     android:stretchMode="spacingWidthUniform"
     >
 
-
 </androidx.recyclerview.widget.RecyclerView>
+
+
 </LinearLayout>

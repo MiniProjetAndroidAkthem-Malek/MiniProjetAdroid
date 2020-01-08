@@ -23,6 +23,15 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.Childr
 
     List<Children> childrenList;
     FragmentManager fragment;
+    String connectedUsername;
+
+    public String getConnectedUsername() {
+        return connectedUsername;
+    }
+
+    public void setConnectedUsername(String connectedUsername) {
+        this.connectedUsername = connectedUsername;
+    }
 
     public FragmentManager getFragment() {
         return fragment;
@@ -72,6 +81,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.Childr
 
                 Bundle bundle=new Bundle();
                 bundle.putInt("id",holder.getId());
+                bundle.putString("connectedUsername",connectedUsername);
                 ChildrenProfileFragment childrenProfileFragment=new ChildrenProfileFragment();
                 childrenProfileFragment.setArguments(bundle);
                 fragment.beginTransaction().replace(R.id.frameProfile,childrenProfileFragment).commit();

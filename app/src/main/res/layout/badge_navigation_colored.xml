@@ -9,13 +9,14 @@
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+
+android:background="@drawable/ic_arrow_back"
+        android:backgroundTint="@color/red_900"
         android:gravity="center"
         android:paddingBottom="@dimen/spacing_small"
         android:paddingLeft="@dimen/spacing_medium"
         android:paddingRight="@dimen/spacing_medium"
         android:paddingTop="@dimen/spacing_small"
-        android:text="20"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:textColor="@android:color/white" />
 

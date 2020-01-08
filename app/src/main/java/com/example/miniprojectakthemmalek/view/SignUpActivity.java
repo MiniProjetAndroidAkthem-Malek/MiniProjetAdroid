@@ -9,23 +9,33 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 
 import com.example.miniprojectakthemmalek.R;
+import com.example.miniprojectakthemmalek.model.entities.Tag;
 import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
+import com.example.miniprojectakthemmalek.view.adapter.TagAdapter;
 import com.google.android.material.snackbar.Snackbar;
+import com.hootsuite.nachos.NachoTextView;
+import com.hootsuite.nachos.chip.Chip;
+import com.hootsuite.nachos.terminator.ChipTerminatorHandler;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -34,10 +44,22 @@ Button email_sign_in_button,facebooklogin;
 int x=0, y=0,z=0;
 LinearLayout linearLayout;
 SessionManager sessionManager;
-NumberPicker numChildren,disableChildren;
     AppCompatRadioButton radio_female,radio_male;
     DatePicker birth_date;
 String sexe="";
+
+NachoTextView et_tag,et_tag2;
+
+
+    List<String> chips=new ArrayList<String>();
+
+    List<Tag> tagList=new ArrayList<Tag>();
+
+    List<Tag> tagList2=new ArrayList<Tag>();
+
+    List<String> chips2=new ArrayList<String>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,18 +68,17 @@ String sexe="";
         birth_date=findViewById(R.id.birth_date);
         radio_female = findViewById(R.id.radio_female);
         radio_male=findViewById(R.id.radio_male);
-        numChildren=findViewById(R.id.numChildren);
-        disableChildren=findViewById(R.id.disableChildren);
         linearLayout=findViewById(R.id.linearLayout);
         usernameInput=findViewById(R.id.usernameInput);
         passwordInput=findViewById(R.id.passwordInput);
         retypeInput=findViewById(R.id.retypeInput);
         firstName=findViewById(R.id.firstName);
         lastName=findViewById(R.id.lastName);
+        et_tag=findViewById(R.id.et_tag);
+        et_tag2=findViewById(R.id.et_tag2);
 
         email_sign_in_button=findViewById(R.id.email_sign_in_button);
         email_sign_in_button.setEnabled(false);
-
 
 
 
@@ -65,11 +86,7 @@ String sexe="";
     passwordControl(passwordInput,retypeInput);
     retypeControl(retypeInput,passwordInput);
     updateButton(email_sign_in_button);
-    numChildren.setMinValue(0);
-    numChildren.setMaxValue(10);
 
-    disableChildren.setMinValue(0);
-    disableChildren.setMaxValue(10);
 
     email_sign_in_button.setOnClickListener(new View.OnClickListener() {
     @Override
@@ -88,11 +105,10 @@ final String usernameLoc = usernameInput.getText().toString();
 
         System.out.println("sexe----> "+sexe);
         System.out.println("date----> "+ getDateFromDatePicker());
-        System.out.println("num_children---->"+numChildren.getValue());
 
 
 
-        UserRepository.getInstance().addUser(new User(usernameInput.getText().toString(), passwordInput.getText().toString(),sexe,birth_date.getYear()+"/"+birth_date.getMonth()+"/"+birth_date.getDayOfMonth(),numChildren.getValue(),disableChildren.getValue()), new UserRepository.addingCallback() {
+        UserRepository.getInstance().addUser(new User(usernameInput.getText().toString(), passwordInput.getText().toString(),sexe,birth_date.getYear()+"/"+birth_date.getMonth()+"/"+birth_date.getDayOfMonth(),0,0), new UserRepository.addingCallback() {
             @Override
             public void addingCallback(int code) {
                 if(code==200)
@@ -142,6 +158,62 @@ final String usernameLoc = usernameInput.getText().toString();
     }
 });
 
+
+
+
+   chips.add("sss");
+   chips.add("qqqq");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("dddd");
+   chips.add("QAA");
+   chips.add("vvvv");
+        et_tag.setChipSpacing(R.dimen.spacing_medium);
+        et_tag2.setChipSpacing(R.dimen.spacing_medium);
+        et_tag.setText(chips);
+
+
+        et_tag.addChipTerminator('\n', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_ALL);
+
+    et_tag.setOnChipClickListener(new NachoTextView.OnChipClickListener() {
+        @Override
+        public void onChipClick(Chip chip, MotionEvent event) {
+
+            chips2.add(chip.getText().toString());
+            chips.remove(chip.getText().toString());
+            et_tag.setText(chips);
+            et_tag2.setText(chips2);
+            et_tag2.addChipTerminator('\n', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_ALL);
+
+        }
+    });
+
+
+
+
+
+
     }
 
     public void usernameControl(final EditText usernameEdit)
@@ -170,8 +242,7 @@ final String usernameLoc = usernameInput.getText().toString();
             public void afterTextChanged(Editable editable) {
 
                 updateButton(email_sign_in_button);
-
-
+                
             }
         });
     }

@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -41,9 +42,11 @@ import com.example.miniprojectakthemmalek.model.entities.EventUser;
 import com.example.miniprojectakthemmalek.model.entities.Post;
 import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.repositories.EventUserRepository;
+import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
 import com.example.miniprojectakthemmalek.view.fragments.AddPostFragment;
 import com.example.miniprojectakthemmalek.view.fragments.PostsFragment;
+import com.facebook.login.LoginManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -54,6 +57,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class HomeActivity extends AppCompatActivity  {
@@ -83,7 +88,7 @@ public class HomeActivity extends AppCompatActivity  {
     TextView inbox_nums;
 
     NotificationManagerCompat notificationManagerCompat;
-    FloatingActionButton moveToAddPost;
+    FloatingActionButton moveToAddPost,movetopostss;
     CardView gotoeventss,gotogroups,gotofriends,gotoposts;
 
 
@@ -104,7 +109,6 @@ public class HomeActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline_feed);
 
-
         notificationManagerCompat = NotificationManagerCompat.from(this);
 
         slideDown =  AnimationUtils.loadAnimation(getApplicationContext(),
@@ -120,7 +124,7 @@ public class HomeActivity extends AppCompatActivity  {
         frameHome=findViewById(R.id.frameHome);
         gotoevents=findViewById(R.id.gotoevents);
         moveToAddPost=findViewById(R.id.movetozddposts);
-
+        movetopostss=findViewById(R.id.movetoposss);
         moveToAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +136,7 @@ public class HomeActivity extends AppCompatActivity  {
                 addPostFragment.setArguments(bundle);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameHome,addPostFragment).commit();
-
+                moveToAddPost.setVisibility(View.GONE);
             }
         });
 
@@ -216,18 +220,6 @@ gotoposts.setOnClickListener(new View.OnClickListener() {
     }
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
         movetogroups.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -239,6 +231,7 @@ gotoposts.setOnClickListener(new View.OnClickListener() {
 
         View headerView = navigationView.getHeaderView(0);
         TextView connectedUserName = headerView.findViewById(R.id.connectedUserName);
+        final CircleImageView avatar=headerView.findViewById(R.id.avatar);
         TextView connectedUserJob = headerView.findViewById(R.id.connectedUserJob);
         inbox_nums = findViewById(R.id.inbox_nums);
 
@@ -269,6 +262,14 @@ gotoposts.setOnClickListener(new View.OnClickListener() {
               startActivity(intent);
           }
       });
+
+
+        ImageRepository.getInstance().loadPicutreOf(user.getUsername(), 0.3f, 0.3f, new ImageRepository.getPictureCallBack() {
+            @Override
+            public void onResponse(Bitmap picBitmap) {
+                avatar.setImageBitmap(picBitmap);
+            }
+        });
 
 
       navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -334,6 +335,20 @@ gotoposts.setOnClickListener(new View.OnClickListener() {
 
                 break;
             }
+            case R.id.nav_signout: {
+
+                LoginManager.getInstance().logOut();
+
+                sessionManager.updateConnectionStatusForUser(user.getUsername(),0);
+                sessionManager.initRememberMeStatus();
+                Intent intent=new Intent(getApplicationContext(), AuthentificationActivity.class);
+                startActivity(intent);
+
+               break;
+
+
+
+            }
 
 
         }
@@ -344,6 +359,24 @@ gotoposts.setOnClickListener(new View.OnClickListener() {
 
 
       });
+        movetopostss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                focusOnView();
+
+                PostsFragment postFragment =    new PostsFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("username",user.getUsername());
+                postFragment.setArguments(bundle);
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameHome,postFragment).commit();
+                moveToAddPost.setVisibility(View.VISIBLE);
+                movetopostss.setVisibility(View.VISIBLE);
+
+
+
+            }
+        });
     }
 
 
@@ -419,6 +452,14 @@ gotoposts.setOnClickListener(new View.OnClickListener() {
 
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Intent intentHome =new Intent(getApplicationContext(), HomeActivity.class);
+        intentHome.putExtra("username",user.getUsername());
+        startActivity(intentHome);
     }
 
     public class MyViewPagerAdapter extends PagerAdapter {

@@ -23,11 +23,19 @@ public interface IImage {
 @Multipart
 @POST("/upload")
 Call<ResponseBody> addImage(@Part MultipartBody.Part image, @Part("upload")RequestBody name);
-
 @GET("/uploads/{username}")
 Call<ResponseBody> getPictureOf(@Path("username") String username);
 
+@Multipart
+@POST("/upload/event")
+Call<ResponseBody> addImageForEvent(@Part MultipartBody.Part image, @Part("upload")RequestBody name);
+@GET("/uploads/event/{eventName}")
+Call<ResponseBody> getPictureForEvent(@Path("eventName") String username);
 
-
+@Multipart
+@POST("/upload/group")
+Call<ResponseBody> addImageForGroup(@Part MultipartBody.Part image, @Part("upload")RequestBody name);
+@GET("/uploads/group/{groupName}")
+Call<ResponseBody> getPictureForGroup(@Path("groupName") String username);
 
 }

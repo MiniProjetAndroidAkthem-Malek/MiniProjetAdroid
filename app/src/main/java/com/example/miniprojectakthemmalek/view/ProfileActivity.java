@@ -30,7 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_purple);
+            setContentView(R.layout.activity_profile_purple);
         tabLayout=findViewById(R.id.tabLayout);
 
         sessionManager = new SessionManager(this);
@@ -80,6 +80,7 @@ public class ProfileActivity extends AppCompatActivity {
                     ChildrenHomeFragment childrenHomeFragment=new ChildrenHomeFragment();
                     Bundle bundle=new Bundle();
                     bundle.putString("username",user.getUsername());
+                    bundle.putString("connectedUsername",user.getUsername());
                     childrenHomeFragment.setArguments(bundle);
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.frameProfile,childrenHomeFragment).commit();

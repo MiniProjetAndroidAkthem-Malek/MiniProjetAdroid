@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.miniprojectakthemmalek.R;
@@ -24,29 +25,42 @@ import retrofit2.Response;
 
 public class EventMainPageActivity extends AppCompatActivity {
     AppCompatButton JoinEventBtn,UnjoinEventBtn;
-
+    ImageButton maps;
+     String Event_name,Event_State,Event_Contry,Event_Description,Event_Place,connectedUsername,place;
+     TextView NameEventTv,AdressEventTv,DescriptionEventTv;
+     FloatingActionButton settingsadd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_overlaps);
-        final String Event_name,Event_State,Event_Contry,Event_Description,connectedUsername;
-        final TextView NameEventTv,AdressEventTv,DescriptionEventTv;
-        final FloatingActionButton settingsadd;
+
         NameEventTv=findViewById(R.id.NameEventTv);
         AdressEventTv=findViewById(R.id.AddressEventTv);
         DescriptionEventTv=findViewById(R.id.DescriptionEventTv);
+        maps=findViewById(R.id.maps);
         settingsadd = findViewById(R.id.settingsAdd);
+
+
         Event_name=getIntent().getStringExtra("Event_name");
         connectedUsername=getIntent().getStringExtra("username");
         Event_Contry=getIntent().getStringExtra("Event_Contry");
         Event_State=getIntent().getStringExtra("Event_State");
         Event_Description=getIntent().getStringExtra("Event_Description");
+        Event_Place=getIntent().getStringExtra("Event_Place");
         System.out.println(Event_name);
 
         JoinEventBtn=findViewById(R.id.JoinEventBtn);
         UnjoinEventBtn=findViewById(R.id.UnJoinEventBtn);
 
-
+        place=Event_Place+","+Event_State+","+Event_Contry;
+        maps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(),MapBoxActivity.class);
+                intent.putExtra("address",place);
+                startActivity(intent);
+            }
+        });
 
 
         EventUserRepository.getInstance().getUserEventByName(connectedUsername,Event_name, new EventUserRepository.getAllGroupCallBack() {
@@ -149,6 +163,7 @@ settingsadd.setOnClickListener(new View.OnClickListener() {
         intent.putExtra("description",Event_Description);
         intent.putExtra("state",Event_State);
         intent.putExtra("contry",Event_Contry);
+        intent.putExtra("place",Event_Place);
         intent.putExtra("username",connectedUsername);
 
         startActivity(intent);
@@ -166,7 +181,7 @@ settingsadd.setOnClickListener(new View.OnClickListener() {
                 System.out.println(groupList);
                 NameEventTv.setText(groupList.get(0).getNom());
                 DescriptionEventTv.setText(groupList.get(0).getDescription());
-                AdressEventTv.setText("the event will be in : "+groupList.get(0).getState()+","+groupList.get(0).getContry());
+                AdressEventTv.setText("the event will be in : "+place);
 
 
 
