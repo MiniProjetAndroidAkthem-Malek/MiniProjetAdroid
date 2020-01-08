@@ -28,6 +28,7 @@ import com.example.miniprojectakthemmalek.view.adapter.CommentAdapter;
 import com.example.miniprojectakthemmalek.view.fragments.PostsFragment;
 import com.example.miniprojectakthemmalek.view.fragments.ProfileFragment;
 import com.example.miniprojectakthemmalek.view.utils.Base_Home;
+import com.example.miniprojectakthemmalek.view.utils.ItemAnimation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -39,6 +40,8 @@ public class CommentActivity extends AppCompatActivity {
     TextView et_post;
     EditText et_comment;
     Button commenter;
+    private int animation_type = ItemAnimation.FADE_IN;
+
 
     TextView usernamelabel;
 
@@ -105,7 +108,7 @@ public class CommentActivity extends AppCompatActivity {
                if(like_posts.size()>0)
                {
 
-                commentAdapter = new CommentAdapter();
+                commentAdapter = new CommentAdapter(like_posts,animation_type);
                 commentAdapter.setCommentList(like_posts);
 
                 commentAdapter.setConnectedUsername(username);
@@ -136,7 +139,7 @@ public class CommentActivity extends AppCompatActivity {
                                      if(like_posts.size()>0)
                                      {
 
-                                         commentAdapter = new CommentAdapter();
+                                         commentAdapter = new CommentAdapter(like_posts,animation_type);
                                          commentAdapter.setCommentList(like_posts);
                                         commentAdapter.setConnectedUsername(username);
                                          comments.setAdapter(commentAdapter);

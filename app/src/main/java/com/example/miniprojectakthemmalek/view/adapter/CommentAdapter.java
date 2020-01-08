@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.comment;
 import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
+import com.example.miniprojectakthemmalek.view.utils.ItemAnimation;
 
 import java.util.List;
 
@@ -19,8 +20,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder>  {
     private List<comment> commentList;
+    private int animation_type = 0;
+
 
     String connectedUsername;
+
+    public CommentAdapter(List<comment> commentList, int animation_type) {
+        this.commentList = commentList;
+        this.animation_type = animation_type;
+    }
 
     public String getConnectedUsername() {
         return connectedUsername;
@@ -74,12 +82,28 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         });
 
 
+        setAnimation(holder.itemView, position);
+
+
     }
 
     @Override
     public int getItemCount() {
         return commentList.size();
     }
+
+    private int lastPosition = -1;
+    private boolean on_attach = true;
+
+    private void setAnimation(View view, int position) {
+        if (position > lastPosition) {
+            ItemAnimation.animate(view, on_attach ? position : -1, animation_type);
+            lastPosition = position;
+        }
+    }
+
+
+
 
     public static class CommentViewHolder extends RecyclerView.ViewHolder {
 

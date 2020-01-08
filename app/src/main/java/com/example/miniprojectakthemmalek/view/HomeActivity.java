@@ -51,6 +51,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+
 import java.sql.SQLOutput;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -464,6 +465,8 @@ gotoposts.setOnClickListener(new View.OnClickListener() {
 
     public class MyViewPagerAdapter extends PagerAdapter {
         private LayoutInflater layoutInflater;
+        private LayoutInflater layoutInflater1;
+        private LayoutInflater layoutInflater2;
 
         public MyViewPagerAdapter() {
         }
@@ -471,15 +474,23 @@ gotoposts.setOnClickListener(new View.OnClickListener() {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            layoutInflater1 = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            layoutInflater2 = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
             View view = layoutInflater.inflate(R.layout.item_article_stepper, container, false);
-            TextView text = (TextView) view.findViewById(R.id.text);
+
+            //TextView text = (TextView) view.findViewById(R.id.text);
             if (position > 0) {
-                text.setVisibility(View.VISIBLE);
+                //text.setVisibility(View.VISIBLE);
+                //image.setBackgroundResource(R.drawable.helps);
+                (view.findViewById(R.id.lyt_article_cover2)).setVisibility(View.VISIBLE);
                 (view.findViewById(R.id.lyt_article_cover)).setVisibility(View.GONE);
                 if (position % 2 == 0) {
-                    text.setText(R.string.long_lorem_ipsum_2);
+                    //text.setText(R.string.long_lorem_ipsum_2);
+                    (view.findViewById(R.id.lyt_article_cover3)).setVisibility(View.VISIBLE);
+                    (view.findViewById(R.id.lyt_article_cover2)).setVisibility(View.GONE);
                 } else {
-                    text.setText(R.string.long_lorem_ipsum);
+                  //  text.setText(R.string.long_lorem_ipsum);
                 }
             }
             container.addView(view);
