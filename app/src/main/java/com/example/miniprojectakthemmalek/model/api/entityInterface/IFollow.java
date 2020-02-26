@@ -17,8 +17,6 @@ import retrofit2.http.Path;
 public interface IFollow {
 
 
-
-
 @POST("followers/add")
 Call<JsonPrimitive> addFollow(@Body Follow follow);
 

@@ -3,6 +3,7 @@ package com.example.miniprojectakthemmalek.view;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,15 +19,21 @@ import com.example.miniprojectakthemmalek.model.api.RetrofitInstance;
 import com.example.miniprojectakthemmalek.model.api.entityInterface.IUser;
 import com.example.miniprojectakthemmalek.model.entities.Children;
 import com.example.miniprojectakthemmalek.model.entities.Message;
+import com.example.miniprojectakthemmalek.model.entities.Tag_post;
+import com.example.miniprojectakthemmalek.model.entities.Tag_user;
 import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.repositories.ChildrenRepository;
 import com.example.miniprojectakthemmalek.model.repositories.MessageRepository;
 import com.example.miniprojectakthemmalek.model.repositories.NotificationRepositories.NotificationRepository;
+import com.example.miniprojectakthemmalek.model.repositories.TagPostRepository;
+import com.example.miniprojectakthemmalek.model.repositories.TagUserRepository;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
+import com.example.miniprojectakthemmalek.view.dialogs.TagsCustomDialog;
 import com.example.miniprojectakthemmalek.view.fragments.AccountsFragment;
 import com.example.miniprojectakthemmalek.view.utils.GeoCoder.GeoLocationManager;
 import com.example.miniprojectakthemmalek.view.utils.ImageManager;
 import com.example.miniprojectakthemmalek.view.utils.NetworkCheck;
+import com.example.miniprojectakthemmalek.view.utils.RecomandedPosts;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -77,29 +84,24 @@ public class AuthentificationActivity extends AppCompatActivity {
         System.out.println(NetworkCheck.isNetworkAvailable(getApplicationContext()));
 
 
-        //System.out.println(NetworkCheck.isInternetAvailable());
+        RecomandedPosts rp=new RecomandedPosts();
 
-      /*try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "com.example.miniprojectakthemmalek",
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.i("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
 
-                System.out.println("---------------------> "+Base64.encodeToString(md.digest(), Base64.DEFAULT));
+        rp.postIsInteresting(67, "ee", new RecomandedPosts.callBack() {
+            @Override
+            public void onResponse(Boolean isInterestedIn) {
+
+                System.out.println("----------> "+isInterestedIn);
             }
-        }
-        catch (PackageManager.NameNotFoundException e) {
-        }
-        catch (NoSuchAlgorithmException e) {
-        }
+        });
 
-*/
+        TagPostRepository.getInstance().getTagPostById(67, new TagPostRepository.getAllPostCallBack() {
+            @Override
+            public void onResponse(List<Tag_post> tagPosts) {
+                System.out.println(tagPosts);
+            }
+        });
 
-       // GeoLocationManager g=new GeoLocationManager(getApplicationContext(),0d,0d);
-       // g.getLatLonFromAdress();
 
 MessageRepository.getInstance().getDiscussionsByConnectedUsername("userTest", new MessageRepository.getManyCallback() {
     @Override

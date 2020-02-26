@@ -57,32 +57,9 @@ android:background="@color/grey_5">
                     android:textColor="@color/grey_90"
                     android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_small"
-                    android:gravity="center_vertical">
-
-                    <ImageView
-                        android:layout_width="@dimen/spacing_mlarge"
-                        android:layout_height="@dimen/spacing_mlarge"
-                        android:tint="@color/colorPrimary"
-                        app:srcCompat="@drawable/ic_public" />
-
-                    <View
-                        android:layout_width="@dimen/spacing_medium"
-                        android:layout_height="0dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:text="Public"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                        android:textColor="@color/colorPrimary" />
-
-                </LinearLayout>
-
+                       <View
+                    android:layout_width="0dp"
+                    android:layout_height="15dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -114,6 +91,18 @@ android:background="@color/grey_5">
 
         </LinearLayout>
 
+        <co.lujun.androidtagview.TagContainerLayout
+            android:id="@+id/tag2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:container_enable_drag="false"
+            app:horizontal_interval="10dp"
+
+            app:vertical_interval="10dp"
+            app:tag_clickable="true"
+
+            />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -131,50 +120,28 @@ android:background="@color/grey_5">
 
         </LinearLayout>
 
-        <LinearLayout
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="50dp" />
+
+
+        <co.lujun.androidtagview.TagContainerLayout
+            android:id="@+id/tag"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/grey_5"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            app:container_enable_drag="false"
+            app:horizontal_interval="10dp"
+            app:vertical_interval="10dp"
+            app:tag_clickable="true"
+            >
 
-            <ImageButton
-                android:id="@+id/bt_photo"
-                android:layout_width="?attr/actionBarSize"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="@color/grey_40"
-                app:srcCompat="@drawable/ic_photo_camera" />
+        </co.lujun.androidtagview.TagContainerLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="20dp" />
+            />
 
-            <ImageButton
-                android:id="@+id/bt_link"
-                android:layout_width="?attr/actionBarSize"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="@color/grey_40"
-                app:srcCompat="@drawable/ic_insert_link" />
-
-            <ImageButton
-                android:id="@+id/bt_file"
-                android:layout_width="?attr/actionBarSize"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="@color/grey_40"
-                app:srcCompat="@drawable/ic_description" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <ImageButton
-                android:id="@+id/bt_setting"
-                android:layout_width="?attr/actionBarSize"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="@color/grey_40"
-                app:srcCompat="@drawable/ic_more_vert" />
-
-        </LinearLayout>
 
     </LinearLayout>
 
@@ -189,6 +156,7 @@ android:background="@color/grey_5">
         <View
             android:layout_width="170dp"
             android:layout_height="20dp"></View>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/moveToPost"
             android:layout_width="wrap_content"

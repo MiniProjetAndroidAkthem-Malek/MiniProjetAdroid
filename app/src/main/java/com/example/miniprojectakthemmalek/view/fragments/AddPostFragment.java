@@ -3,10 +3,12 @@ package com.example.miniprojectakthemmalek.view.fragments;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -21,9 +23,12 @@ import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.Activities;
 import com.example.miniprojectakthemmalek.model.entities.Enums.ActivityType;
 import com.example.miniprojectakthemmalek.model.entities.Post;
+import com.example.miniprojectakthemmalek.model.entities.Tag;
+import com.example.miniprojectakthemmalek.model.entities.Tag_post;
 import com.example.miniprojectakthemmalek.model.repositories.ActivitiesRepository;
 import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
+import com.example.miniprojectakthemmalek.model.repositories.TagPostRepository;
 import com.example.miniprojectakthemmalek.view.ProfileActivity;
 import com.example.miniprojectakthemmalek.view.utils.Base_Home;
 import com.example.miniprojectakthemmalek.view.utils.GeoCoder.GeoLocationManager;
@@ -32,7 +37,17 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonPrimitive;
+import com.hootsuite.nachos.NachoTextView;
+import com.hootsuite.nachos.chip.Chip;
 import com.mikhaellopez.circularimageview.CircularImageView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import co.lujun.androidtagview.ColorFactory;
+import co.lujun.androidtagview.TagContainerLayout;
+import co.lujun.androidtagview.TagView;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
@@ -54,6 +69,11 @@ SwitchCompat positionSwitch;
     Post post;
 CircularImageView image;
     private FusedLocationProviderClient client;
+
+    List<String> list=new ArrayList<String>();
+
+    List<String> list2=new ArrayList<String>();
+
 
     public AddPostFragment() {
         // Required empty public constructor
@@ -96,7 +116,17 @@ CircularImageView image;
         moveToPost=rootView.findViewById(R.id.moveToPost);
         usernamelabel=rootView.findViewById(R.id.usernamelabel);
         positionSwitch=rootView.findViewById(R.id.positionSwitch);
+        final TagContainerLayout mTagContainer = (TagContainerLayout) rootView.findViewById(R.id.tag);
+        final TagContainerLayout mTagContainer2 = (TagContainerLayout) rootView.findViewById(R.id.tag2);
+        mTagContainer.setTheme(ColorFactory.NONE);
+        mTagContainer.setBackgroundColor(Color.TRANSPARENT);
+        mTagContainer2.setTheme(ColorFactory.NONE);
+        mTagContainer2.setBackgroundColor(Color.TRANSPARENT);
+
         image = rootView.findViewById(R.id.image);
+
+        list.addAll(Arrays.asList(getResources().getStringArray(R.array.disease_array)));
+
 
         username= getArguments().getString("username");
        
@@ -155,7 +185,21 @@ moveToPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onResponse(JsonPrimitive id) {
 
-                System.out.println("-------------------------- "+post.getId());
+                if(list2.size()!=0)
+                {
+                    for(String s:list2)
+                    {
+                        Tag_post tag_post=new Tag_post(id.getAsInt(),s);
+                        TagPostRepository.getInstance().addTagPost(tag_post, new TagPostRepository.getLastInsertedCallBack() {
+                            @Override
+                            public void onResponse(JsonPrimitive id) {
+
+                            }
+                        });
+
+                    }
+                }
+
 
                 ActivitiesRepository.getInstance().addActivities(new Activities(username, ""+id, ActivityType.POST), new ActivitiesRepository.addingCallback() {
                     @Override
@@ -165,8 +209,6 @@ moveToPost.setOnClickListener(new View.OnClickListener() {
 
                     }
                 });
-
-
 
                 PostsFragment postsFragment =    new PostsFragment();
                 Bundle bundle = new Bundle();
@@ -183,11 +225,68 @@ moveToPost.setOnClickListener(new View.OnClickListener() {
 
 
 
+mTagContainer.setTags(list);
+mTagContainer2.setTags(list2);
+
+mTagContainer.setOnTagClickListener(new TagView.OnTagClickListener() {
+    @Override
+    public void onTagClick(int position, String text) {
+
+        list.remove(text);
+        list2.add(text);
+
+        mTagContainer.setTags(list);
+        mTagContainer2.setTags(list2);
+
+    }
+
+    @Override
+    public void onTagLongClick(int position, String text) {
+
+    }
+
+    @Override
+    public void onSelectedTagDrag(int position, String text) {
+
+    }
+
+    @Override
+    public void onTagCrossClick(int position) {
+
+    }
+});
 
 
+mTagContainer2.setOnTagClickListener(new TagView.OnTagClickListener() {
+    @Override
+    public void onTagClick(int position, String text) {
 
+        list2.remove(text);
+        list.add(text);
+
+        mTagContainer.setTags(list);
+        mTagContainer2.setTags(list2);
+
+    }
+
+    @Override
+    public void onTagLongClick(int position, String text) {
+
+    }
+
+    @Override
+    public void onSelectedTagDrag(int position, String text) {
+
+    }
+
+    @Override
+    public void onTagCrossClick(int position) {
+
+    }
+});
 
         return rootView;
+
     }
 
 

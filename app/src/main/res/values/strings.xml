@@ -32,6 +32,7 @@
         <item>My Posts</item>
         <item>My Friends posts</item>
         <item>Public Posts</item>
+        <item>Recommended</item>
 
     </string-array>
 
@@ -39,6 +40,15 @@
     <string-array name="disease_array">
         <item>Physical</item>
         <item>Mental</item>
+        <item>Mental</item>
+        <item>Anxiety</item>
+        <item>Autism</item>
+        <item>Bipolar</item>
+        <item>Cerabral palsy</item>
+        <item>Depression</item>
+        <item>Epilepsy</item>
+        <item>Allergies</item>
+        <item>Cancer</item>
     </string-array>
 
     <string-array name="countries_array">

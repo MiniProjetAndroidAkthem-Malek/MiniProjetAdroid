@@ -28,7 +28,7 @@ public class TagUserRepository {
     ITagUSer iTagUser = RetrofitInstance.getRetrofitInstance().create(ITagUSer.class);
 
 
-    public void addTagUser(Tag_user tag_user, final getLastInsertedCallBack callback )
+    public void addTagUser(Tag_user tag_user, final addingCallback callback )
     {
         Call<JsonPrimitive> call ;
 
@@ -37,7 +37,7 @@ public class TagUserRepository {
             @Override
             public void onResponse(Call<JsonPrimitive> call, Response<JsonPrimitive> response) {
 
-                callback.onResponse(response.body());
+                callback.addingCallback(response.code());
 
             }
 
@@ -75,6 +75,27 @@ public class TagUserRepository {
         });
 
     }
+
+    public void getTagUserByUsername(String username ,final getAllPostCallBack allPostCallBack)
+    {
+        Call<List<Tag_user>> call;
+        call = iTagUser.getTagByUsername(username);
+        call.enqueue(new Callback<List<Tag_user>>() {
+            @Override
+            public void onResponse(Call<List<Tag_user>> call, Response<List<Tag_user>> response) {
+
+                allPostCallBack.onResponse(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Tag_user>> call, Throwable t) {
+
+                t.printStackTrace();
+            }
+        });
+
+    }
+
     public void getTagUserById(int id ,final getAllPostCallBack allPostCallBack)
     {
         Call<List<Tag_user>> call;

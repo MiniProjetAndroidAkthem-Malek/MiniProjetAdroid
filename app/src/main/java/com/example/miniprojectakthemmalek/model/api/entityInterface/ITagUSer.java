@@ -21,10 +21,10 @@ Call<JsonPrimitive> addTagUser(@Body Tag_user tag_user);
 @GET("/tagUSer/get/{id}")
 Call<List<Tag_user>> getTagUserById(@Path("id") int id);
 
-@GET("/tagUSer/get/{username}")
+@GET("/tagUSer/getByUsername/{username}")
 Call<List<Tag_user>> getTagByUsername(@Path("username") String username);
 
-@GET("/tagUSer/get/{name}")
+@GET("/tagUSer/getByName/{name}")
 Call<List<Tag_user>> getTagByName(@Path("name") String name);
 
 

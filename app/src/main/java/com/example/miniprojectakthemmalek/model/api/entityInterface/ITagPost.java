@@ -19,7 +19,7 @@ public interface ITagPost {
 @POST("tagPost/add")
 Call<JsonPrimitive> addTagPost(@Body Tag_post tag_post);
 
-@GET("/tagPost/get/{name}")
+@GET("/tagPost/getByName/{name}")
 Call<List<Tag_post>> getTagByName(@Path("name") String name);
 
 @GET("/tagPost/get/{id}")

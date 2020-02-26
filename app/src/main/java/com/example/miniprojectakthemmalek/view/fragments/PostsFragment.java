@@ -33,8 +33,10 @@ import com.example.miniprojectakthemmalek.view.adapter.AccountsAdapter;
 import com.example.miniprojectakthemmalek.view.adapter.PostAdapter;
 import com.example.miniprojectakthemmalek.view.utils.Base_Home;
 import com.example.miniprojectakthemmalek.view.utils.ItemAnimation;
+import com.example.miniprojectakthemmalek.view.utils.RecomandedPosts;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -163,6 +165,49 @@ spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 }
             });
 
+
+        }else if(position==2)
+        {
+
+        }else if(position==3)
+        {
+
+        }else if(position==4)
+        {
+
+            final RecomandedPosts recomandedPosts=new RecomandedPosts();
+            PostRepository.getInstance().getAllPost(new PostRepository.getAllPostCallBack() {
+                @Override
+                public void onResponse(List<Post> posts) {
+                     final List<Post> finalList=new ArrayList<Post>();
+
+                    for(final Post p:posts)
+                    {
+                        recomandedPosts.postIsInteresting(p.getId(), username, new RecomandedPosts.callBack() {
+                            @Override
+                            public void onResponse(Boolean isInterestedIn) {
+
+                                if(isInterestedIn)
+                                {
+                                    System.out.println(p);
+                                    finalList.add(p);
+                                }
+
+                                postAdapter=new PostAdapter(getContext(),animation_type);
+                                postAdapter.setPost_list(finalList);
+                                postAdapter.setUsername(username);
+                                recyclerView.setHasFixedSize(true);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,true));
+                                recyclerView.setAdapter(postAdapter);
+
+                            }
+                        });
+                    }
+
+                  /*
+*/
+                }
+            });
 
         }
 

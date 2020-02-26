@@ -28,11 +28,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.miniprojectakthemmalek.CommentActivity;
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.Post;
+import com.example.miniprojectakthemmalek.model.entities.Tag_post;
 import com.example.miniprojectakthemmalek.model.entities.comment;
 import com.example.miniprojectakthemmalek.model.entities.like_posts;
 import com.example.miniprojectakthemmalek.model.repositories.CommentRepository;
 import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
+import com.example.miniprojectakthemmalek.model.repositories.TagPostRepository;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
 import com.example.miniprojectakthemmalek.model.repositories.like_postsRepository;
 import com.example.miniprojectakthemmalek.view.OtherProfileActivity;
@@ -41,8 +43,11 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 
 import org.w3c.dom.Comment;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import co.lujun.androidtagview.ColorFactory;
+import co.lujun.androidtagview.TagContainerLayout;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
@@ -72,6 +77,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         this.post_list = post_list;
         this.context = context;
         this.animation_type = animation_type;
+    }
+
+    public PostAdapter(Context context, int animation_type) {
+        this.context = context;
+        this.animation_type = animation_type;
+    }
+
+    public List<Post> getPost_list() {
+        return post_list;
+    }
+
+    public void setPost_list(List<Post> post_list) {
+        this.post_list = post_list;
     }
 
     @NonNull
@@ -147,6 +165,29 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         });
 
 
+
+        TagPostRepository.getInstance().getTagPostById(single_post.getId(), new TagPostRepository.getAllPostCallBack() {
+            @Override
+            public void onResponse(List<Tag_post> tagPosts) {
+
+                if(tagPosts.size()!=0)
+                {
+
+                List<String> list=new ArrayList<String>();
+                for(Tag_post tp:tagPosts)
+                {
+                list.add(tp.getName());
+                }
+
+                holder.mTagContainer2.setTags(list);
+
+                }
+            }
+        });
+
+
+
+
         holder.like.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -175,8 +216,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             }
 
 
-            if(x==1)
 
+            if(x==1)
 
 
                 like_postsRepository.getInstance().dislike(username, single_post.getId(), new like_postsRepository.deletingCallback() {
@@ -205,6 +246,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         });
         System.out.println("**********"+x);
+
+
+
+
 
 
         setAnimation(holder.itemView, position);
@@ -352,6 +397,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         public Button likes;
         public  TextView geoPosition;
         CircleImageView imageView;
+        public TagContainerLayout mTagContainer2;
+
 
 
         public PostViewHolder(@NonNull View itemView)
@@ -365,6 +412,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             show_comments=itemView.findViewById(R.id.show_comments);
             imageView=itemView.findViewById(R.id.imageView);
             geoPosition=itemView.findViewById(R.id.geoPosition);
+            mTagContainer2=itemView.findViewById(R.id.tag2);
+            mTagContainer2.setTheme(ColorFactory.NONE);
+            mTagContainer2.setBackgroundColor(Color.TRANSPARENT);
+
         }
 
 

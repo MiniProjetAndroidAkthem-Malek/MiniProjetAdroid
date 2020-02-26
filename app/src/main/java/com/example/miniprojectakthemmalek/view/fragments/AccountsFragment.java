@@ -14,9 +14,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.miniprojectakthemmalek.R;
+import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.view.SessionManager;
 import com.example.miniprojectakthemmalek.view.adapter.AccountsAdapter;
 import com.example.miniprojectakthemmalek.view.database.AppDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class AccountsFragment extends Fragment {
@@ -79,8 +83,13 @@ TextView addAnAccount;
             }
         });
 
+
+
         sessionManager=new SessionManager(getContext());
         recyclerview = rootView.findViewById(R.id.recyclerViewAccount);
+
+
+
 
         AccountsAdapter accountAdapter=new AccountsAdapter(this);
         accountAdapter.setFilm_list(sessionManager.getAllUsers());

@@ -40,10 +40,13 @@ import android.widget.TextView;
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.EventUser;
 import com.example.miniprojectakthemmalek.model.entities.Post;
+import com.example.miniprojectakthemmalek.model.entities.Tag_user;
 import com.example.miniprojectakthemmalek.model.entities.User;
 import com.example.miniprojectakthemmalek.model.repositories.EventUserRepository;
 import com.example.miniprojectakthemmalek.model.repositories.ImageRepository;
 import com.example.miniprojectakthemmalek.model.repositories.PostRepository;
+import com.example.miniprojectakthemmalek.model.repositories.TagUserRepository;
+import com.example.miniprojectakthemmalek.view.dialogs.TagsCustomDialog;
 import com.example.miniprojectakthemmalek.view.fragments.AddPostFragment;
 import com.example.miniprojectakthemmalek.view.fragments.PostsFragment;
 import com.facebook.login.LoginManager;
@@ -92,7 +95,6 @@ public class HomeActivity extends AppCompatActivity  {
     FloatingActionButton moveToAddPost,movetopostss;
     CardView gotoeventss,gotogroups,gotofriends,gotoposts;
 
-
     Spinner spinner;
     public void initStyle()
     {
@@ -126,6 +128,15 @@ public class HomeActivity extends AppCompatActivity  {
         gotoevents=findViewById(R.id.gotoevents);
         moveToAddPost=findViewById(R.id.movetozddposts);
         movetopostss=findViewById(R.id.movetoposss);
+
+
+
+
+
+
+
+
+
         moveToAddPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -241,6 +252,27 @@ gotoposts.setOnClickListener(new View.OnClickListener() {
         {
             user = sessionManager.getUser(getIntent().getStringExtra("username"),1);
         }
+
+
+
+        TagUserRepository.getInstance().getTagUserByUsername(user.getUsername(), new TagUserRepository.getAllPostCallBack() {
+            @Override
+            public void onResponse(List<Tag_user> tagUsers) {
+
+                if(tagUsers.size()==0)
+                {
+
+                    TagsCustomDialog tagsCustomDialog=new TagsCustomDialog(HomeActivity.this);
+                    tagsCustomDialog.setUsername(user.getUsername());
+                    tagsCustomDialog.show();
+
+                }
+
+            }
+        });
+
+
+
 
 
         FirebaseMessaging.getInstance().subscribeToTopic(user.getUsername().toString());
@@ -374,12 +406,9 @@ gotoposts.setOnClickListener(new View.OnClickListener() {
                 moveToAddPost.setVisibility(View.VISIBLE);
                 movetopostss.setVisibility(View.VISIBLE);
 
-
-
             }
         });
     }
-
 
     private void bottomProgressDots(int current_index) {
         LinearLayout dotsLayout =  findViewById(R.id.layoutDotss);

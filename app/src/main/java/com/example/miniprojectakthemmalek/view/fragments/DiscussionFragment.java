@@ -79,6 +79,8 @@ public class DiscussionFragment extends Fragment {
         @Override
         public void getManyOneFollow(List<Message> messages) {
 
+            if(messages.size()!=0)
+            {
             List<Message> messageList = new ArrayList<Message>();
 
             discussionAdapter.setConnectedUsername(connectedUsername);
@@ -86,7 +88,7 @@ public class DiscussionFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setHasFixedSize(false);
             recyclerView.setAdapter(discussionAdapter);
-
+            }
         }
     });
 

@@ -21,10 +21,13 @@ import android.widget.NumberPicker;
 
 import com.example.miniprojectakthemmalek.R;
 import com.example.miniprojectakthemmalek.model.entities.Tag;
+import com.example.miniprojectakthemmalek.model.entities.Tag_user;
 import com.example.miniprojectakthemmalek.model.entities.User;
+import com.example.miniprojectakthemmalek.model.repositories.TagUserRepository;
 import com.example.miniprojectakthemmalek.model.repositories.UserRepository;
 import com.example.miniprojectakthemmalek.view.adapter.TagAdapter;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.JsonPrimitive;
 import com.hootsuite.nachos.NachoTextView;
 import com.hootsuite.nachos.chip.Chip;
 import com.hootsuite.nachos.terminator.ChipTerminatorHandler;
@@ -33,9 +36,14 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import co.lujun.androidtagview.ColorFactory;
+import co.lujun.androidtagview.TagContainerLayout;
+import co.lujun.androidtagview.TagView;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -48,22 +56,15 @@ SessionManager sessionManager;
     DatePicker birth_date;
 String sexe="";
 
-NachoTextView et_tag,et_tag2;
-
-
-    List<String> chips=new ArrayList<String>();
-
-    List<Tag> tagList=new ArrayList<Tag>();
-
-    List<Tag> tagList2=new ArrayList<Tag>();
-
-    List<String> chips2=new ArrayList<String>();
+     List<String> list= new ArrayList<String>();
+     List<String> list2=new ArrayList<String>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_sign_up);
+
         sessionManager=new SessionManager(this);
         birth_date=findViewById(R.id.birth_date);
         radio_female = findViewById(R.id.radio_female);
@@ -74,20 +75,18 @@ NachoTextView et_tag,et_tag2;
         retypeInput=findViewById(R.id.retypeInput);
         firstName=findViewById(R.id.firstName);
         lastName=findViewById(R.id.lastName);
-        et_tag=findViewById(R.id.et_tag);
-        et_tag2=findViewById(R.id.et_tag2);
-
+        final TagContainerLayout mTagContainer = (TagContainerLayout) findViewById(R.id.tag);
+        final TagContainerLayout mTagContainer2 = (TagContainerLayout) findViewById(R.id.tag2);
         email_sign_in_button=findViewById(R.id.email_sign_in_button);
         email_sign_in_button.setEnabled(false);
-
-
-
     usernameControl(usernameInput);
     passwordControl(passwordInput,retypeInput);
     retypeControl(retypeInput,passwordInput);
     updateButton(email_sign_in_button);
-
-
+        mTagContainer.setTheme(ColorFactory.NONE);
+        mTagContainer.setBackgroundColor(Color.TRANSPARENT);
+        mTagContainer2.setTheme(ColorFactory.NONE);
+        mTagContainer2.setBackgroundColor(Color.TRANSPARENT);
     email_sign_in_button.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
@@ -106,6 +105,20 @@ final String usernameLoc = usernameInput.getText().toString();
         System.out.println("sexe----> "+sexe);
         System.out.println("date----> "+ getDateFromDatePicker());
 
+
+        if(list2.size()!=0)
+        {
+            for(String s:list2)
+            {
+                Tag_user tag_user=new Tag_user(usernameInput.getText().toString(),s);
+                TagUserRepository.getInstance().addTagUser(tag_user, new TagUserRepository.addingCallback() {
+                    @Override
+                    public void addingCallback(int code) {
+
+                    }
+                });
+            }
+          }
 
 
         UserRepository.getInstance().addUser(new User(usernameInput.getText().toString(), passwordInput.getText().toString(),sexe,birth_date.getYear()+"/"+birth_date.getMonth()+"/"+birth_date.getDayOfMonth(),0,0), new UserRepository.addingCallback() {
@@ -158,59 +171,68 @@ final String usernameLoc = usernameInput.getText().toString();
     }
 });
 
+Calendar c = Calendar.getInstance();
+c.add(Calendar.YEAR,-20);
+birth_date.setMaxDate(c.getTimeInMillis());
+list.addAll(Arrays.asList(getResources().getStringArray(R.array.disease_array)));
 
 
-
-   chips.add("sss");
-   chips.add("qqqq");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("dddd");
-   chips.add("QAA");
-   chips.add("vvvv");
-        et_tag.setChipSpacing(R.dimen.spacing_medium);
-        et_tag2.setChipSpacing(R.dimen.spacing_medium);
-        et_tag.setText(chips);
+    mTagContainer.setTags(list);
+    mTagContainer2.setTags(list2);
 
 
-        et_tag.addChipTerminator('\n', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_ALL);
-
-    et_tag.setOnChipClickListener(new NachoTextView.OnChipClickListener() {
+    mTagContainer.setOnTagClickListener(new TagView.OnTagClickListener() {
         @Override
-        public void onChipClick(Chip chip, MotionEvent event) {
+        public void onTagClick(int position, String text) {
+            list2.add(text);
+            list.remove(text);
+            mTagContainer.setTags(list);
+            mTagContainer2.setTags(list2);
+        }
 
-            chips2.add(chip.getText().toString());
-            chips.remove(chip.getText().toString());
-            et_tag.setText(chips);
-            et_tag2.setText(chips2);
-            et_tag2.addChipTerminator('\n', ChipTerminatorHandler.BEHAVIOR_CHIPIFY_ALL);
+        @Override
+        public void onTagLongClick(int position, String text) {
+
+        }
+
+        @Override
+        public void onSelectedTagDrag(int position, String text) {
+
+        }
+
+        @Override
+        public void onTagCrossClick(int position) {
 
         }
     });
 
 
+    mTagContainer2.setOnTagClickListener(new TagView.OnTagClickListener() {
+        @Override
+        public void onTagClick(int position, String text) {
 
+            list2.remove(text);
+            list.add(text);
+            mTagContainer.setTags(list);
+            mTagContainer2.setTags(list2);
+
+        }
+
+        @Override
+        public void onTagLongClick(int position, String text) {
+
+        }
+
+        @Override
+        public void onSelectedTagDrag(int position, String text) {
+
+        }
+
+        @Override
+        public void onTagCrossClick(int position) {
+
+        }
+    });
 
 
 
@@ -317,8 +339,6 @@ final String usernameLoc = usernameInput.getText().toString();
             }
         });
     }
-
-
 
     public Date getDateFromDatePicker()
     {
