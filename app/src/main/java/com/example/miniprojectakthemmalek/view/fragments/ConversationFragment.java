@@ -95,7 +95,7 @@ public class ConversationFragment extends Fragment {
 
         try {
 
-            socket = IO.socket("http://"+ Constants.IP_ADDRESS +":3000");
+            socket = IO.socket("http://"+ Constants.IP_ADDRESS +":11855");
             socket.connect();
             socket.emit("join",connectedUsername);
 
@@ -117,7 +117,7 @@ public class ConversationFragment extends Fragment {
 
         try {
 
-            socket = IO.socket("http://"+Constants.IP_ADDRESS+":3000");
+            socket = IO.socket("http://"+Constants.IP_ADDRESS+":11855");
             socket.connect();
             socket.emit("join",connectedUsername);
 

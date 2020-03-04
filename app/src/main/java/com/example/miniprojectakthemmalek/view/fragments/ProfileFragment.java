@@ -53,7 +53,7 @@ public class ProfileFragment extends Fragment {
 
     SessionManager sessionManager;
     User user;
-   // Toolbar toolbar;
+    // Toolbar toolbar;
     CircleImageView image;
     TextView jobProfile,birth_date, partnerLabel, postsLabel,first_name_label,last_name_label,address_label,phone_number_label,birth_date_label,partner_label,firstNameLabel,lastNameLabel,addressLabel,phoneNumberLabel,usernameLabel,textView11,textView12;
     FloatingActionButton settingBtn;
@@ -84,21 +84,21 @@ public class ProfileFragment extends Fragment {
     {
         if(user.getTheme_r()!=0)
         {
-         int rgb = Color.rgb(user.getTheme_r(),user.getTheme_g(),user.getTheme_b());
+            int rgb = Color.rgb(user.getTheme_r(),user.getTheme_g(),user.getTheme_b());
 
-      //  toolbar.setBackgroundColor(rgb);
-       // image.setBorderColor(rgb);
-        textView11.setTextColor(rgb);
-        textView12.setTextColor(rgb);
+            //  toolbar.setBackgroundColor(rgb);
+            // image.setBorderColor(rgb);
+            textView11.setTextColor(rgb);
+            textView12.setTextColor(rgb);
 
-        first_name_label.setTextColor(rgb);
+            first_name_label.setTextColor(rgb);
 
-        last_name_label.setTextColor(rgb);
-        address_label.setTextColor(rgb);
-        phone_number_label.setTextColor(rgb);
-        birth_date_label.setTextColor(rgb);
-        partner_label.setTextColor(rgb);
-        postsLabel.setTextColor(rgb);
+            last_name_label.setTextColor(rgb);
+            address_label.setTextColor(rgb);
+            phone_number_label.setTextColor(rgb);
+            birth_date_label.setTextColor(rgb);
+            partner_label.setTextColor(rgb);
+            postsLabel.setTextColor(rgb);
 
         }
     }
@@ -112,7 +112,7 @@ public class ProfileFragment extends Fragment {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-       user = sessionManager.getUser(getArguments().getString("username"),1);
+        user = sessionManager.getUser(getArguments().getString("username"),1);
         System.out.println("------->"+user);
         firstNameLabel=rootView.findViewById(R.id.firstNameLabel);
         lastNameLabel=rootView.findViewById(R.id.lastNameLabel);
@@ -123,16 +123,16 @@ public class ProfileFragment extends Fragment {
         settingBtn=rootView.findViewById(R.id.settingsAdd);
         imageLoading = rootView.findViewById(R.id.imageLoading);
 
-           // toolbar = rootView.findViewById(R.id.toolbar);
-            image=rootView.findViewById(R.id.image);
+        // toolbar = rootView.findViewById(R.id.toolbar);
+        image=rootView.findViewById(R.id.image);
         postsLabel=rootView.findViewById(R.id.postsLabel);
 
-            first_name_label=rootView.findViewById(R.id.first_name_label);
-            last_name_label=rootView.findViewById(R.id.last_name_label);
-            address_label=rootView.findViewById(R.id.address_label);
-            phone_number_label=rootView.findViewById(R.id.phone_number_label);
-            birth_date_label=rootView.findViewById(R.id.birth_date_label);
-            partner_label=rootView.findViewById(R.id.partner_label);
+        first_name_label=rootView.findViewById(R.id.first_name_label);
+        last_name_label=rootView.findViewById(R.id.last_name_label);
+        address_label=rootView.findViewById(R.id.address_label);
+        phone_number_label=rootView.findViewById(R.id.phone_number_label);
+        birth_date_label=rootView.findViewById(R.id.birth_date_label);
+        partner_label=rootView.findViewById(R.id.partner_label);
         partnerLabel=rootView.findViewById(R.id.partnerLabel);
         birth_date=rootView.findViewById(R.id.birth_date);
 
@@ -144,7 +144,7 @@ public class ProfileFragment extends Fragment {
 
         imageLoading.setVisibility(View.VISIBLE);
         image.setVisibility(View.GONE);
-          usernameLabel.setText(user.getUsername());
+        usernameLabel.setText(user.getUsername());
 
         if(user.getFirst_name()==null || user.getFirst_name()=="" )
         {
@@ -202,11 +202,11 @@ public class ProfileFragment extends Fragment {
             partnerLabel.setText(user.getPartner());
         }
 
-    if(user.getBirth_date()==null || user.getBirth_date()=="")
+        if(user.getBirth_date()==null || user.getBirth_date()=="")
         {
             birth_date.setText("");
         }else {
-        birth_date.setText(user.getBirth_date().toString().substring(0,10));
+            birth_date.setText(user.getBirth_date().toString().substring(0,10));
         }
 
         ImageRepository.getInstance().loadPicutreOf(user.getUsername().toString(),0.5f,0.5f, new ImageRepository.getPictureCallBack() {
@@ -252,19 +252,19 @@ public class ProfileFragment extends Fragment {
         });
 
 
-initStyle();
-settingBtn.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        SettingsFragment settingsFragment =new SettingsFragment();
-        Bundle bundle =new Bundle();
-        bundle.putString("username",user.getUsername());
-        settingsFragment.setArguments(bundle);
+        initStyle();
+        settingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SettingsFragment settingsFragment =new SettingsFragment();
+                Bundle bundle =new Bundle();
+                bundle.putString("username",user.getUsername());
+                settingsFragment.setArguments(bundle);
 
-        getFragmentManager().beginTransaction().replace(R.id.frameProfile,settingsFragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.frameProfile,settingsFragment).commit();
 
-    }
-});
+            }
+        });
 
         return rootView;
     }

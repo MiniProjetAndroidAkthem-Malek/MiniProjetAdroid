@@ -3,7 +3,7 @@ package com.example.miniprojectakthemmalek.view.utils;
 public class Constants {
 
 
-    public static String IP_ADDRESS = "192.168.1.7";
+    public static String IP_ADDRESS = "41.226.11.252";
 
 
 }

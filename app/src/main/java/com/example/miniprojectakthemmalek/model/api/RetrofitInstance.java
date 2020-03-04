@@ -11,7 +11,7 @@ public class RetrofitInstance {
 
     private static Retrofit retrofit;
     private static Retrofit retrofit2;
-    private static final String BASE_URL = "http://"+ Constants.IP_ADDRESS +":3003/";
+    private static final String BASE_URL = "http://"+ Constants.IP_ADDRESS +":11855/";
     private static final String NOTIFICATION_URL = "https://fcm.googleapis.com/";
 
     public static Retrofit getRetrofitInstance(){

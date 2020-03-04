@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_xlarge"
-                android:text="Julianna Carter"
+                android:text="profile"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
                 android:textColor="@color/grey_90" />
 
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_medium"
-                android:text="Ingenieur"
+                android:text="job"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 android:textColor="@color/grey_60" />
 
@@ -69,13 +69,7 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <ImageButton
-                        android:layout_width="?attr/actionBarSize"
-                        android:layout_height="?attr/actionBarSize"
-                        android:layout_margin="@dimen/spacing_middle"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/ic_chat"
-                        android:tint="@color/light_green_600" />
+
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/image"
@@ -88,13 +82,7 @@
                         app:civ_shadow="true"
                         app:civ_shadow_radius="0" />
 
-                    <ImageButton
-                        android:layout_width="?attr/actionBarSize"
-                        android:layout_height="?attr/actionBarSize"
-                        android:layout_margin="@dimen/spacing_middle"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:src="@drawable/ic_call"
-                        android:tint="@color/light_green_600" />
+
 
                 </LinearLayout>
 
@@ -153,7 +141,7 @@
                             android:id="@+id/postsLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1.5 K"
+                            android:text="0"
                             android:textAppearance="@style/TextAppearance.AppCompat.Title"
                             android:textColor="@color/purple_500" />
 
@@ -180,7 +168,7 @@
                             android:id="@+id/followers"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="17.8 K"
+                            android:text="0"
                             android:textAppearance="@style/TextAppearance.AppCompat.Title"
                             android:textColor="@color/purple_500" />
 
@@ -207,7 +195,7 @@
                             android:id="@+id/following"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1.3 K"
+                            android:text="0"
                             android:textAppearance="@style/TextAppearance.AppCompat.Title"
                             android:textColor="@color/purple_500" />
 
@@ -238,7 +226,8 @@
                 android:layout_marginRight="@dimen/spacing_xlarge"
                 android:gravity="center"
                 android:lineSpacingExtra="2dp"
-                android:text="@string/middle_lorem_ipsum"
+                android:text="“The purpose of life is not to be happy. It is to be useful, to be honorable, to be compassionate, to have it make some difference that you have lived and lived well.”
+― Ralph Waldo Emerson"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                 android:textColor="@color/grey_90" />
 
